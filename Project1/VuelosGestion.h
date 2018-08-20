@@ -15,7 +15,7 @@ private:
 	string piloto;
 public:
 	VuelosGestion();
-	void col();
+	void col(int);
 	~VuelosGestion();
 };
 #endif // !VUELOSGESTION_H

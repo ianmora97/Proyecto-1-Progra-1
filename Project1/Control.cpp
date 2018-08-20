@@ -21,8 +21,9 @@ void Control::opciones() {
 	while (cicloPrincipal) {
 		i->imprime();
 		int opc = i->menu();
-		cout << opc;
 		if (opc == 1) {
+			system("cls");
+			col(15);
 			flotaGe.revisarAdmin();
 			bool cicloOpcion1 = true;
 			while (cicloOpcion1) {
@@ -62,13 +63,30 @@ void Control::opciones() {
 						system("PAUSE");
 						break;
 					default:
-						cerr << "Error! Digite un numero de la lista!";
+						system("cls");
+						col(13);
+						cout << "\n\n\n\t\t\t";
+						cout << "Saliendo de la Gestion de Flota!\n";
+						for (int i = 0; i < 2; i++) {
+							Sleep(700);
+						}
+						system("cls");
+						col(15);
 						cicloOpcion1 = false;
 						break;
 					}
 			}
 		}
 		if (opc == 2) {
+			system("cls");
+			col(13);
+			cout << "\n\n\n\t\t\t";
+			cout << "Bienvenido a la gestion de Rutas!\n";
+			for (int i = 0; i < 2; i++) {
+				Sleep(1000);
+			}
+			system("cls");
+			col(15);
 			bool cicloOpcion = true;
 			string origen;
 			string destino;
@@ -92,7 +110,7 @@ void Control::opciones() {
 					cout << "Ingrese el destino : ";
 					
 					getline(cin,destino);
-					cout << "Ingrese la duracion del vuelo: ";
+					cout << "Ingrese la duracion del vuelo (Horas): ";
 					d1 = true;
 					while (d1) {
 						if (!(cin>>duracion)) {
@@ -152,13 +170,29 @@ void Control::opciones() {
 					system("PAUSE");
 					break;
 				default:
+					system("cls");
+					col(13);
+					cout << "\n\n\n\t\t\t";
+					cout << "Saliendo de la gestion de Rutas!\n";
+					for (int i = 0; i < 2; i++) {
+						Sleep(1000);
+					}
+					col(15);
 					cicloOpcion = false;
 					break;
 				}
 			}
 			
 		}
-		if (opc == 0) { cicloPrincipal = false; }
+		if (opc == 3) {
+			
+		}
+		if (opc == 0) { 
+			flotaGe.~FlotaGestion();
+			avion.~Avion();
+			rutaGes.~RutasGestion();
+			ruta.~Rutas();
+			cicloPrincipal = false; }
 	}
 	hastaLuego();
 }
@@ -182,12 +216,12 @@ void Control::bienvenido(){
 	for (int i = 0; i < 5; i++) { cout << "\t"; }
 	cout << "|__________|   |__|    |__|\n";
 	col(15);
-	cout << "\n\nContinuar...";
-	cin.get();
+	cout << "\n\n\n";
+	system("PAUSE");
 	cout << "\n\n\t\t\t\t\t\tCargando...\n" << endl;
 	cout << "\t\t\t";
 	for (int i = 0; i<60; i++) {
-		col(170);
+		col(255);
 		cout << " ";
 		Sleep(7);
 	}
@@ -196,17 +230,11 @@ void Control::bienvenido(){
 void Control::hastaLuego(){
 	system("cls");
 	for (int i = 0; i < 6; i++) { cout << "\n"; }
-	for (int i = 0; i < 6; i++) { cout << "\t"; }
-	col(11);
-	cout << "Hasta Luego!\n\n";
-	for (int i = 0; i < 7; i++) { cout << "\t"; }
-	col(14);
-	cout << ":)";
 	col(15);
 	cout << "\n\n\t\t\t\t\t\tCerrando...\n" << endl;
 	cout << "\t\t\t";
 	for (int i = 0; i<60; i++) {
-		col(170);
+		col(255);
 		cout << " ";
 		Sleep(15);
 	}

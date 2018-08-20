@@ -1,11 +1,13 @@
 #ifndef AVION_H
 #define AVION_H
 #include <iostream>
-#include "Asientos.h"
+#include "Persona.h"
 using namespace std;
 class Avion{
 private:
-	Asientos *asientos;
+	Persona *asiento;
+	int can;
+	int ma[6][30];
 	int annio,id;
 	string modelo,marca;
 	int cantPasajeros;
@@ -13,6 +15,7 @@ private:
 public:
 	Avion();
 	Avion(int,int,string,string);
+	void col(int);
 	void setAnnio(int);
 	void setId(int);
 	void setModelo(string);
@@ -26,7 +29,9 @@ public:
 	int getColumnas();
 	string getModelo();
 	string getMarca();
-
+	int letraXNumero(char);
+	void insertaPersona(Persona&, char, int);
+	void imprimeAsientos();
 	~Avion();
 };
 #endif // !AVION_H

@@ -15,6 +15,7 @@ public:
 	Persona(string,string);
 	string getName();
 	string getId();
+	string toString();
 	~Persona();
 };
 #endif // !PERSONA_H

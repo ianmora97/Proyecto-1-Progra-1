@@ -10,8 +10,10 @@ bool FlotaGestion::revisarAdmin() {
 	string pass;
 	bool ciclo=true;
 	while (ciclo) {
-		cout << "Digite su clave > ";
+		cout << "\n\n\n\t\t\tDigite su clave > ";
+		col(17);
 		cin>>pass;
+		col(15);
 		if (pass != clave) {
 			col(12);
 			cerr << "Error!\nClave Incorrecta! Digite nuevamente!\n";
@@ -20,6 +22,18 @@ bool FlotaGestion::revisarAdmin() {
 			cin.ignore(1024, '\n');
 		}
 		else {
+			system("cls");
+			col(10);
+			cout << "\n\t\t\t\t";
+			cout << "Clave Correcta!";
+			col(13);
+			cout << "\n\n\n\t\t\t";
+			cout << "Bienvenido a la Gestion de Flota!\n";
+			for (int i = 0; i < 2; i++) {
+				Sleep(1000);
+			}
+			system("cls");
+			col(15);
 			ciclo = false;
 			return true;
 		}

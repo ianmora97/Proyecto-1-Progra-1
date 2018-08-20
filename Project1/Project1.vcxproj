@@ -112,6 +112,7 @@
   <ItemGroup>
     <ClInclude Include="Asientos.h" />
     <ClInclude Include="Avion.h" />
+    <ClInclude Include="CompraTiquetes.h" />
     <ClInclude Include="Control.h" />
     <ClInclude Include="FlotaGestion.h" />
     <ClInclude Include="Interfaz.h" />
@@ -123,6 +124,7 @@
   <ItemGroup>
     <ClCompile Include="Asientos.cpp" />
     <ClCompile Include="Avion.cpp" />
+    <ClCompile Include="CompraTiquetes.cpp" />
     <ClCompile Include="Control.cpp" />
     <ClCompile Include="FlotaGestion.cpp" />
     <ClCompile Include="Interfaz.cpp" />
