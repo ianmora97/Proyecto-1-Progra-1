@@ -30,19 +30,22 @@
     <ClInclude Include="Control.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FlotaGestion.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="RutasGestion.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="VuelosGestion.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Rutas.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CompraTiquetes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FlotaGestion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vuelos.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VuelosGestion.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -65,19 +68,22 @@
     <ClCompile Include="Control.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FlotaGestion.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="RutasGestion.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="VuelosGestion.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Rutas.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CompraTiquetes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FlotaGestion.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Vuelos.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="VuelosGestion.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

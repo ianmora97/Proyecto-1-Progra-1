@@ -1,23 +1,25 @@
 #ifndef FLOTAGESTION_H
 #define FLOTAGESTION_H
-#include <iostream>
 #include "Avion.h"
 using namespace std;
 const string clave = "admin";
-class FlotaGestion{
+class FlotaGestion {
 private:
-	Avion *plane;
-	int cant=0, tam;
+	Avion **plane;
+	int cant = 0, tam;
+	int opc;
 public:
 	FlotaGestion();
-	bool revisarAdmin();
+	void revisarAdmin();
 	void col(int);
-	void ingresarAvion(Avion&);
+	int getOpc();
+	void ingresarAvion(Avion*);
 	void visualizarAviones();
 	void modificar();
 	void eliminar();
-	int menu();
+	void menu();
 	void imprimeMenu();
+	Avion devuelve(int);
 	~FlotaGestion();
 };
 #endif // !FLOTAGESTION_H

@@ -15,6 +15,8 @@ public:
 	Persona(string,string);
 	string getName();
 	string getId();
+	void setName(string);
+	void setId(string);
 	string toString();
 	~Persona();
 };

@@ -1,9 +1,6 @@
 #include "Control.h"
 int main() {
-	Control *c = new Control;
-	//c->opciones();
-	Avion a;
-	a.getAsientos();
-	system("PAUSE");
+	Control *control = new Control;
+	control->opciones();
 	return 0;
 };

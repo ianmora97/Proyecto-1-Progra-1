@@ -19,6 +19,7 @@ public:
 	void setDestino(string);
 	void setDuracion(int);
 	void setCantEscalas(int);
+	string sumaRuta();
 	string getOrigen();
 	string getDestino();
 	int getDuracion();

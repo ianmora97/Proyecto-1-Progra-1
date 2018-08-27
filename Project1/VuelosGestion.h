@@ -1,21 +1,26 @@
 #ifndef VUELOSGESTION_H
 #define VUELOSGESTION_H
-#include "Avion.h"
+#include <string>
+#include <iostream>
+#include <sstream>
+#include <Windows.h>
 #include <time.h>
+#include "Vuelos.h"
 using namespace std;
-class VuelosGestion{
+class VuelosGestion {
 private:
-	Avion *avion;
-	string nomRuta;
-	string fecha;
-	int horaSalida;
-	int horaLlegada;
-	string aereoSalida;
-	string aereoLlegada;
-	string piloto;
+	Vuelos *vuelo;
+	int cant, tam;
 public:
 	VuelosGestion();
 	void col(int);
+	void insertarVuelo(Vuelos&);
+	void visualizar();
+	void modificar();
+	void eliminar();
+	void imprimeMenu();
+	int interfaz();
+	//un Vuelos devuelve() para encadenamiento
 	~VuelosGestion();
 };
 #endif // !VUELOSGESTION_H

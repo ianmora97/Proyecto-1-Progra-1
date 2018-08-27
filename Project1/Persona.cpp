@@ -9,4 +9,6 @@ string Persona::toString(){
 	p << "Identificacion: " << id << endl;
 	return p.str();
 }
+void Persona::setName(string n) { name = n; }
+void Persona::setId(string i) { id = i; }
 Persona::~Persona(){}

@@ -1,6 +1,6 @@
 #include "RutasGestion.h"
 
-RutasGestion::RutasGestion(){
+RutasGestion::RutasGestion() {
 	ruta = new Rutas[100]; //se pueden hacer hasta 100 rutas, (el proyecto no especifica cuantas rutas se puedan hacer)
 	cant = 0;
 	tam = 100;
@@ -80,7 +80,7 @@ void RutasGestion::modificar(){
 				cin.ignore(1024, '\n');
 			}
 			else {
-				if (opc2 >= 0 && opc2 < cant) {
+				if (opc2 >= 0 && opc2 < 5) {
 					ciclo2 = false;
 				}
 				else {
@@ -264,4 +264,7 @@ int RutasGestion::interfaz(){
 	}
 	return opc;
 }
-RutasGestion::~RutasGestion(){}
+RutasGestion::~RutasGestion(){
+	cant = 0;
+	tam = 0;
+}

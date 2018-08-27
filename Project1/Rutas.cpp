@@ -10,6 +10,11 @@ void Rutas::setOrigen(string o) { nameOrigen = o; }
 void Rutas::setDestino(string d) { nameDestino = d; }
 void Rutas::setDuracion(int d) { duracion = d; }
 void Rutas::setCantEscalas(int e) { cantEscalas = e; }
+string Rutas::sumaRuta(){
+	stringstream suma;
+	suma << nameOrigen << "-" << nameDestino;
+	return suma.str();
+}
 string Rutas::getOrigen() { return nameOrigen; }
 string Rutas::getDestino() { return nameDestino; }
 int Rutas::getDuracion() { return duracion; }

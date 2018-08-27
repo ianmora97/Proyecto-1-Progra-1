@@ -1,18 +1,20 @@
 #include "FlotaGestion.h"
-FlotaGestion::FlotaGestion(){
-	plane = new Avion[30];
+FlotaGestion::FlotaGestion() {
 	cant = 0;
 	tam = 30;
+	plane = new Avion*[30];
+	for (int i = 0; i < tam; i++)
+		plane[i] = NULL;
 }
-bool FlotaGestion::revisarAdmin() {
+void FlotaGestion::revisarAdmin() {
 	system("cls");
 	col(15);
 	string pass;
-	bool ciclo=true;
+	bool ciclo = true;
 	while (ciclo) {
 		cout << "\n\n\n\t\t\tDigite su clave > ";
 		col(17);
-		cin>>pass;
+		cin >> pass;
 		col(15);
 		if (pass != clave) {
 			col(12);
@@ -20,6 +22,7 @@ bool FlotaGestion::revisarAdmin() {
 			col(15);
 			cin.clear();
 			cin.ignore(1024, '\n');
+			ciclo = true;
 		}
 		else {
 			system("cls");
@@ -35,13 +38,13 @@ bool FlotaGestion::revisarAdmin() {
 			system("cls");
 			col(15);
 			ciclo = false;
-			return true;
 		}
 	}
 }
-void FlotaGestion::col(int c){ SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), c); }
-void FlotaGestion::ingresarAvion(Avion &a) {
-	if (cant<=30) {
+void FlotaGestion::col(int c) { SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), c); }
+int FlotaGestion::getOpc(){return opc;}
+void FlotaGestion::ingresarAvion(Avion *a) {
+	if (cant < tam) {
 		plane[cant] = a;
 		cant++;
 		col(10);
@@ -70,13 +73,9 @@ void FlotaGestion::visualizarAviones() {
 	for (int i = 0; i < cant; i++) {
 		cout << "-------------------------" << endl;
 		col(11);
-		cout << "Avion: "<<endl<<endl;
+		cout << "Avion: " << i+1 << endl << endl;
 		col(15);
-		cout << "Id: " << plane[i].getId() << endl;
-		cout << "Annio: " << plane[i].getAnnio() << endl;
-		cout << "Marca: " << plane[i].getMarca() << endl;
-		cout << "Modelo: " << plane[i].getModelo() << endl;
-		cout << "Cantidad de pasajeros: " << plane[i].getCantPasajeros() << endl;
+		cout<<plane[i]->toString()<<endl;
 	}
 	cout << endl;
 }
@@ -87,7 +86,7 @@ void FlotaGestion::eliminar() {
 	col(15);
 	if (cant != 0) { //si hay aviones 
 		cout << "Cual avion desea eliminar?\n";
-		for (int i = 0; i < cant; i++) { cout << "[" << i << "]" << plane[i].getId() << endl; }
+		for (int i = 0; i < cant; i++) { cout << "[" << i << "]" << plane[i]->getId() << endl; }
 		int eliAv;
 		bool cic = true;
 		//Verificacion
@@ -120,7 +119,7 @@ void FlotaGestion::eliminar() {
 		}
 		else {
 			//cout << "Eli: " << eliAv << " cant: " << cant << endl;
-			plane[eliAv] = plane[cant-1];
+			plane[eliAv] = plane[cant - 1];
 			cant--;
 			col(10);
 			cout << "Se ha eliminado un avion Correctamente!\n";
@@ -133,8 +132,7 @@ void FlotaGestion::eliminar() {
 		col(15);
 	}
 }
-int FlotaGestion::menu(){
-	int opc;
+void FlotaGestion::menu() {
 	bool c = true;
 	while (c) {
 		cout << "> ";
@@ -146,7 +144,7 @@ int FlotaGestion::menu(){
 			cin.ignore(1024, '\n');
 		}
 		else {
-			if (opc >=0 && opc <=4) {
+			if (opc >= 0 && opc <= 4) {
 				c = false;
 			}
 			else {
@@ -154,16 +152,15 @@ int FlotaGestion::menu(){
 			}
 		}
 	}
-	return opc;
 }
-void FlotaGestion::imprimeMenu(){
+void FlotaGestion::imprimeMenu() {
 	system("cls");
 	col(11);
 	cout << "\t\tMenu";
 	col(10);
 	cout << "\t\t\t\t\t[Gestion de Flota]\n";
 	col(15);
-	for (int i = 0; i<40; i++) { cout << "-"; }
+	for (int i = 0; i < 40; i++) { cout << "-"; }
 	cout << "\n\n";
 	cout << "\t[1] Insertar\n";
 	cout << "\t[2] Visualizar\n";
@@ -179,7 +176,7 @@ void FlotaGestion::modificar() {
 	if (cant != 0) {
 		cout << "Que avion desea modificar?\n";
 		for (int i = 0; i < cant; i++) {
-			cout << "[" << i << "] " << plane[i].getId() << endl;
+			cout << "[" << i << "] " << plane[i]->getId() << endl;
 		}
 		int opcAvion;
 		bool opcAvionCiclo = true;
@@ -245,21 +242,21 @@ void FlotaGestion::modificar() {
 			col(10);
 			cout << "\t\t(Annio)\n\n";
 			col(15);
-			cout << "El annio del avion es: " << plane[opcAvion].getAnnio() << endl;
+			cout << "El annio del avion es: " << plane[opcAvion]->getAnnio() << endl;
 			cout << "Digite un nuevo annio\n ";
 			while (ciAn) {
 				cout << ">";
-				if (!(cin>>an)) {
+				if (!(cin >> an)) {
 					col(12);
 					cerr << "Error! Digite un numero!\n";
 					col(15);
 					cin.clear();
-					cin.ignore(1024,'\n');
+					cin.ignore(1024, '\n');
 					ciAn = true;
 				}
 				else { ciAn = false; }
 			}
-			plane[opcAvion].setAnnio(an);
+			plane[opcAvion]->setAnnio(an);
 			col(10);
 			cout << "Cambio relizado correctamente!\n";
 			col(15);
@@ -268,10 +265,10 @@ void FlotaGestion::modificar() {
 			col(10);
 			cout << "\t\t(Modelo)\n\n";
 			col(15);
-			cout << "El modelo del avion es: " << plane[opcAvion].getModelo() << endl;
+			cout << "El modelo del avion es: " << plane[opcAvion]->getModelo() << endl;
 			cout << "Digite un nuevo modelo\n> ";
 			cin >> mode;
-			plane[opcAvion].setModelo(mode);
+			plane[opcAvion]->setModelo(mode);
 			col(10);
 			cout << "Cambio relizado correctamente!\n";
 			col(15);
@@ -280,10 +277,10 @@ void FlotaGestion::modificar() {
 			col(10);
 			cout << "\t\t(Marca)\n\n";
 			col(15);
-			cout << "La marca del avion es: " << plane[opcAvion].getMarca() << endl;
+			cout << "La marca del avion es: " << plane[opcAvion]->getMarca() << endl;
 			cout << "Digite la nueva marca\n>";
 			cin >> mar;
-			plane[opcAvion].setMarca(mar);
+			plane[opcAvion]->setMarca(mar);
 			col(10);
 			cout << "Cambio relizado correctamente!\n";
 			col(15);
@@ -301,4 +298,11 @@ void FlotaGestion::modificar() {
 		col(15);
 	}
 }
-FlotaGestion::~FlotaGestion() { cant = 0; }
+Avion FlotaGestion::devuelve(int i) {return *plane[i];}
+FlotaGestion::~FlotaGestion() { 
+	for (int i = 0; i < cant; i++)
+		delete plane[i];
+	delete[] plane;
+	tam = 0;
+	cant = 0; 
+}

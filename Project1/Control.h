@@ -6,8 +6,9 @@
 #include "Avion.h"
 #include "Interfaz.h"
 #include "Persona.h"
-#include "FlotaGestion.h"
 #include "RutasGestion.h"
+#include "FlotaGestion.h"
+#include "Vuelos.h"
 #include "VuelosGestion.h"
 using namespace std;
 class Control{

@@ -1,6 +1,6 @@
 #ifndef COMPRATIQUETES_H
 #define COMPRATIQUETES_H
-#include "Avion.h"
+
 
 class CompraTiquetes{
 private:
