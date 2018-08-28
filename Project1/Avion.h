@@ -11,6 +11,7 @@ private:
 	int cantPasajeros;
 	int filas, columnas;
 public:
+	Avion();
 	Avion(char);
 	Avion(int,int,string,string);
 	void col(int);
@@ -28,7 +29,8 @@ public:
 	string getModelo();
 	string getMarca();
 	string toString();
-	void insertaAsientos(Asientos&);
+	void insertaAsientos(Asientos*);
+	Asientos devuelve();
 	~Avion();
 };
 #endif // !AVION_H

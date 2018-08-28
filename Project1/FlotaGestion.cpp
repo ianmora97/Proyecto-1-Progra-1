@@ -33,7 +33,7 @@ void FlotaGestion::revisarAdmin() {
 			cout << "\n\n\n\t\t\t";
 			cout << "Bienvenido a la Gestion de Flota!\n";
 			for (int i = 0; i < 2; i++) {
-				Sleep(1000);
+				Sleep(500);
 			}
 			system("cls");
 			col(15);
@@ -298,7 +298,9 @@ void FlotaGestion::modificar() {
 		col(15);
 	}
 }
-Avion FlotaGestion::devuelve(int i) {return *plane[i];}
+Avion FlotaGestion::devuelve(int i) {
+	return *plane[i];
+}
 FlotaGestion::~FlotaGestion() { 
 	for (int i = 0; i < cant; i++)
 		delete plane[i];

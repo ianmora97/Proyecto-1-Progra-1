@@ -19,7 +19,7 @@ private:
 public:
 	Vuelos();
 	void col(int);
-	void muestraFecha();
+	string muestraFecha();
 	string getNomRuta();
 	string getFecha();
 	int getHoraSalida();
@@ -27,6 +27,7 @@ public:
 	string getAereoSalida();
 	string getAereoLlegada();
 	string getPiloto();
+	void ingresarAvion(Avion*);
 	void setNomRuta(string);
 	void setFecha(string);
 	void setHoraSalida(int);
@@ -35,7 +36,7 @@ public:
 	void setAereoLlegada(string);
 	void setPiloto(string);
 	string toString();
-	void setAvion(int);
+	Avion devuelve();
 	~Vuelos();
 };
 #endif // !VUELOS_H

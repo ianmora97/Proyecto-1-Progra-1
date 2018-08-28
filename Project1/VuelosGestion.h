@@ -9,17 +9,20 @@
 using namespace std;
 class VuelosGestion {
 private:
-	Vuelos *vuelo;
+	Vuelos **vuelo;
 	int cant, tam;
+	int opc;
 public:
 	VuelosGestion();
 	void col(int);
-	void insertarVuelo(Vuelos&);
+	void insertarVuelo(Vuelos*);
 	void visualizar();
 	void modificar();
 	void eliminar();
 	void imprimeMenu();
-	int interfaz();
+	void interfaz();
+	int getOpc();
+	void flotaVisualizar();
 	//un Vuelos devuelve() para encadenamiento
 	~VuelosGestion();
 };

@@ -24,11 +24,15 @@ string Rutas::toString() {
 	col(11);
 	for (int i = 0; i < 30; i++) { cout << "-"; }
 	col(15);
-	p1 << "\nNombre de origen: \n"
-		<< nameOrigen<<"\n"
-		<< "Nombre de destino:\n"
-		<<nameDestino<<"\n"
-		<<"Duracion del viaje:\n"
+	p1 << "\nNombre de origen: \n";
+	col(10);
+	p1 << nameOrigen << "\n";
+	col(15);
+	p1 << "Nombre de destino:\n";
+	col(10);
+	p1 << nameDestino << "\n";
+	col(15);
+	p1 <<"Duracion del viaje:\n"
 		<<duracion<<" horas\n"
 		<<"Cantidad de escalas:\n"
 		<<cantEscalas<<" escalas\n";

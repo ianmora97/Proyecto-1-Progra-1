@@ -1,4 +1,5 @@
 #include "Avion.h"
+Avion::Avion(){}
 Avion::Avion(char t) {
 	can = 0;
 	asiento = new Asientos(t);
@@ -27,32 +28,27 @@ string Avion::getModelo() { return modelo; }
 string Avion::getMarca() { return marca; }
 string Avion::toString() {
 	stringstream p;
+	col(11);
+	p << "------------------------------------\n";
+	col(15);
 	p << "Id: " << id << endl;
 	p << "Annio: "<<annio<<endl;
 	p << "Modelo: " << modelo << endl;
 	p << "Marca: " << marca << endl;
-	p << "Tipo de avion: " << asiento->getTipo() << endl;
 	p << "Cantidad de Pasajeros: " << cantPasajeros << endl;
 	p << "Cantidad de filas: " << filas << " Columnas: " << columnas << endl;
 	return p.str();
 }
-void Avion::insertaAsientos(Asientos &a){
+void Avion::insertaAsientos(Asientos *a){
 	if (can < cantPasajeros) {
-		asiento[can] = a;
+		asiento[can] = *a;
 		can++;
 	}
 	else {
 		cerr << "No hay asientos disponibles!" << endl;
 	}
 }
-Avion::~Avion(){
-	delete asiento;
-	can = 0;
-	filas = 0;
-	columnas = 0;
-	cantPasajeros = 0;
-	annio = 0;
-	id = 0;
-	modelo = "";
-	marca = "";
+Asientos Avion::devuelve(){
+	return *asiento;
 }
+Avion::~Avion(){}

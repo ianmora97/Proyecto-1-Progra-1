@@ -6,6 +6,9 @@ RutasGestion::RutasGestion() {
 	tam = 100;
 }
 void RutasGestion::col(int c) { SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), c); }
+int RutasGestion::getCant(){
+	return cant;
+}
 void RutasGestion::ingresarRuta(Rutas &r) {
 	if (cant<tam) {
 		ruta[cant] = r;
@@ -20,20 +23,12 @@ void RutasGestion::ingresarRuta(Rutas &r) {
 	}
 }
 void RutasGestion::visualizar() {
-	system("cls");
-	col(10);
-	cout << "\t\t(Visualizar Rutas)\n\n";
-	col(15);
 	cout << "La empresa tiene: "<<cant<<" rutas!\n\n";
 	for (int i = 0; i < cant;i++) {
 		cout<<ruta[i].toString()<<endl;
 	}
 }
 void RutasGestion::modificar(){
-	system("cls");
-	col(10);
-	cout << "\t\t(Modificar Ruta)\n\n";
-	col(15);
 	if (cant != 0) {
 		cout << "Digite la ruta que quiera modificar:\n";
 		for (int i = 0; i < cant; i++) {
@@ -175,10 +170,6 @@ void RutasGestion::modificar(){
 	}
 }
 void RutasGestion::eliminar() {
-	system("cls");
-	col(10);
-	cout << "\t\t(Eliminar Rutas)\n\n";
-	col(15);
 	if (cant != 0) {
 		cout << "Cual ruta desea eliminar?\n";
 		for (int i = 0; i < cant; i++) {
@@ -263,6 +254,9 @@ int RutasGestion::interfaz(){
 		}
 	}
 	return opc;
+}
+Rutas RutasGestion::devuele(int i){
+	return ruta[i];
 }
 RutasGestion::~RutasGestion(){
 	cant = 0;

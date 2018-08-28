@@ -9,12 +9,14 @@ private:
 public:
 	RutasGestion();
 	void col(int);
+	int getCant();
 	void ingresarRuta(Rutas&);
 	void visualizar();
 	void modificar();
 	void eliminar();
 	void imprimirMenu();
 	int interfaz();
+	Rutas devuele(int);
 	~RutasGestion();
 };
 #endif // !RUTASGESTION_H

@@ -100,16 +100,4 @@ void Asientos::imprimeAsientos() {
 	for (int i = 0; i < (c * 3) + 1; i++) { cout << "-"; }
 	cout << endl;
 }
-Asientos::~Asientos(){
-	for (int i = 0; i < can; i++) {
-		delete asiento[i];
-	}
-	delete[] asiento;
-	can = 0;
-	tam = 0;
-	for (int i=0;i<f;i++)
-		for (int j=0;j<c;j++)
-			vec[i][j] = 0;
-	f = 0;
-	c = 0;
-}
+Asientos::~Asientos(){}

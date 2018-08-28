@@ -1,13 +1,14 @@
 #include "VuelosGestion.h"
 VuelosGestion::VuelosGestion() {
-	vuelo = new  Vuelos[100]; //Declara hasta 100 vuelos (no especifica cuantos vuelos se pueden hacer)
+	vuelo = new  Vuelos*[100]; //Declara hasta 100 vuelos (no especifica cuantos vuelos se pueden hacer)
 	cant = 0;
 	tam = 100;
 }
 void VuelosGestion::col(int c) { SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), c); }
-void VuelosGestion::insertarVuelo(Vuelos &v) {
+void VuelosGestion::insertarVuelo(Vuelos *v) {
 	if (cant < tam) {
 		vuelo[cant] = v;
+		cant++;
 		col(10);
 		cout << "Un vuelo ha sido creado!\n";
 		col(15);
@@ -33,7 +34,11 @@ void VuelosGestion::visualizar() {
 		col(11);
 		cout << "Vuelo: " << i + 1 << endl << endl;
 		col(15);
-		cout << vuelo[i].toString() << endl;
+		cout << vuelo[i]->toString() << endl;
+		cout << "Avion asignado: "<<endl;
+		cout << vuelo[i]->devuelve().toString()<<endl;
+		vuelo[i]->devuelve().devuelve().imprimeAsientos();
+		cout << endl;
 	}
 	cout << endl;
 }
@@ -45,7 +50,7 @@ void VuelosGestion::modificar(){
 	if (cant != 0) {
 		cout << "Que vuelo desea modificar?\n";
 		for (int i = 0; i < cant; i++) {
-			cout << "[" << i << "] " << vuelo[i].getNomRuta() << endl;
+			cout << "[" << i << "] " << vuelo[i]->getNomRuta() << endl;
 		}
 		int opcVuelo;
 		bool opcVueloCiclo = true;
@@ -75,11 +80,9 @@ void VuelosGestion::modificar(){
 		cout << "Que desea modificar?\n\n";
 		cout << "[1] Fecha\n";
 		cout << "[2] Hora de Salida\n";
-		cout << "[3] Hora de Llegada\n";
-		cout << "[4] Aereopuerto de Salida\n";
-		cout << "[5] Aereopuerto de Llegada\n";
-		cout << "[6] Nombre del piloto\n";
-		cout << "[7] Cambiar de avion\n";
+		cout << "[3] Aereopuerto de Salida\n";
+		cout << "[4] Aereopuerto de Llegada\n";
+		cout << "[5] Nombre del piloto\n";
 		cout << "(Si desea modificar el nombre del vuelo debe de hacerlo desde el [Modulo Gestion de Ruta])\n";
 		cout << "(Digite 0 para salir!)\n";
 		int opcModifica;
@@ -107,7 +110,6 @@ void VuelosGestion::modificar(){
 				}
 			}
 		}
-		int opcavion;
 		string fecha_temp;
 		int horaSalida_temp;
 		int horaLlegada_temp;
@@ -116,17 +118,16 @@ void VuelosGestion::modificar(){
 		string piloto_temp;
 		bool ciclo_validaciones = true;
 		system("cls");
+		int dura;
+		int suma;
 		switch (opcModifica){
 		case 1:
 			col(10);
 			cout << "\t\t(Fecha)\n\n";
 			col(15);
-			cout << "La fecha del Vuelo es: "<<vuelo[opcVuelo].getFecha()<<endl;
-			vuelo[opcVuelo].muestraFecha();
+			cout << "La fecha del Vuelo es: "<<vuelo[opcVuelo]->getFecha()<<endl;
+			vuelo[opcVuelo]->setFecha(vuelo[opcVuelo]->muestraFecha());
 			cout << endl;
-			cout << "Digite la nueva Fecha: >";
-			cin >> fecha_temp;
-			vuelo[opcVuelo].setFecha(fecha_temp);
 			col(10);
 			cout << "Cambio relizado correctamente!\n";
 			col(15);
@@ -135,8 +136,17 @@ void VuelosGestion::modificar(){
 			col(10);
 			cout << "\t\t(Hora de Salida)\n\n";
 			col(15);
-			cout << "La hora de salida del Vuelo es: " << vuelo[opcVuelo].getHoraSalida() << endl;
-			cout << "Digite la nueva hora de salida: >";
+			cout << "La hora de salida del Vuelo es: " << vuelo[opcVuelo]->getHoraSalida() << endl;
+			for (int i = 1; i <= 24; i++) {
+				if (i == 13) {
+					cout << endl;
+				}
+				col(14);
+				cout << i;
+				col(15);
+				cout << ":" << "00 ";
+			}
+			cout << "\nDigite la nueva hora de salida: >";
 			while (ciclo_validaciones) {
 				cout << ">";
 				if (!(cin >> horaSalida_temp)) {
@@ -149,85 +159,54 @@ void VuelosGestion::modificar(){
 				}
 				else { ciclo_validaciones = false; }
 			}
-			vuelo[opcVuelo].setHoraSalida(horaSalida_temp);
+			dura = (vuelo[opcVuelo]->getHoraLlegada()) - (24) - (vuelo[opcVuelo]->getHoraSalida())+24;
+			vuelo[opcVuelo]->setHoraSalida(horaSalida_temp);
+			suma=vuelo[opcVuelo]->getHoraSalida() + dura;
+			if (suma > 24) { horaLlegada_temp = suma - 24; }
+			else { horaLlegada_temp = suma; }
+			vuelo[opcVuelo]->setHoraLlegada(horaLlegada_temp);
 			col(10);
 			cout << "Cambio relizado correctamente!\n";
 			col(15);
 			break;
 		case 3:
 			col(10);
-			cout << "\t\t(Hora de Llegada)\n\n";
+			cout << "\t\t(Aereopuerto de Salida)\n\n";
 			col(15);
-			cout << "La hora de Llegada del Vuelo es: " << vuelo[opcVuelo].getHoraLlegada() << endl;
-			cout << "Digite la nueva hora de llegada: >";
-			while (ciclo_validaciones) {
-				cout << ">";
-				if (!(cin >> horaLlegada_temp)) {
-					col(12);
-					cerr << "Error! Digite un numero!\n";
-					col(15);
-					cin.clear();
-					cin.ignore(1024, '\n');
-					ciclo_validaciones = true;
-				}
-				else { ciclo_validaciones = false; }
-			}
-			vuelo[opcVuelo].setHoraLlegada(horaLlegada_temp);
+			cout << "El aereopuerto de salida del Vuelo es: " << vuelo[opcVuelo]->getAereoSalida() << endl;
+			cout << endl;
+			cout << "Digite el nuevo aereopuerto de salida: >";
+			cin.ignore();
+			getline(cin,aereoSalida_temp);
+			vuelo[opcVuelo]->setAereoSalida(aereoSalida_temp);
 			col(10);
 			cout << "Cambio relizado correctamente!\n";
 			col(15);
 			break;
 		case 4:
 			col(10);
-			cout << "\t\t(Aereopuerto de Salida)\n\n";
+			cout << "\t\t(Aereopuerto de Llegada)\n\n";
 			col(15);
-			cout << "El aereopuerto de salida del Vuelo es: " << vuelo[opcVuelo].getAereoSalida() << endl;
+			cout << "El aereopuerto de llegada del Vuelo es: " << vuelo[opcVuelo]->getAereoLlegada() << endl;
 			cout << endl;
-			cout << "Digite el nuevo aereopuerto de salida: >";
+			cout << "Digite el nuevo aereopuerto de llegada: >";
 			cin.ignore();
-			getline(cin,aereoSalida_temp);
-			vuelo[opcVuelo].setAereoSalida(aereoSalida_temp);
+			getline(cin, aereoLlegada_temp);
+			vuelo[opcVuelo]->setAereoLlegada(aereoLlegada_temp);
 			col(10);
 			cout << "Cambio relizado correctamente!\n";
 			col(15);
 			break;
 		case 5:
 			col(10);
-			cout << "\t\t(Aereopuerto de Llegada)\n\n";
-			col(15);
-			cout << "El aereopuerto de llegada del Vuelo es: " << vuelo[opcVuelo].getAereoLlegada() << endl;
-			cout << endl;
-			cout << "Digite el nuevo aereopuerto de llegada: >";
-			cin.ignore();
-			getline(cin, aereoLlegada_temp);
-			vuelo[opcVuelo].setAereoLlegada(aereoLlegada_temp);
-			col(10);
-			cout << "Cambio relizado correctamente!\n";
-			col(15);
-			break;
-		case 6:
-			col(10);
 			cout << "\t\t(Nombre del piloto)\n\n";
 			col(15);
-			cout << "El nombre del piloto del Vuelo es: " << vuelo[opcVuelo].getPiloto() << endl;
+			cout << "El nombre del piloto del Vuelo es: " << vuelo[opcVuelo]->getPiloto() << endl;
 			cout << endl;
 			cout << "Digite el nuevo nombre del piloto: >";
 			cin.ignore();
 			getline(cin, piloto_temp);
-			vuelo[opcVuelo].setPiloto(piloto_temp);
-			col(10);
-			cout << "Cambio relizado correctamente!\n";
-			col(15);
-			break;
-		case 7:
-			col(10);
-			cout << "\t\t(Cambiar el avion)\n\n";
-			col(15);
-			FlotaGestion *f;
-			f->visualizarAviones();
-			cout << "Cual avion desea cambiar el vuelo? >";
-			cin >> opcavion;
-			vuelo[opcVuelo].setAvion(opcavion); //verificar si cambia el avion, si se le da el avion al vuelo
+			vuelo[opcVuelo]->setPiloto(piloto_temp);
 			col(10);
 			cout << "Cambio relizado correctamente!\n";
 			col(15);
@@ -250,7 +229,7 @@ void VuelosGestion::eliminar(){
 	col(15);
 	if (cant != 0) { //si hay vuelos 
 		cout << "Cual vuelo desea eliminar?\n";
-		for (int i = 0; i < cant; i++) { cout << "[" << i << "]" << vuelo[i].getNomRuta() << endl; }
+		for (int i = 0; i < cant; i++) { cout << "[" << i << "]" << vuelo[i]->getNomRuta() << endl; }
 		int eligeVuelo;
 		bool cic = true;
 		while (cic) {
@@ -309,8 +288,7 @@ void VuelosGestion::imprimeMenu(){
 	cout << "\t[4] Eliminar\n";
 	cout << "\t[0] Volver al menu principal\n";
 }
-int VuelosGestion::interfaz(){
-	int opc;
+void VuelosGestion::interfaz(){
 	bool c = true;
 	while (c) {
 		cout << "> ";
@@ -330,6 +308,12 @@ int VuelosGestion::interfaz(){
 			}
 		}
 	}
+}
+int VuelosGestion::getOpc(){
 	return opc;
+}
+void VuelosGestion::flotaVisualizar(){
+	FlotaGestion *f=new FlotaGestion;
+	f->visualizarAviones();
 }
 VuelosGestion::~VuelosGestion() {}

@@ -14,7 +14,7 @@ void Control::opciones() {
 	bool cicloPrincipal=true;
 	//----!ciclos
 
-	//bienvenido();
+	bienvenido();
 	while (cicloPrincipal) {
 		i->imprime();
 		int opc = i->menu();
@@ -91,7 +91,7 @@ void Control::opciones() {
 					cout << "\n\n\n\t\t\t";
 					cout << "Saliendo de la Gestion de Flota!\n";
 					for (int i = 0; i < 2; i++) {
-						Sleep(700);
+						Sleep(600);
 					}
 					system("cls");
 					col(15);
@@ -106,7 +106,7 @@ void Control::opciones() {
 			cout << "\n\n\n\t\t\t";
 			cout << "Bienvenido a la gestion de Rutas!\n";
 			for (int i = 0; i < 2; i++) {
-				Sleep(1000);
+				Sleep(500);
 			}
 			system("cls");
 			col(15);
@@ -198,7 +198,7 @@ void Control::opciones() {
 					cout << "\n\n\n\t\t\t";
 					cout << "Saliendo de la gestion de Rutas!\n";
 					for (int i = 0; i < 2; i++) {
-						Sleep(1000);
+						Sleep(500);
 					}
 					col(15);
 					cicloOpcion = false;
@@ -213,80 +213,200 @@ void Control::opciones() {
 			cout << "\n\n\n\t\t\t";
 			cout << "Bienvenido a la gestion de Vuelos!\n";
 			for (int i = 0; i < 2; i++) {
-				Sleep(1000);
+				Sleep(500);
 			}
 			system("cls");
 			col(15);
 			bool cicloOpcion = true;
-			Avion *avion;
-			string nomRuta;
-			string fecha;
-			int horaSalida;
-			int horaLlegada;
-			string aereoSalida;
-			string aereoLlegada;
-			string piloto;
-			while (cicloOpcion) {
+			while (cicloOpcion == true) {
 				system("cls");
 				vg->imprimeMenu();
-				switch (vg->interfaz()){
-				case 1:
+				int opcRuta;
+				vg->interfaz();
+				if (vg->getOpc() == 1) {
+					string nomRuta;
+					string fecha;
+					int horaSalida;
+					int horaLlegada, suma;
+					string aereoSalida;
+					string aereoLlegada;
+					string piloto;
+					bool cicloSelecRuta = true;
+					bool cicloSelecHora = true;
 					system("cls");
 					col(10);
 					cout << "\t\t(Ingresar Vuelos)\n\n";
 					col(15);
-					//comenzar con la suma de origenes en rutas
-					//ingresar los valores de las variables ya declaradas
-					//guardar en los set de vuelo->...
-					//vg->ingresar(vuelo)
-					break;
-				case 2:
+					if (rutaGes->getCant() != 0) {
+						cout << "Las rutas disponibles son:\n";
+						rutaGes->visualizar();
+						cout << "Seleccione una Ruta:";
+						while (cicloSelecRuta) {
+							cout << "> ";
+							if (!(cin >> opcRuta)) {
+								col(12);
+								cerr << "Digite un numero!\n";
+								col(15);
+								cin.clear();
+								cin.ignore(1024, '\n');
+							}
+							else {
+								if (opcRuta >= 0 && opcRuta <= rutaGes->getCant()) {
+									cicloSelecRuta = false;
+								}
+								else {
+									col(12);
+									cerr << "Digite un numero de la lista!\n";
+									col(15);
+									cin.clear();
+									cin.ignore(1024, '\n');
+								}
+							}
+						}
+						int numRuta = opcRuta - 1;
+						Avion *av = new Avion;
+						*av = flotaGe->devuelve(numRuta);
+						vuelo->ingresarAvion(av);
+						nomRuta = rutaGes->devuele(numRuta).sumaRuta();
+						fecha = vuelo->muestraFecha();
+						system("cls");
+						cout << "Seleccione la hora de salida: " << endl;
+						for (int i = 1; i <= 24; i++) {
+							if (i == 13) {
+								cout << endl;
+							}
+							col(14);
+							cout << i;
+							col(15);
+							cout << ":" << "00 ";
+						}
+						cout << endl << "> ";
+						while (cicloSelecHora) {
+							if (!(cin >> horaSalida)) {
+								col(12);
+								cerr << "Digite un numero!\n";
+								col(15);
+								cin.clear();
+								cin.ignore(1024, '\n');
+							}
+							else {
+								if (horaSalida >= 1 && horaSalida <= 24) {
+									cicloSelecHora = false;
+								}
+								else {
+									col(12);
+									cerr << "Digite un numero de la lista!\n";
+									col(15);
+									cin.clear();
+									cin.ignore(1024, '\n');
+								}
+							}
+						}
+						suma = horaSalida + (rutaGes->devuele(numRuta).getDuracion());
+						if (suma > 24) { horaLlegada = suma - 24; }
+						else { horaLlegada = suma; }
+						cout << "\nDigite el aereopuerto de salida: > ";
+						cin.ignore();
+						getline(cin, aereoSalida);
+						cout << "\nDigite el aereopuerto de llegada: > ";
+						getline(cin, aereoLlegada);
+						cout << "\nDigite el nombre del piloto: > ";
+						getline(cin, piloto);
+						system("cls");
+						vuelo->setNomRuta(nomRuta);
+						vuelo->setFecha(fecha);
+						vuelo->setHoraSalida(horaSalida);
+						vuelo->setHoraLlegada(horaLlegada);
+						vuelo->setAereoSalida(aereoSalida);
+						vuelo->setAereoLlegada(aereoLlegada);
+						vuelo->setPiloto(piloto);
+						vg->insertarVuelo(vuelo);
+						cout << av->toString()<<endl;
+						cout << rutaGes->devuele(numRuta).toString()<<endl;
+						cout << vuelo->toString() << endl;
+					}
+					else {
+						col(12);
+						cerr << "No hay rutas ingresadas!\nIngrese una ruta primero en [Modulo Gestion de Ruta]\n";
+						col(15);
+					}
+					system("PAUSE");
+					cicloOpcion = true;
+				}
+				else if (vg->getOpc() == 2) {
 					system("cls");
 					col(10);
 					cout << "\t\t(Visualizar Vuelos)\n\n";
 					col(15);
-					vg->visualizar();
+					vg->visualizar();					
 					system("PAUSE");
-					break;
-					break;
-				case 3:
+					cicloOpcion = true;
+				}
+				else if (vg->getOpc() == 3) {
 					system("cls");
 					col(10);
 					cout << "\t\t(Modificar Vuelos)\n\n";
 					col(15);
-					vg->modificar();
+					if (rutaGes->getCant() != 0) {
+						vg->modificar();
+					}
+					else {
+						col(12);
+						cerr << "No hay rutas ingresadas!\nIngrese una ruta primero en [Modulo Gestion de Ruta]\n";
+						col(15);
+					}
 					system("PAUSE");
-					break;
-					break;
-				case 4:
+					cicloOpcion = true;
+				}
+				else if (vg->getOpc() == 4) {
 					system("cls");
 					col(10);
 					cout << "\t\t(Eliminar Vuelos)\n\n";
 					col(15);
-					vg->eliminar();
+					if (rutaGes->getCant() != 0) {
+						vg->eliminar();
+					}
+					else {
+						col(12);
+						cerr << "No hay rutas ingresadas!\nIngrese una ruta primero en [Modulo Gestion de Ruta]\n";
+						col(15);
+					}
 					system("PAUSE");
-					break;
-					break;
-				default:
+					cicloOpcion = true;
+				}
+				else if (vg->getOpc() == 0){
 					system("cls");
 					col(13);
 					cout << "\n\n\n\t\t\t";
 					cout << "Saliendo de la gestion de Vuelos!\n";
 					for (int i = 0; i < 2; i++) {
-						Sleep(1000);
+						Sleep(500);
 					}
 					col(15);
 					cicloOpcion = false;
-					break;
 				}
 			}
-			system("PAUSE");
+		}
+		if (opc == 4) {
+			system("cls");
+			col(13);
+			cout << "\n\n\n\t\t\t";
+			cout << "Bienvenido a la Compra de tiquetes!\n";
+			for (int i = 0; i < 2; i++) {
+				Sleep(500);
+			}
+			system("cls");
+			col(15);
+			bool cicloCompra = true;
+			while (cicloCompra == true) {
+
+			}
 		}
 		if (opc == 0) { 
 			cicloPrincipal = false; 
 		}
 	}
-	//hastaLuego();
+	hastaLuego();
 }
 void Control::bienvenido(){
 	for (int i = 0; i < 6; i++) { cout << "\n"; }
