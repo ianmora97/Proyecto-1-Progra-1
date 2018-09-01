@@ -6,6 +6,7 @@
 #include <Windows.h>
 #include <time.h>
 #include "Vuelos.h"
+#include "CompraTiquetes.h"
 using namespace std;
 class VuelosGestion {
 private:
@@ -22,8 +23,11 @@ public:
 	void imprimeMenu();
 	void interfaz();
 	int getOpc();
+	int getCant();
 	void flotaVisualizar();
-	//un Vuelos devuelve() para encadenamiento
+	Vuelos devuelveVuelo(int);
+	void toString();
+	int revisaValor(char l, int t);
 	~VuelosGestion();
 };
 #endif // !VUELOSGESTION_H

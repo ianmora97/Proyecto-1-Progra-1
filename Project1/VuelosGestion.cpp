@@ -20,24 +20,26 @@ void VuelosGestion::insertarVuelo(Vuelos *v) {
 	}
 }
 void VuelosGestion::visualizar() {
-	system("cls");
-	col(10);
-	cout << "\t\t(Visualizar Vuelos)\n\n";
-	col(15);
-
 	cout << "La empresa tiene: " << cant;
-	cant > 1 ? cout << " vuelos " : cout << " vuelo ";
-	cout << "en su empresa." << endl << endl;
-
+	cant > 1 ? cout << " vuelos " : cout << " vuelo " << endl;
+	
 	for (int i = 0; i < cant; i++) {
-		cout << "-------------------------" << endl;
+		cout << "\n---------------------------------\n";
 		col(11);
-		cout << "Vuelo: " << i + 1 << endl << endl;
+		cout << "   Vuelo: " << i + 1 << endl << endl;
 		col(15);
 		cout << vuelo[i]->toString() << endl;
-		cout << "Avion asignado: "<<endl;
-		cout << vuelo[i]->devuelve().toString()<<endl;
-		vuelo[i]->devuelve().devuelve().imprimeAsientos();
+		col(11);
+		cout << "   Avion: "<<endl;
+		col(15);
+		cout <<vuelo[i]->devuelveAvion().toString()<<endl;
+		vuelo[i]->devuelveAvion().imprimeAsientos();
+		col(11);
+		cout << "\n\nTiquetes"<<endl;
+		col(15);
+		for (int j = 0; j < vuelo[i]->devuelveAvion().getCan(); j++ ) {
+			cout<<vuelo[j]->devuelveAvion().toStringPasajeros();
+		}
 		cout << endl;
 	}
 	cout << endl;
@@ -282,16 +284,32 @@ void VuelosGestion::imprimeMenu(){
 	col(15);
 	for (int i = 0; i < 40; i++) { cout << "-"; }
 	cout << "\n\n";
-	cout << "\t[1] Insertar\n";
-	cout << "\t[2] Visualizar\n";
-	cout << "\t[3] Modificar\n";
-	cout << "\t[4] Eliminar\n";
-	cout << "\t[0] Volver al menu principal\n";
+	col(10);
+	cout << "\t[1]";
+	col(15);
+	cout << " Insertar\n";
+	col(10);
+	cout << "\t[2]";
+	col(15);
+	cout << " Visualizar\n";
+	col(10);
+	cout << "\t[3]";
+	col(15);
+	cout << " Modificar\n";
+	col(10);
+	cout << "\t[4]";
+	col(15);
+	cout << " Eliminar\n";
+	col(10);
+	cout << "\t[0]";
+	col(15);
+	cout << " Volver al menu principal\n\n";
 }
 void VuelosGestion::interfaz(){
 	bool c = true;
 	while (c) {
-		cout << "> ";
+		cout << "\t> ";
+		col(10);
 		if (!(cin >> opc)) {
 			col(12);
 			cerr << "Error!\nDigite un NUMERO del menu!\n";
@@ -307,13 +325,49 @@ void VuelosGestion::interfaz(){
 				c = true;
 			}
 		}
+		col(15);
 	}
 }
 int VuelosGestion::getOpc(){
 	return opc;
 }
+int VuelosGestion::getCant(){return cant;}
 void VuelosGestion::flotaVisualizar(){
 	FlotaGestion *f=new FlotaGestion;
 	f->visualizarAviones();
+}
+Vuelos VuelosGestion::devuelveVuelo(int i) {return *vuelo[i];}
+void VuelosGestion::toString() {
+	for (int i = 0; i < cant; i++) {
+		cout << "-------------------------" << endl;
+		col(11);
+		cout << "Vuelo: " << i + 1 << endl << endl;
+		col(15);
+		cout << vuelo[i]->toString() << endl;
+		cout << "Avion asignado: " << endl;
+		cout << vuelo[i]->devuelveAvion().toString() << endl;
+		vuelo[i]->devuelveAvion().imprimeAsientos();
+		cout << endl;
+	}
+}
+int VuelosGestion::revisaValor(char l, int t) {
+	int v;
+	if (t == 180) {
+		if (l == 'a' || l == 'A' || l == 'b' || l == 'B' || l == 'c' || l == 'C' || l == 'd' || l == 'D' || l == 'e' || l == 'E' || l == 'f' || l == 'F') {
+			v = 1;
+		}
+		else {
+			v = 0;
+		}
+	}
+	else if (t == 100) {
+		if (l == 'a' || l == 'A' || l == 'b' || l == 'B' || l == 'c' || l == 'C' || l == 'd' || l == 'D') {
+			v = 1;
+		}
+		else {
+			v = 0;
+		}
+	}
+	return v;
 }
 VuelosGestion::~VuelosGestion() {}

@@ -1,6 +1,7 @@
 #include "Vuelos.h"
 Vuelos::Vuelos() {
 	avion = new Avion;
+	numAvionAsignado = 0;
 	nomRuta = "";
 	fecha = "";
 	horaSalida = 0;
@@ -510,7 +511,7 @@ int Vuelos::getHoraLlegada() { return horaLlegada; }
 string Vuelos::getAereoSalida() { return aereoSalida; }
 string Vuelos::getAereoLlegada() { return aereoLlegada; }
 string Vuelos::getPiloto() { return piloto; }
-void Vuelos::ingresarAvion(Avion *a){avion = a;}
+int Vuelos::getNumAvion() { return numAvionAsignado; }
 void Vuelos::setNomRuta(string n) { nomRuta = n; }
 void Vuelos::setFecha(string f) { fecha = f; }
 void Vuelos::setHoraSalida(int hs) { horaSalida = hs; }
@@ -518,39 +519,27 @@ void Vuelos::setHoraLlegada(int hl) { horaLlegada = hl; }
 void Vuelos::setAereoSalida(string as) { aereoSalida = as; }
 void Vuelos::setAereoLlegada(string al) { aereoLlegada = al; }
 void Vuelos::setPiloto(string p) { piloto = p; }
+void Vuelos::setNumAvion(int n) { numAvionAsignado = n; }
 string Vuelos::toString() {
 	stringstream p;
-	col(11);
-	p << "----------------------\n";
-	col(15);
 	p << "Nombre de la ruta: ";
-	col(10);
 	p << nomRuta << endl;
-	col(15);
 	p << "Fecha: ";
-	col(14);
 	p << fecha << endl;
-	col(15);
 	p << "Hora de Salida: ";
-	col(14);
 	p << horaSalida;
-	col(15);
 	p <<":00"<<endl;
 	p << "Hora de llegada: ";
-	col(14);
 	p << horaLlegada;
-	col(15);
 	p << ":00"<<endl;
 	p << "Aereopuerto de Salida: "<<aereoSalida<<endl;
 	p << "Aereopuerto de Llegada: "<<aereoLlegada<<endl;
 	p << "Nombre del Piloto: "<<piloto<<endl;
 	return p.str();
 }
-Avion Vuelos::devuelve() {
-	return *avion;
-}
+void Vuelos::insertaAvion(Avion *a) {avion = a;}
+Avion Vuelos::devuelveAvion() { return *avion; }
 Vuelos::~Vuelos(){
-	avion = NULL;
 	nomRuta = "";
 	fecha = "";
 	horaSalida = 0;

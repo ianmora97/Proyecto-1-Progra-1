@@ -4,20 +4,23 @@
 using namespace std;
 class Asientos{
 private:
-	Persona **asiento; //hacer esto dinamico ** objetos dinamicos vector dinamicos
-	int can,tam;
+	Persona ***asiento; //hacer esto dinamico ** objetos dinamicos vector dinamicos
+	int can;
+	int tam;
 	int f, c;
-	int vec[6][30];
 	string tipo;
 public:
-	Asientos(char);
+	Asientos(int,int,int);
 	int getFilas();
 	int getColumnas();
 	int getTam();
+	int getCant();
 	string getTipo();
 	int letraXNumero(char);
+	int revisaValor(char, int);
 	void insertaPersona(Persona*,char,int);
 	void imprimeAsientos();
+	Persona devuelvePersona(int,int);
 	~Asientos();
 };
 #endif // !ASIENTOS_H

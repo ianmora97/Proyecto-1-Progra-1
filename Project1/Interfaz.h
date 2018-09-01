@@ -2,6 +2,8 @@
 #define INTERFAZ_H
 #include <iostream>
 #include <Windows.h>
+#include <conio.h>
+#include <stdio.h>
 using namespace std;
 class Interfaz{
 public:

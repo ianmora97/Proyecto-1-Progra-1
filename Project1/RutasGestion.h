@@ -16,6 +16,7 @@ public:
 	void eliminar();
 	void imprimirMenu();
 	int interfaz();
+	void mostrarRutas();
 	Rutas devuele(int);
 	~RutasGestion();
 };

@@ -3,8 +3,6 @@ FlotaGestion::FlotaGestion() {
 	cant = 0;
 	tam = 30;
 	plane = new Avion*[30];
-	for (int i = 0; i < tam; i++)
-		plane[i] = NULL;
 }
 void FlotaGestion::revisarAdmin() {
 	system("cls");
@@ -43,6 +41,7 @@ void FlotaGestion::revisarAdmin() {
 }
 void FlotaGestion::col(int c) { SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), c); }
 int FlotaGestion::getOpc(){return opc;}
+int FlotaGestion::getCant() {return cant;}
 void FlotaGestion::ingresarAvion(Avion *a) {
 	if (cant < tam) {
 		plane[cant] = a;
@@ -67,8 +66,7 @@ void FlotaGestion::visualizarAviones() {
 	cout << "      |/" << endl << endl;
 
 	cout << "La empresa tiene: " << cant;
-	cant > 1 ? cout << " aviones " : cout << " avion ";
-	cout << "en su empresa." << endl << endl;
+	cant > 1 ? cout << " aviones " : cout << " avion "<< endl;
 
 	for (int i = 0; i < cant; i++) {
 		cout << "-------------------------" << endl;
@@ -78,6 +76,15 @@ void FlotaGestion::visualizarAviones() {
 		cout<<plane[i]->toString()<<endl;
 	}
 	cout << endl;
+}
+void FlotaGestion::toString() {
+	cout << "----------------------\n";
+	for (int i = 0; i < cant; i++) {
+		col(11);
+		cout << "Avion: "<<i+1;
+		col(15);
+		cout << plane[i]->toString() << endl;
+	}
 }
 void FlotaGestion::eliminar() {
 	system("cls");
@@ -135,7 +142,8 @@ void FlotaGestion::eliminar() {
 void FlotaGestion::menu() {
 	bool c = true;
 	while (c) {
-		cout << "> ";
+		cout << "\t> ";
+		col(10);
 		if (!(cin >> opc)) {
 			col(12);
 			cerr << "Error!\nDigite un NUMERO del menu!\n";
@@ -151,6 +159,7 @@ void FlotaGestion::menu() {
 				c = true;
 			}
 		}
+		col(15);
 	}
 }
 void FlotaGestion::imprimeMenu() {
@@ -162,11 +171,26 @@ void FlotaGestion::imprimeMenu() {
 	col(15);
 	for (int i = 0; i < 40; i++) { cout << "-"; }
 	cout << "\n\n";
-	cout << "\t[1] Insertar\n";
-	cout << "\t[2] Visualizar\n";
-	cout << "\t[3] Modificar\n";
-	cout << "\t[4] Eliminar\n";
-	cout << "\t[0] Volver al menu principal\n";
+	col(10);
+	cout << "\t[1]";
+	col(15);
+	cout << " Insertar\n";
+	col(10);
+	cout << "\t[2]";
+	col(15);
+	cout << " Visualizar\n";
+	col(10);
+	cout << "\t[3]";
+	col(15);
+	cout << " Modificar\n";
+	col(10);
+	cout << "\t[4]";
+	col(15);
+	cout << " Eliminar\n";
+	col(10);
+	cout << "\t[0]";
+	col(15);
+	cout << " Volver al menu principal\n\n";
 }
 void FlotaGestion::modificar() {
 	system("cls");
@@ -298,9 +322,7 @@ void FlotaGestion::modificar() {
 		col(15);
 	}
 }
-Avion FlotaGestion::devuelve(int i) {
-	return *plane[i];
-}
+Avion FlotaGestion::devuelve(int i) {return *plane[i];}
 FlotaGestion::~FlotaGestion() { 
 	for (int i = 0; i < cant; i++)
 		delete plane[i];

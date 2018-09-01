@@ -24,7 +24,12 @@ void RutasGestion::ingresarRuta(Rutas &r) {
 }
 void RutasGestion::visualizar() {
 	cout << "La empresa tiene: "<<cant<<" rutas!\n\n";
+	for (int i = 0; i < 30; i++) { cout << "-"; }
+	cout << endl;
 	for (int i = 0; i < cant;i++) {
+		col(11);
+		cout << "Ruta "<<i+1<<endl;
+		col(15);
 		cout<<ruta[i].toString()<<endl;
 	}
 }
@@ -32,7 +37,7 @@ void RutasGestion::modificar(){
 	if (cant != 0) {
 		cout << "Digite la ruta que quiera modificar:\n";
 		for (int i = 0; i < cant; i++) {
-			cout << "[" << i << "] " << ruta[i].getOrigen() << "-" << ruta[i].getDestino() << endl;
+			cout << "[" << i << "] " << ruta[i].sumaRuta() << endl;
 		}
 		int opc;
 		bool ciclo = true;
@@ -88,7 +93,7 @@ void RutasGestion::modificar(){
 			col(11);
 			cout << "(Destino)\n\n";
 			col(15);
-			cout << "[" << opc << "] " << ruta[opc].getOrigen() << "-" << ruta[opc].getDestino() << endl;
+			cout << "[" << opc << "] " << ruta[opc].sumaRuta() << endl;
 			cout << "Digite el nuevo destino:\n>";
 			cin.ignore();
 			getline(cin, cambio);
@@ -101,7 +106,7 @@ void RutasGestion::modificar(){
 			col(11);
 			cout << "(Origen)\n\n";
 			col(15);
-			cout << "[" << opc << "] " << ruta[opc].getOrigen() << "-" << ruta[opc].getDestino() << endl;
+			cout << "[" << opc << "] " << ruta[opc].sumaRuta() << endl;
 			cout << "Digite el nuevo origen:\n>";
 			cin.ignore();
 			getline(cin, cambio);
@@ -226,17 +231,32 @@ void RutasGestion::imprimirMenu(){
 	col(15);
 	for (int i = 0; i<40; i++) { cout << "-"; }
 	cout << "\n\n";
-	cout << "\t[1] Insertar\n";
-	cout << "\t[2] Visualizar\n";
-	cout << "\t[3] Modificar\n";
-	cout << "\t[4] Eliminar\n";
-	cout << "\t[0] Volver al menu principal\n";
+	col(10);
+	cout << "\t[1]";
+	col(15);
+	cout << " Insertar\n";
+	col(10);
+	cout << "\t[2]";
+	col(15);
+	cout << " Visualizar\n";
+	col(10);
+	cout << "\t[3]";
+	col(15);
+	cout << " Modificar\n";
+	col(10);
+	cout << "\t[4]";
+	col(15);
+	cout << " Eliminar\n";
+	col(10);
+	cout << "\t[0]";
+	col(15);
+	cout << " Volver al menu principal\n\n";
 }
 int RutasGestion::interfaz(){
 	int opc;
 	bool c = true;
 	while (c) {
-		cout << "> ";
+		cout << "\t> ";
 		if (!(cin >> opc)) {
 			col(12);
 			cerr << "Error!\nDigite un NUMERO del menu!\n";
@@ -254,6 +274,10 @@ int RutasGestion::interfaz(){
 		}
 	}
 	return opc;
+}
+void RutasGestion::mostrarRutas() {
+	for (int i = 0; i < cant; i++)
+		cout<<ruta[i].toString()<<endl;
 }
 Rutas RutasGestion::devuele(int i){
 	return ruta[i];

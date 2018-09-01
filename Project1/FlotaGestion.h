@@ -13,8 +13,10 @@ public:
 	void revisarAdmin();
 	void col(int);
 	int getOpc();
+	int getCant();
 	void ingresarAvion(Avion*);
 	void visualizarAviones();
+	void toString();
 	void modificar();
 	void eliminar();
 	void menu();

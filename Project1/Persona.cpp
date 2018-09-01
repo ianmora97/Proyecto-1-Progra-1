@@ -1,8 +1,9 @@
 #include "Persona.h"
 Persona::Persona(){};
-Persona::Persona(string n, string i) { name = n; id = i; }
+Persona::Persona(string n, string i, int e) { name = n; id = i; estado = e; }
 string Persona::getName() {	return name; }
 string Persona::getId() { return id; }
+int Persona::getEstado() { return estado; }
 string Persona::toString(){
 	stringstream p;
 	p << "Nombre: "<<name<<endl;
@@ -11,4 +12,5 @@ string Persona::toString(){
 }
 void Persona::setName(string n) { name = n; }
 void Persona::setId(string i) { id = i; }
+void Persona::setEstado(int e) { estado = e; }
 Persona::~Persona(){}

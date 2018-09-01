@@ -11,9 +11,10 @@ void Rutas::setDestino(string d) { nameDestino = d; }
 void Rutas::setDuracion(int d) { duracion = d; }
 void Rutas::setCantEscalas(int e) { cantEscalas = e; }
 string Rutas::sumaRuta(){
-	stringstream suma;
-	suma << nameOrigen << "-" << nameDestino;
-	return suma.str();
+	string cadena = nameOrigen + "-" + nameDestino;
+	for (int i = 0; cadena[i]; i++)
+		cadena[i] = toupper(cadena[i]);
+	return cadena;
 }
 string Rutas::getOrigen() { return nameOrigen; }
 string Rutas::getDestino() { return nameDestino; }
@@ -21,17 +22,10 @@ int Rutas::getDuracion() { return duracion; }
 int Rutas::getCantEscalas() { return cantEscalas; }
 string Rutas::toString() {
 	stringstream p1;
-	col(11);
-	for (int i = 0; i < 30; i++) { cout << "-"; }
-	col(15);
 	p1 << "\nNombre de origen: \n";
-	col(10);
 	p1 << nameOrigen << "\n";
-	col(15);
 	p1 << "Nombre de destino:\n";
-	col(10);
 	p1 << nameDestino << "\n";
-	col(15);
 	p1 <<"Duracion del viaje:\n"
 		<<duracion<<" horas\n"
 		<<"Cantidad de escalas:\n"
