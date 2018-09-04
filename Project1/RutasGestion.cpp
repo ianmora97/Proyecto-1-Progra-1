@@ -34,7 +34,7 @@ void RutasGestion::modificar(){
 	if (cant != 0) {
 		cout << "Digite la ruta que quiera modificar:\n";
 		for (int i = 0; i < cant; i++) {
-			cout << "[" << i << "] " << ruta[i]->sumaRuta() << endl;
+			cout << "[" << i+1 << "] " << ruta[i]->sumaRuta() << endl;
 		}
 		int opc;
 		bool ciclo = true;
@@ -48,7 +48,7 @@ void RutasGestion::modificar(){
 				cin.ignore(1024, '\n');
 			}
 			else {
-				if (opc >= 0 && opc < cant) {
+				if (opc > 0 && opc <= cant) {
 					ciclo = false;
 				}
 				else {
@@ -56,7 +56,7 @@ void RutasGestion::modificar(){
 				}
 			}
 		}
-
+		int opcR = opc - 1;
 		system("cls");
 		cout << "\n";
 		cout << "Que desea modificar?\n";
@@ -77,7 +77,7 @@ void RutasGestion::modificar(){
 				cin.ignore(1024, '\n');
 			}
 			else {
-				if (opc2 >= 0 && opc2 < 5) {
+				if (opc2 > 0 && opc2 < 5) {
 					ciclo2 = false;
 				}
 				else {
@@ -90,11 +90,11 @@ void RutasGestion::modificar(){
 			col(11);
 			cout << "(Destino)\n\n";
 			col(15);
-			cout << "[" << opc << "] " << ruta[opc]->sumaRuta() << endl;
+			cout << "[" << opc << "] " << ruta[opcR]->sumaRuta() << endl;
 			cout << "Digite el nuevo destino:\n>";
 			cin.ignore();
 			getline(cin, cambio);
-			ruta[opc]->setDestino(cambio);
+			ruta[opcR]->setDestino(cambio);
 			col(10);
 			cout << "\nCambio realizado correctamente!";
 			col(15);
@@ -103,12 +103,12 @@ void RutasGestion::modificar(){
 			col(11);
 			cout << "(Origen)\n\n";
 			col(15);
-			cout << "[" << opc << "] " << ruta[opc]->sumaRuta() << endl;
+			cout << "[" << opc << "] " << ruta[opcR]->sumaRuta() << endl;
 			cout << "Digite el nuevo origen:\n>";
 			cin.ignore();
 			getline(cin, cambio);
 
-			ruta[opc]->setOrigen(cambio);
+			ruta[opcR]->setOrigen(cambio);
 			col(10);
 			cout << "\nCambio realizado correctamente!";
 			col(15);
@@ -117,7 +117,7 @@ void RutasGestion::modificar(){
 			col(11);
 			cout << "(Duracion)\n\n";
 			col(15);
-			cout << "[" << opc << "] " << ruta[opc]->getDuracion() << endl;
+			cout << "[" << opc << "] " << ruta[opcR]->getDuracion() << endl;
 			cout << "Digite la nueva duracion:\n";
 			while (d1) {
 				cout << "> ";
@@ -132,7 +132,7 @@ void RutasGestion::modificar(){
 					d1 = false;
 				}
 			}
-			ruta[opc]->setDuracion(cambioN);
+			ruta[opcR]->setDuracion(cambioN);
 			col(10);
 			cout << "\nCambio realizado correctamente!";
 			col(15);
@@ -141,7 +141,7 @@ void RutasGestion::modificar(){
 			col(11);
 			cout << "(Cantidad de escalas)\n\n";
 			col(15);
-			cout << "[" << opc << "] " << ruta[opc]->getCantEscalas() << endl;
+			cout << "[" << opc << "] " << ruta[opcR]->getCantEscalas() << endl;
 			cout << "Digite la nueva cantidad de escalas:\n";
 			while (d) {
 				cout << "> ";
@@ -156,7 +156,7 @@ void RutasGestion::modificar(){
 					d = false;
 				}
 			}
-			ruta[opc]->setCantEscalas(cambioN);
+			ruta[opcR]->setCantEscalas(cambioN);
 			col(10);
 			cout << "\nCambio realizado correctamente!\n";
 			col(15);
@@ -175,13 +175,16 @@ void RutasGestion::eliminar() {
 	if (cant != 0) {
 		cout << "Cual ruta desea eliminar?\n";
 		for (int i = 0; i < cant; i++) {
-			cout << "[" << i << "] " << ruta[i]->getOrigen() << "-" << ruta[i]->getDestino() << endl;
+			col(10);
+			cout << "\t[" << i + 1 << "] ";
+			col(15);
+			cout << ruta[i]->getOrigen() << "-" << ruta[i]->getDestino() << endl;
 		}
-		int opc;
+		int opc1;
 		bool ciclo = true;
 		while (ciclo) {
-			cout << ">";
-			if (!(cin >> opc)) {
+			cout << "\t> ";
+			if (!(cin >> opc1)) {
 				col(12);
 				cerr << "Error!\nDigite un numero!\n";
 				col(15);
@@ -189,23 +192,24 @@ void RutasGestion::eliminar() {
 				cin.ignore(1024, '\n');
 			}
 			else {
-				if (opc >= 0 && opc < cant) {
+				if (opc1 > 0 && opc1 <= cant) {
 					ciclo = false;
 				}
 				else {
 					col(12);
-					cerr << "Error!\nDigite un numero!\n";
+					cerr << "Error!\nDigite un numero de la lista!\n";
 					col(15);
 					cin.clear();
 					cin.ignore(1024, '\n');
 				}
 			}
 		}
-		if (opc == cant) {
+		int opcR = opc1 - 1;
+		if (opcR == cant -1) {
 			cant--;
 		}
 		else {
-			ruta[opc] = ruta[cant - 1];
+			ruta[opcR] = ruta[cant - 1];
 			cant--;
 		}
 		col(10);

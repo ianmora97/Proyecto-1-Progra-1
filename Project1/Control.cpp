@@ -1,6 +1,14 @@
 #include "Control.h"
 Control::Control(){}
 void Control::col(int c){SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), c);}
+void Control::gotoxy(int x, int y) {
+	HANDLE hcon;
+	hcon = GetStdHandle(STD_OUTPUT_HANDLE);
+	COORD dwPos;
+	dwPos.X = x;
+	dwPos.Y = y;
+	SetConsoleCursorPosition(hcon, dwPos);
+}
 void Control::opciones() {
 	Interfaz *i = new Interfaz;
 	FlotaGestion *flotaGe = new FlotaGestion;
@@ -27,6 +35,7 @@ void Control::opciones() {
 	//ciclos
 	bool cicloPrincipal=true;
 	//----!ciclos
+	srand(time(NULL));
 
 	bienvenido();
 	while (cicloPrincipal) {
@@ -575,31 +584,42 @@ void Control::opciones() {
 					}
 				}
 				int vuelo = opcVvuelo-1;
-				cout << vuelo;		
+				cout << vuelo;
+				//metodo para un precio random
+				int precio = rand() % (800 + 150);
 				int tamAvion = vg->devuelveVuelo(vuelo).devuelveAvion().getCantPasajeros(); //tamaño del avion seleccionado
 				int colum = vg->devuelveVuelo(vuelo).devuelveAvion().getColumnas(); //tamaño de las columnas del avion seleccionado;		
 				system("cls");
 				string nombre;
 				string id;
 				col(10);
-				cout << "[Digitar los datos de la persona]\n";
+				cout << "\t[Digitar los datos de la persona]\n";
 				col(11);
-				cout << "Asiento"<<endl;
-				cout << "------------------\n";
+				cout << "\n\tAsiento"<<endl;
+				cout << "--------------------------\n";
 				col(15);
-				cout << "Digite su nombre > ";
+				cout << "\tDigite su nombre > ";
 				cin.ignore();
 				getline(cin,nombre);
-				cout << "Digite su identificacion >";
+				cout << "\tDigite su identificacion >";
 				getline(cin,id);
-				cout << endl<<"Datos:\n";
-				for (int j = 0; j < 2; j++) {Sleep(500);}
 				system("cls");
-				cout << "[Digitar el asiento]"<<endl;
+				col(10);
+				cout << "\t[Digitar el asiento]\n"<<endl;
+				col(15);
 				vg->devuelveVuelo(vuelo).devuelveAvion().imprimeAsientos();
 				char fila;
 				int columna;
-				cout << "Digite la fila del asiento (Letra / A B C D...) ";
+				cout << "\n\nDigite la fila del asiento (Letra / ";
+				col(14);
+				cout << "A B C D...";
+				col(15);
+				cout<< ") ";
+				gotoxy(((vg->devuelveVuelo(vuelo).devuelveAvion().getColumnas()) * 3) + 3, (vg->devuelveVuelo(vuelo).devuelveAvion().getFilas() + 6));
+				col(224);
+				cout << char(186);
+				col(15);
+				gotoxy(47, (vg->devuelveVuelo(vuelo).devuelveAvion().getFilas() + 8));
 				bool cicloSelecFila = true;
 				while (cicloSelecFila == true) {
 					cout << "> ";
@@ -623,7 +643,19 @@ void Control::opciones() {
 						}
 					}
 				}
-				cout << "\nDigite la columna del asiento(Numero / 1 2 3 4...) ";
+				cout << "\n\nDigite la columna del asiento(Numero /";
+				col(11);
+				cout << " 1 2 3 4...";
+				col(15);
+				cout<< ") ";
+				gotoxy(((vg->devuelveVuelo(vuelo).devuelveAvion().getColumnas()) * 3) + 3, (vg->devuelveVuelo(vuelo).devuelveAvion().getFilas() + 6));
+				col(15);
+				cout << " ";
+				gotoxy(((vg->devuelveVuelo(vuelo).devuelveAvion().getColumnas()) * 3) + 3, 2);
+				col(176);
+				cout << "<";
+				col(15);
+				gotoxy(51, (vg->devuelveVuelo(vuelo).devuelveAvion().getFilas() + 11));
 				bool cicloSelecNum = true;
 				while (cicloSelecNum == true) {
 					cout << "> ";
@@ -647,6 +679,9 @@ void Control::opciones() {
 						}
 					}
 				}
+				gotoxy(((vg->devuelveVuelo(vuelo).devuelveAvion().getColumnas()) * 3) + 3, 2);
+				col(15);
+				cout << " ";
 				stringstream f1;
 				f1 << fila;
 				string f2 = f1.str();
@@ -655,32 +690,136 @@ void Control::opciones() {
 				s1 << f2 << columna;
 				string as = s1.str();
 				Persona *persona = new Persona(nombre, id, as);
+				gotoxy(0, (vg->devuelveVuelo(vuelo).devuelveAvion().getFilas() + 12));
 				vg->devuelveVuelo(vuelo).devuelveAvion().insertarPersona(persona, fila, columna);
+				cout << "\n\n\tAsiento: ";
+				col(14);
+				cout << f2.c_str();
+				col(11);
+				cout << columna << endl;
+				col(15);
+				Sleep(2000);
+				//---------IMPRIME EL TIQUETE--------
+				system("cls");
+				cout << endl;
+				cout << char(201);
+				for (int i = 0; i < 60; i++) { cout << char(205); }
+				cout << char(187)<<endl;
+				cout << char(186);
+				col(11);
+				cout << "\t\t\t   Tiquete:\t\t\t     ";
+				col(15);
+				cout << char(186) << endl;
+				cout << char(186);
+				for (int i = 0; i < 60; i++) { cout << "-"; }
+				cout << char(186) << endl;
+				cout << char(186);
+				col(11);
+				cout << "\t\t     Datos de la persona:\t\t     ";
+				col(15);
+				cout << char(186) << endl;
+				cout << char(186);
+				for (int i = 0; i < 60; i++) { cout << " "; }
+				cout << char(186) << endl;
+				cout << char(186);
+				cout << "  Nombre         : "<< persona->getName() << endl;
+				cout << char(186);
+				cout << "  Identificacion : "<<persona->getId() << endl;
+				cout << char(186);
+				cout << "  Asiento        : "<<persona->getAsiento() <<endl;
+				cout << char(186);
+				for (int i = 0; i < 60; i++) { cout << "-"; }
+				cout << char(186) << endl;
+				cout << char(186);
+				col(11);
+				cout << "\t\t            Vuelo:\t\t             ";
+				col(15);
+				cout << char(186) << endl;
+				cout << char(186);
+				for (int i = 0; i < 60; i++) { cout << " "; }
+				cout << char(186) << endl;
+				cout << char(186);
+				cout << "  Vuelo               : " <<vg->devuelveVuelo(vuelo).getNomRuta() << endl;
+				cout << char(186);
+				cout << "  Fecha               : " << vg->devuelveVuelo(vuelo).getFecha() << endl;
+				cout << char(186);
+				cout << "  Aereopuerto salida  : " << vg->devuelveVuelo(vuelo).getAereoSalida() << endl;
+				cout << char(186);
+				cout << "  Aereopuerto llegada : " << vg->devuelveVuelo(vuelo).getAereoLlegada() << endl;
+				cout << char(186);
+				cout << "  Hora salida         : " << vg->devuelveVuelo(vuelo).getHoraSalida()<<":00" << endl;
+				cout << char(186);
+				cout << "  Hora llegada        : " << vg->devuelveVuelo(vuelo).getHoraLlegada()<<":00" << endl;
+				cout << char(186);
+				cout << "  Piloto              : " << vg->devuelveVuelo(vuelo).getPiloto() << endl;
+				cout << char(186);
+				for (int i = 0; i < 60; i++) { cout << "-"; }
+				cout << char(186) << endl;
+				cout << char(186);
+				col(11);
+				cout << "\t\t            Avion:\t\t             ";
+				col(15);
+				cout << char(186) << endl;
+				cout << char(186);
+				for (int i = 0; i < 60; i++) { cout << " "; }
+				cout << char(186) << endl;
+				cout << char(186);
+				cout << "  Identificacion      : " << vg->devuelveVuelo(vuelo).devuelveAvion().getId() << endl;
+				cout << char(186);
+				cout << "  A"<<char(164)<<"o                 : " << vg->devuelveVuelo(vuelo).devuelveAvion().getAnnio() << endl;
+				cout << char(186);
+				cout << "  Marca               : "<< vg->devuelveVuelo(vuelo).devuelveAvion().getMarca() << endl;
+				cout << char(186);
+				cout << "  Modelo              : " << vg->devuelveVuelo(vuelo).devuelveAvion().getModelo() << endl;
+				cout << char(186);
+				for (int i = 0; i < 60; i++) { cout << "-"; }
+				cout << char(186) << endl;
+				cout << char(186);
+				col(11);
+				cout << "\t\t            Precio:\t\t             ";
+				col(15);
+				cout << char(186) << endl;
+				cout << char(186);
+				for (int i = 0; i < 60; i++) { cout << " "; }
+				cout << char(186) << endl;
+				cout << char(186);
+				cout << "  Precio del tiquete  :    $" << precio << endl;
+				col(15);
+				cout << char(200);
+				for (int i = 0; i < 60; i++) { cout << char(205); }
+				cout << char(188) << endl;
+				//laterales derecha
+				gotoxy(61, 2) ; cout << char(186);
+				gotoxy(61, 4) ; cout << char(186);
+				gotoxy(61, 5) ; cout << char(186);
+				gotoxy(61, 6) ; cout << char(186);
+				gotoxy(61, 7) ; cout << char(186);
+				gotoxy(61, 8) ; cout << char(186);
+				gotoxy(61, 11); cout << char(186);
+				gotoxy(61, 12); cout << char(186);
+				gotoxy(61, 13); cout << char(186);
+				gotoxy(61, 14); cout << char(186);
+				gotoxy(61, 15); cout << char(186);
+				gotoxy(61, 16); cout << char(186);
+				gotoxy(61, 17); cout << char(186);
+				gotoxy(61, 18); cout << char(186);
+				gotoxy(61, 21); cout << char(186);
+				gotoxy(61, 22); cout << char(186);
+				gotoxy(61, 23); cout << char(186);
+				gotoxy(61, 24); cout << char(186);
+				gotoxy(61, 25); cout << char(186);
+				gotoxy(61, 28); cout << char(186);
+				gotoxy(61, 29); cout << char(186);
+				
+				//---------!IMPRIME EL TIQUETE--------
+				gotoxy(61, 32);
 				cout << endl;
 				vg->devuelveVuelo(vuelo).devuelveAvion().imprimeAsientos();
-				system("PAUSE");
-				system("cls");
-				col(10);
-				cout << "Boletos comprados Correctamente!";
-				col(15);
-				cout << endl;
-				col(11);
-				cout << "------------------------------------------" << endl;
-				col(11);
-				cout << " Datos de la persona:"<< endl;
-				col(15);
-				cout << "Nombre: "<< persona->getName() << endl;
-				cout << "Identificacion: "<<persona->getId() << endl;
-				cout << "Asiento de la persona: "<<persona->getAsiento() <<endl;
-				col(11);
-				cout << "- Vuelo: " << endl;
-				col(15);
-				cout << vg->devuelveVuelo(vuelo).toString();
-				col(11);
-				cout << "- Avion: " << endl;
-				col(15);
-				cout << vg->devuelveVuelo(vuelo).devuelveAvion().toString() << endl;
-				system("PAUSE");
+				cout << endl << endl;
+
+				gotoxy(65, 2); 
+				cin.ignore();
+				cin.get();
 			}
 			else {
 				col(12);
@@ -719,7 +858,7 @@ void Control::bienvenido(){
 	cout << "|__________|   |__|    |__|\n";
 	col(15);
 	cout << "\n\n\n";
-	cout << "\t\t\t\t\t  [Pulse ENTER para ";
+	cout << "\t\t\t\t\t[Pulse ENTER para ";
 	col(10);
 	cout << "ENTRAR";
 	col(15);

@@ -14,6 +14,7 @@ class Control{
 public:
 	Control();
 	void col(int);
+	void gotoxy(int x, int y);
 	void opciones();
 	void bienvenido();
 	void hastaLuego();

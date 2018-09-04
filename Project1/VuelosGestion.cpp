@@ -32,7 +32,7 @@ void VuelosGestion::visualizar() {
 		cout <<vuelo[i]->devuelveAvion().toString()<<endl;
 		vuelo[i]->devuelveAvion().imprimeAsientos();
 		col(11);
-		cout << "\n - Tiquetes"<<endl;
+		cout << "\n - Tiquetes"<<endl<<endl;
 		col(15);
 		cout << vuelo[i]->devuelveAvion().toStringPasajeros()<<endl;
 		cout << endl;

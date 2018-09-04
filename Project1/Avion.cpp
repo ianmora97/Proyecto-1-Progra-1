@@ -30,7 +30,7 @@ string Avion::toString() {
 	int ca = suma();
 	stringstream p;
 	p << "Id: " << id << endl;
-	p << "Annio: "<<annio<<endl;
+	p << "A" << char(164) << "o: "<<annio<<endl;
 	p << "Modelo: " << modelo << endl;
 	p << "Marca: " << marca << endl;
 	p << "Capacidad de Pasajeros: " << cantPasajeros << endl;
@@ -151,7 +151,7 @@ string Avion::toStringPasajeros() {
 	for (int i = 0; i < filas;i++) {
 		for (int j = 0; j < columnas; j++) {
 			if (persona[i][j] != NULL) {
-				p << persona[i][j]->toString() << endl;
+				p << persona[i][j]->toString() << endl<<endl;
 			}
 		}
 	}
