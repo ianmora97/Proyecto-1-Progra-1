@@ -10,6 +10,7 @@ Vuelos::Vuelos() {
 	aereoLlegada = "";
 	piloto = "";
 }
+Vuelos::Vuelos(string n, string f , int s, int l, string as, string al, string p, Avion *av) : nomRuta(n), fecha(f), horaSalida(s), horaLlegada(l), aereoSalida(as), aereoLlegada(al), piloto(p), avion(av){}
 void Vuelos::col(int c) { SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), c); }
 string Vuelos::muestraFecha(){
 	int mes;

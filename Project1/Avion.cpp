@@ -1,9 +1,6 @@
 #include "Avion.h"
 Avion::Avion(){}
-Avion::Avion(int i, int a, string mo, string ma,int t,int f,int c) : id(i), annio(a), modelo(mo), marca(ma), cantidad(0) {
-	filas = f;
-	columnas = c;
-	cantPasajeros = t;
+Avion::Avion(int i, int a, string mo, string ma,int t,int f,int c) : id(i), annio(a), modelo(mo), marca(ma), cantidad(0),filas(f),columnas(c),cantPasajeros(t) {
 	persona = new Persona**[filas];
 	for (int i = 0; i < filas; i++) {
 		persona[i] = new Persona*[columnas];
@@ -30,18 +27,29 @@ int Avion::getColumnas() { return columnas; }
 string Avion::getModelo() { return modelo; }
 string Avion::getMarca() { return marca; }
 string Avion::toString() {
+	int ca = suma();
 	stringstream p;
 	p << "Id: " << id << endl;
 	p << "Annio: "<<annio<<endl;
 	p << "Modelo: " << modelo << endl;
 	p << "Marca: " << marca << endl;
 	p << "Capacidad de Pasajeros: " << cantPasajeros << endl;
-	p << "Asientos ocupados: " << cantidad << endl;
-	p << "Asientos disponibles: " << (cantPasajeros - cantidad) << endl;
+	p << "Asientos ocupados: " << ca << endl;
+	p << "Asientos disponibles: " << (cantPasajeros - ca) << endl;
 	p << "Cantidad de filas: " << filas << " Columnas: " << columnas << endl;
 	return p.str();
 }
-void Avion::suma() { cantidad++; }
+int Avion::suma() { 
+	int ca=0;
+	for (int i = 0; i < filas; i++) {
+		for (int j = 0; j < columnas; j++) {
+			if (persona[i][j] != NULL) {
+				ca++;
+			}
+		}
+	}
+	return ca;
+}
 int Avion::letraXNumero(char l) {
 	int i;
 	if (l == 'a' || l == 'A') {
@@ -124,10 +132,8 @@ void Avion::imprimeAsientos() {
 	cout << endl;
 }
 void Avion::insertarPersona(Persona *p,char f,int c){
-	int fi = letraXNumero(f);
-	if (cantidad < cantPasajeros) {
-		persona[fi][c-1] = p;
-		cantidad++;
+	if (suma() < cantPasajeros) {
+		persona[letraXNumero(f)][c-1] = p;
 		col(10);
 		cout << "Se ha insertado una persona correctamente!\n";
 		col(15);
@@ -137,6 +143,7 @@ void Avion::insertarPersona(Persona *p,char f,int c){
 		cout << "No hay espacio!\n";
 		col(15);
 	}
+	cantidad = suma();
 }
 Persona Avion::devuelvePersona(int f,int c){return *persona[f][c];}
 string Avion::toStringPasajeros() {
@@ -150,4 +157,13 @@ string Avion::toStringPasajeros() {
 	}
 	return p.str();
 }
-Avion::~Avion(){}
+Avion::~Avion(){
+	id = 0;
+	annio = 0;
+	modelo = " ";
+	marca = " ";
+	cantPasajeros = 0;
+	cantidad = 0;
+	filas = 0;
+	columnas = 0;
+}

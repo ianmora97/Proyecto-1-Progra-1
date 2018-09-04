@@ -32,7 +32,7 @@ public:
 	int letraXNumero(char);
 	int revisaValor(char,int);
 	void imprimeAsientos();
-	void suma();
+	int suma();
 	void insertarPersona(Persona*,char ,int);
 	Persona devuelvePersona(int,int);
 	string toStringPasajeros();

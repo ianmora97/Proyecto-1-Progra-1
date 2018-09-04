@@ -2,7 +2,6 @@
 #define CONTROL_H
 #include <iostream>
 #include <time.h>
-#include "Asientos.h"
 #include "Avion.h"
 #include "Interfaz.h"
 #include "Persona.h"

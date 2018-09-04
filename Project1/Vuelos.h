@@ -20,6 +20,7 @@ private:
 	string piloto;
 public:
 	Vuelos();
+	Vuelos(string,string,int,int,string,string,string,Avion*);
 	void col(int);
 	string muestraFecha();
 	string getNomRuta();

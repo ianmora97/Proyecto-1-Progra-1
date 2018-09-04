@@ -110,22 +110,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Asientos.h" />
     <ClInclude Include="Avion.h" />
-    <ClInclude Include="CompraTiquetes.h" />
     <ClInclude Include="Control.h" />
     <ClInclude Include="FlotaGestion.h" />
     <ClInclude Include="Interfaz.h" />
     <ClInclude Include="Persona.h" />
     <ClInclude Include="Rutas.h" />
     <ClInclude Include="RutasGestion.h" />
+    <ClInclude Include="Tiquete.h" />
     <ClInclude Include="Vuelos.h" />
     <ClInclude Include="VuelosGestion.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Asientos.cpp" />
     <ClCompile Include="Avion.cpp" />
-    <ClCompile Include="CompraTiquetes.cpp" />
     <ClCompile Include="Control.cpp" />
     <ClCompile Include="FlotaGestion.cpp" />
     <ClCompile Include="Interfaz.cpp" />
@@ -133,6 +130,7 @@
     <ClCompile Include="Persona.cpp" />
     <ClCompile Include="Rutas.cpp" />
     <ClCompile Include="RutasGestion.cpp" />
+    <ClCompile Include="Tiquete.cpp" />
     <ClCompile Include="Vuelos.cpp" />
     <ClCompile Include="VuelosGestion.cpp" />
   </ItemGroup>

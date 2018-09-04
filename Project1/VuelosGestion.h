@@ -6,7 +6,6 @@
 #include <Windows.h>
 #include <time.h>
 #include "Vuelos.h"
-#include "CompraTiquetes.h"
 using namespace std;
 class VuelosGestion {
 private:

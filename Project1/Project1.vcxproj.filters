@@ -21,9 +21,6 @@
     <ClInclude Include="Avion.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Asientos.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Interfaz.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -36,9 +33,6 @@
     <ClInclude Include="Rutas.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CompraTiquetes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="FlotaGestion.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -48,15 +42,15 @@
     <ClInclude Include="VuelosGestion.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Tiquete.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Persona.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Avion.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Asientos.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
@@ -74,9 +68,6 @@
     <ClCompile Include="Rutas.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CompraTiquetes.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="FlotaGestion.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -84,6 +75,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="VuelosGestion.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tiquete.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

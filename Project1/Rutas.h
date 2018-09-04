@@ -8,12 +8,12 @@
 using namespace std;
 class Rutas{
 private:
-	string nameOrigen;
-	string nameDestino;
+	string origen;
+	string destino;
 	int duracion;
 	int cantEscalas;
 public:
-	Rutas();
+	Rutas(string,string,int,int);
 	void col(int);
 	void setOrigen(string);
 	void setDestino(string);

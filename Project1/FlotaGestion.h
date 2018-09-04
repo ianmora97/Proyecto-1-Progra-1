@@ -1,6 +1,8 @@
 #ifndef FLOTAGESTION_H
 #define FLOTAGESTION_H
 #include "Avion.h"
+#include <conio.h>
+#include <stdio.h>
 using namespace std;
 const string clave = "admin";
 class FlotaGestion {
@@ -10,6 +12,7 @@ private:
 	int opc;
 public:
 	FlotaGestion();
+	void gotoxy(int x, int y);
 	void revisarAdmin();
 	void col(int);
 	int getOpc();

@@ -9,9 +9,6 @@ void VuelosGestion::insertarVuelo(Vuelos *v) {
 	if (cant < tam) {
 		vuelo[cant] = v;
 		cant++;
-		col(10);
-		cout << "Un vuelo ha sido creado!\n";
-		col(15);
 	}
 	else {
 		col(12);
@@ -26,20 +23,18 @@ void VuelosGestion::visualizar() {
 	for (int i = 0; i < cant; i++) {
 		cout << "\n---------------------------------\n";
 		col(11);
-		cout << "   Vuelo: " << i + 1 << endl << endl;
+		cout << " - Vuelo: " << i + 1 << endl << endl;
 		col(15);
 		cout << vuelo[i]->toString() << endl;
 		col(11);
-		cout << "   Avion: "<<endl;
+		cout << " - Avion: "<<endl;
 		col(15);
 		cout <<vuelo[i]->devuelveAvion().toString()<<endl;
 		vuelo[i]->devuelveAvion().imprimeAsientos();
 		col(11);
-		cout << "\n\nTiquetes"<<endl;
+		cout << "\n - Tiquetes"<<endl;
 		col(15);
-		for (int j = 0; j < vuelo[i]->devuelveAvion().getCan(); j++ ) {
-			cout<<vuelo[j]->devuelveAvion().toStringPasajeros();
-		}
+		cout << vuelo[i]->devuelveAvion().toStringPasajeros()<<endl;
 		cout << endl;
 	}
 	cout << endl;
@@ -344,7 +339,7 @@ void VuelosGestion::toString() {
 		cout << "Vuelo: " << i + 1 << endl << endl;
 		col(15);
 		cout << vuelo[i]->toString() << endl;
-		cout << "Avion asignado: " << endl;
+		cout << "Avion asignado: " << endl<<endl;
 		cout << vuelo[i]->devuelveAvion().toString() << endl;
 		vuelo[i]->devuelveAvion().imprimeAsientos();
 		cout << endl;
@@ -370,4 +365,14 @@ int VuelosGestion::revisaValor(char l, int t) {
 	}
 	return v;
 }
-VuelosGestion::~VuelosGestion() {}
+VuelosGestion::~VuelosGestion() {
+	for (int i = 0; i < cant; i++) {
+		delete vuelo[i];
+	}
+	delete[] vuelo;
+	cant = 0;
+	tam = 0;
+	col(10);
+	cout << "Se ha destruido los vuelos!" << endl;
+	col(15);
+}
