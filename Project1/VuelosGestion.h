@@ -15,6 +15,7 @@ private:
 public:
 	VuelosGestion();
 	void col(int);
+	void gotoxy(int x, int y);
 	void insertarVuelo(Vuelos*);
 	void visualizar();
 	void modificar();

@@ -18,7 +18,14 @@ void Avion::setModelo(string m) { modelo = m; }
 void Avion::setMarca(string m) { marca = m; }
 void Avion::setCantPasajetos(int p) { cantPasajeros = p; }
 void Avion::setFilasColumnas(int f, int c) { filas = f; columnas = c; }
-int Avion::getCan() { return cantidad; }
+int Avion::getCan() {
+	int cont = 0;
+	for (int i = 0; i < filas; i++)
+		for (int j = 0; j < columnas; j++)
+			if (persona[i][j] != NULL)
+				cont++;
+	return cont;
+}
 int Avion::getAnnio() { return annio; }
 int Avion::getId() { return id; }
 int Avion::getCantPasajeros() { return cantPasajeros; }
@@ -104,11 +111,11 @@ void Avion::imprimeAsientos() {
 		for (int j = 0; j < columnas; j++) {
 			cout << "[";
 			if ((persona[i][j]) != NULL) {
-				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 10); //verde
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12); //rojo
 				cout << "0";
 			}
 			else {
-				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12); //rojo
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 10); //verde
 				cout << "0";
 			}
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
@@ -131,19 +138,38 @@ void Avion::imprimeAsientos() {
 	for (int i = 0; i < (columnas * 3) + 1; i++) { cout << "-"; }
 	cout << endl;
 }
-void Avion::insertarPersona(Persona *p,char f,int c){
+bool Avion::verifica(char f, int c) {
+	if (persona[letraXNumero(f)][c - 1] == NULL) {
+		return true;
+	}
+	return false;
+}
+bool Avion::insertarPersona(Persona *p,char f,int c){
 	if (suma() < cantPasajeros) {
-		persona[letraXNumero(f)][c-1] = p;
-		col(10);
-		cout << "Se ha insertado una persona correctamente!\n";
-		col(15);
+		if (persona[letraXNumero(f)][c - 1] == NULL) {
+			persona[letraXNumero(f)][c - 1] = p;
+			col(10);
+			cout << "Se ha insertado una persona correctamente!\n";
+			col(15);
+			return true;
+		}
+		else { return false; }
 	}
 	else {
 		col(12);
 		cout << "No hay espacio!\n";
 		col(15);
+		return false;
 	}
 	cantidad = suma();
+}
+void Avion::eliminarPersonas() {
+	for (int i = 0; i < filas; i++) {
+		for (int j = 0; j < columnas; j++) {
+			
+			persona[i][j] = NULL;
+		}
+	}
 }
 Persona Avion::devuelvePersona(int f,int c){return *persona[f][c];}
 string Avion::toStringPasajeros() {
@@ -151,7 +177,7 @@ string Avion::toStringPasajeros() {
 	for (int i = 0; i < filas;i++) {
 		for (int j = 0; j < columnas; j++) {
 			if (persona[i][j] != NULL) {
-				p << persona[i][j]->toString() << endl<<endl;
+				p << persona[i][j]->toString();
 			}
 		}
 	}

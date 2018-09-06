@@ -32,8 +32,10 @@ public:
 	int letraXNumero(char);
 	int revisaValor(char,int);
 	void imprimeAsientos();
+	bool verifica(char f, int c);
 	int suma();
-	void insertarPersona(Persona*,char ,int);
+	bool insertarPersona(Persona*,char ,int);
+	void eliminarPersonas();
 	Persona devuelvePersona(int,int);
 	string toStringPasajeros();
 	~Avion();

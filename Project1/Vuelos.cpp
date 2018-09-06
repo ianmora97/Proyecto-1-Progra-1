@@ -1,6 +1,5 @@
 #include "Vuelos.h"
 Vuelos::Vuelos() {
-	avion = new Avion;
 	numAvionAsignado = 0;
 	nomRuta = "";
 	fecha = "";
@@ -10,7 +9,7 @@ Vuelos::Vuelos() {
 	aereoLlegada = "";
 	piloto = "";
 }
-Vuelos::Vuelos(string n, string f , int s, int l, string as, string al, string p, Avion *av) : nomRuta(n), fecha(f), horaSalida(s), horaLlegada(l), aereoSalida(as), aereoLlegada(al), piloto(p), avion(av){}
+Vuelos::Vuelos(string n, string f , int s, int l, string as, string al, string p, Avion av) : nomRuta(n), fecha(f), horaSalida(s), horaLlegada(l), aereoSalida(as), aereoLlegada(al), piloto(p), avion(av){}
 void Vuelos::col(int c) { SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), c); }
 string Vuelos::muestraFecha(){
 	int mes;
@@ -23,9 +22,12 @@ string Vuelos::muestraFecha(){
 	col(10);
 	cout << "\t(Fecha del viaje)\n";
 	col(15);
-	cout << "Seleccione un mes:\n";
+	int annio;
+	cout << endl << "Digite el a"<<char(164)<<"o: > ";
+	cin >> annio;
+	cout << "Seleccione el numero del mes:\n";
 	col(11);
-	cout << "[1 Enero] [2 Febrero] [3 Marzo] [4 Abril] [5 Mayo] [6 Junio] [7 Julio]\n[8 Agosto] [9 Septiembre] [10 Octubre] [11 Noviembre] [12 Diciembre]\n";
+	cout << "[1] Enero [2] Febrero [3] Marzo [4] Abril [5] Mayo [6] Junio [7] Julio\n[8] Agosto [9] Septiembre [10] Octubre [11] Noviembre [12] Diciembre\n";
 	col(15);
 	while (cicloMes) {
 		cout << "> ";
@@ -498,9 +500,7 @@ string Vuelos::muestraFecha(){
 	default:
 		break;
 	}
-	int annio;
-	cout << endl << "Digite el a"<<char(164)<<"o: > ";
-	cin >> annio;
+	
 	stringstream p;
 	p << dia<<","<<mesL<<","<<annio;
 	return p.str();
@@ -538,8 +538,8 @@ string Vuelos::toString() {
 	p << "Nombre del Piloto: "<<piloto<<endl;
 	return p.str();
 }
-void Vuelos::insertaAvion(Avion *a) {avion = a;}
-Avion Vuelos::devuelveAvion() { return *avion; }
+void Vuelos::insertaAvion(Avion a) {avion = a;}
+Avion Vuelos::devuelveAvion() { return avion; }
 Vuelos::~Vuelos(){
 	nomRuta = "";
 	fecha = "";

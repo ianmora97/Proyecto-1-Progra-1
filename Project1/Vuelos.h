@@ -9,7 +9,7 @@
 using namespace std;
 class Vuelos {
 private:
-	Avion *avion;
+	Avion avion;
 	int numAvionAsignado;
 	string nomRuta;
 	string fecha;
@@ -20,7 +20,7 @@ private:
 	string piloto;
 public:
 	Vuelos();
-	Vuelos(string,string,int,int,string,string,string,Avion*);
+	Vuelos(string,string,int,int,string,string,string,Avion);
 	void col(int);
 	string muestraFecha();
 	string getNomRuta();
@@ -39,7 +39,7 @@ public:
 	void setAereoLlegada(string);
 	void setPiloto(string);
 	void setNumAvion(int);
-	void insertaAvion(Avion*);
+	void insertaAvion(Avion);
 	Avion devuelveAvion();
 	string toString();
 	~Vuelos();

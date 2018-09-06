@@ -17,6 +17,7 @@ void Control::opciones() {
 	Avion *a1 = new Avion(1, 2005, "747", "Boeing", 180, 6, 30);
 	Avion *a2 = new Avion(2, 2000, "A340", "Airbus", 100, 4, 25);
 	Avion *a3 = new Avion(3, 2015, "182N", "Cessna", 100, 4, 25);
+
 	flotaGe->ingresarAvion(a1);
 	flotaGe->ingresarAvion(a2);
 	flotaGe->ingresarAvion(a3);
@@ -26,9 +27,9 @@ void Control::opciones() {
 	rutaGes->ingresarRuta(r1);
 	rutaGes->ingresarRuta(r2);
 	rutaGes->ingresarRuta(r3);
-	Vuelos *v1 = new Vuelos("COSTA RICA-PANAMA","14,NOVIEMBRE,2018",5,6,"Juan Santamaria","Albrook","Juan Gonzales",a1);
-	Vuelos *v2 = new Vuelos("COSTA RICA-ESPAÑA", "25,DICIEMBRE,2018", 8, 1, "Juan Santamaria", "Madrid", "Luis Garita", a2);
-	Vuelos *v3 = new Vuelos("COSTA RICA-ESTADOS UNIDOS", "8,ENERO,2019", 12, 3, "Juan Santamaria", "Orlando, Florida", "Ivannia Flores", a3);
+	Vuelos *v1 = new Vuelos("COSTA RICA-PANAMA","14,NOVIEMBRE,2018",5,6,"Juan Santamaria","Albrook","Juan Gonzales", *a1);
+	Vuelos *v2 = new Vuelos("COSTA RICA-ESPAÑA", "25,DICIEMBRE,2018", 8, 1, "Juan Santamaria", "Madrid", "Luis Garita", *a2);
+	Vuelos *v3 = new Vuelos("COSTA RICA-ESTADOS UNIDOS", "8,ENERO,2019", 12, 3, "Juan Santamaria", "Orlando, Florida", "Ivannia Flores", *a3);
 	vg->insertarVuelo(v1);
 	vg->insertarVuelo(v2);
 	vg->insertarVuelo(v3);
@@ -234,7 +235,7 @@ void Control::opciones() {
 					d1 = true;
 					while (d1) {
 						cout << " > ";
-						col(10);
+						col(14);
 						if (!(cin >> duracion)) {
 							col(12);
 							cerr << "Error! Digite un numero!\n";
@@ -247,11 +248,11 @@ void Control::opciones() {
 						}
 						col(15);
 					}
-					cout << "Ingrese la cantidad de escalas";
+					cout << "\nIngrese la cantidad de escalas";
 					d2 = true;
 					while (d2) {
 						cout << " > ";
-						col(10);
+						col(11);
 						if (!(cin >> escalas)) {
 							col(12);
 							cerr << "Error! Digite un numero!\n";
@@ -379,6 +380,7 @@ void Control::opciones() {
 						flotaGe->toString();
 						cout << "\nSeleccione un Avion";
 						int opcAvion; //el numero del avion
+
 						Avion *avion = new Avion;
 						while (cicloSelecAvion) {
 							cout << "> ";
@@ -403,9 +405,11 @@ void Control::opciones() {
 							}
 						}
 						*avion = flotaGe->devuelve(opcAvion-1); //hace una copia del avion
-						vuelo->insertaAvion(avion);
+						avion->eliminarPersonas();
+						vuelo->insertaAvion(*avion);
+
 						fecha = vuelo->muestraFecha();
-						system("cls");
+						cout << endl;
 						cout << "Seleccione la hora de salida (Solo la hora en ";
 						col(14);
 						cout << " AMARILLO";
@@ -446,6 +450,7 @@ void Control::opciones() {
 						suma = horaSalida + (rutaGes->devuele(numRuta).getDuracion()); //pide por la duracion del avion y la suma a la hora de salida para la hora de llegada
 						if (suma > 24) { horaLlegada = suma - 24; } //verificacion de la hora de llegada si se pasa de 24
 						else { horaLlegada = suma; }
+						system("cls");
 						cout << "\nDigite el aereopuerto de salida > ";
 						cin.ignore();
 						getline(cin, aereoSalida);
@@ -552,274 +557,299 @@ void Control::opciones() {
 			cout << "\n\n\n\t\t\t";
 			cout << "Bienvenido a la Compra de tiquetes!\n";
 			for (int i = 0; i < 2; i++) {Sleep(500);}
-			system("cls");
-			col(10);
-			cout << "\t\t(Compra de Tiquetes)\n\n";
-			col(15);
 			if (vg->getCant() != 0) { //si no hay vuelos registrados no puede comprar asientos
-				vg->toString();
-				cout << "Seleccione el vuelo deseado";
-				int opcVvuelo;
-				bool cicloSelecVuelo=true;
-				while (cicloSelecVuelo == true) {
-					cout << "> ";
-					if (!(cin>> opcVvuelo)) {
-						col(12);
-						cerr << "Digite un numero!\n";
-						col(15);
-						cin.clear();
-						cin.ignore(1024, '\n');
-					}
-					else {
-						if (opcVvuelo > 0 && opcVvuelo <= vg->getCant() ) {
-							cicloSelecVuelo = false;
-						}
-						else {
+				bool espacio = true;
+				while (espacio == true) {
+					system("cls");
+					col(10);
+					cout << "\t\t(Compra de Tiquetes)\n\n";
+					col(15);
+					vg->toString();
+					cout << "Seleccione el vuelo deseado";
+					int opcVvuelo;
+					bool cicloSelecVuelo = true;
+					while (cicloSelecVuelo == true) {
+						cout << "> ";
+						if (!(cin >> opcVvuelo)) {
 							col(12);
-							cerr << "Digite un numero de la lista!\n";
+							cerr << "Digite un numero!\n";
 							col(15);
 							cin.clear();
 							cin.ignore(1024, '\n');
 						}
-					}
-				}
-				int vuelo = opcVvuelo-1;
-				cout << vuelo;
-				//metodo para un precio random
-				int precio = rand() % (800 + 150);
-				int tamAvion = vg->devuelveVuelo(vuelo).devuelveAvion().getCantPasajeros(); //tamaño del avion seleccionado
-				int colum = vg->devuelveVuelo(vuelo).devuelveAvion().getColumnas(); //tamaño de las columnas del avion seleccionado;		
-				system("cls");
-				string nombre;
-				string id;
-				col(10);
-				cout << "\t[Digitar los datos de la persona]\n";
-				col(11);
-				cout << "\n\tAsiento"<<endl;
-				cout << "--------------------------\n";
-				col(15);
-				cout << "\tDigite su nombre > ";
-				cin.ignore();
-				getline(cin,nombre);
-				cout << "\tDigite su identificacion >";
-				getline(cin,id);
-				system("cls");
-				col(10);
-				cout << "\t[Digitar el asiento]\n"<<endl;
-				col(15);
-				vg->devuelveVuelo(vuelo).devuelveAvion().imprimeAsientos();
-				char fila;
-				int columna;
-				cout << "\n\nDigite la fila del asiento (Letra / ";
-				col(14);
-				cout << "A B C D...";
-				col(15);
-				cout<< ") ";
-				gotoxy(((vg->devuelveVuelo(vuelo).devuelveAvion().getColumnas()) * 3) + 3, (vg->devuelveVuelo(vuelo).devuelveAvion().getFilas() + 6));
-				col(224);
-				cout << char(186);
-				col(15);
-				gotoxy(47, (vg->devuelveVuelo(vuelo).devuelveAvion().getFilas() + 8));
-				bool cicloSelecFila = true;
-				while (cicloSelecFila == true) {
-					cout << "> ";
-					if (!(cin>>fila)) {
-						col(12);
-						cerr << "Digite una letra!\n";
-						col(15);
-						cin.clear();
-						cin.ignore(1024, '\n');
-					}
-					else {
-						if (vg->revisaValor(fila,tamAvion) == 1) {
-							cicloSelecFila = false;
-						}
 						else {
-							col(12);
-							cerr << "Digite una letra de la columna!\n";
-							col(15);
-							cin.clear();
-							cin.ignore(1024, '\n');
+							if (opcVvuelo > 0 && opcVvuelo <= vg->getCant()) {
+								cicloSelecVuelo = false;
+							}
+							else {
+								col(12);
+								cerr << "Digite un numero de la lista!\n";
+								col(15);
+								cin.clear();
+								cin.ignore(1024, '\n');
+							}
 						}
 					}
-				}
-				cout << "\n\nDigite la columna del asiento(Numero /";
-				col(11);
-				cout << " 1 2 3 4...";
-				col(15);
-				cout<< ") ";
-				gotoxy(((vg->devuelveVuelo(vuelo).devuelveAvion().getColumnas()) * 3) + 3, (vg->devuelveVuelo(vuelo).devuelveAvion().getFilas() + 6));
-				col(15);
-				cout << " ";
-				gotoxy(((vg->devuelveVuelo(vuelo).devuelveAvion().getColumnas()) * 3) + 3, 2);
-				col(176);
-				cout << "<";
-				col(15);
-				gotoxy(51, (vg->devuelveVuelo(vuelo).devuelveAvion().getFilas() + 11));
-				bool cicloSelecNum = true;
-				while (cicloSelecNum == true) {
-					cout << "> ";
-					if (!(cin>>columna)) {
-						col(12);
-						cerr << "Digite una numero!\n";
+					int vuelo = opcVvuelo - 1;
+					if (vg->devuelveVuelo(vuelo).devuelveAvion().getCan() < vg->devuelveVuelo(vuelo).devuelveAvion().getCantPasajeros()) {
+						int precio = rand() % (800 + 150);//metodo para un precio random
+						int tamAvion = vg->devuelveVuelo(vuelo).devuelveAvion().getCantPasajeros(); //tamaño del avion seleccionado
+						int colum = vg->devuelveVuelo(vuelo).devuelveAvion().getColumnas(); //tamaño de las columnas del avion seleccionado;		
+						system("cls");
+						string nombre;
+						string id;
+						col(10);
+						cout << "\t[Digitar los datos de la persona]\n";
+						col(11);
+						cout << "\n\tAsiento" << endl;
+						cout << "\t--------------------------\n";
 						col(15);
-						cin.clear();
-						cin.ignore(1024, '\n');
-					}
-					else {
-						if (columna > 0 && columna <= colum){
-							cicloSelecNum = false;
-						}
-						else {
-							col(12);
-							cerr << "Digite una numero de las columnas!\n";
+						cout << "\tDigite su nombre > ";
+						cin.ignore();
+						getline(cin, nombre);
+						cout << "\tDigite su identificacion >";
+						getline(cin, id);
+						bool verifica = true;
+						while (verifica == true) {
+							system("cls");
+							col(10);
+							cout << "\t[Digitar el asiento]\n" << endl;
 							col(15);
-							cin.clear();
-							cin.ignore(1024, '\n');
-						}
-					}
-				}
-				gotoxy(((vg->devuelveVuelo(vuelo).devuelveAvion().getColumnas()) * 3) + 3, 2);
-				col(15);
-				cout << " ";
-				stringstream f1;
-				f1 << fila;
-				string f2 = f1.str();
-				f2 = toupper(f2[0]);
-				stringstream s1;
-				s1 << f2 << columna;
-				string as = s1.str();
-				Persona *persona = new Persona(nombre, id, as);
-				gotoxy(0, (vg->devuelveVuelo(vuelo).devuelveAvion().getFilas() + 12));
-				vg->devuelveVuelo(vuelo).devuelveAvion().insertarPersona(persona, fila, columna);
-				cout << "\n\n\tAsiento: ";
-				col(14);
-				cout << f2.c_str();
-				col(11);
-				cout << columna << endl;
-				col(15);
-				Sleep(2000);
-				//---------IMPRIME EL TIQUETE--------
-				system("cls");
-				cout << endl;
-				cout << char(201);
-				for (int i = 0; i < 60; i++) { cout << char(205); }
-				cout << char(187)<<endl;
-				cout << char(186);
-				col(11);
-				cout << "\t\t\t   Tiquete:\t\t\t     ";
-				col(15);
-				cout << char(186) << endl;
-				cout << char(186);
-				for (int i = 0; i < 60; i++) { cout << "-"; }
-				cout << char(186) << endl;
-				cout << char(186);
-				col(11);
-				cout << "\t\t     Datos de la persona:\t\t     ";
-				col(15);
-				cout << char(186) << endl;
-				cout << char(186);
-				for (int i = 0; i < 60; i++) { cout << " "; }
-				cout << char(186) << endl;
-				cout << char(186);
-				cout << "  Nombre         : "<< persona->getName() << endl;
-				cout << char(186);
-				cout << "  Identificacion : "<<persona->getId() << endl;
-				cout << char(186);
-				cout << "  Asiento        : "<<persona->getAsiento() <<endl;
-				cout << char(186);
-				for (int i = 0; i < 60; i++) { cout << "-"; }
-				cout << char(186) << endl;
-				cout << char(186);
-				col(11);
-				cout << "\t\t            Vuelo:\t\t             ";
-				col(15);
-				cout << char(186) << endl;
-				cout << char(186);
-				for (int i = 0; i < 60; i++) { cout << " "; }
-				cout << char(186) << endl;
-				cout << char(186);
-				cout << "  Vuelo               : " <<vg->devuelveVuelo(vuelo).getNomRuta() << endl;
-				cout << char(186);
-				cout << "  Fecha               : " << vg->devuelveVuelo(vuelo).getFecha() << endl;
-				cout << char(186);
-				cout << "  Aereopuerto salida  : " << vg->devuelveVuelo(vuelo).getAereoSalida() << endl;
-				cout << char(186);
-				cout << "  Aereopuerto llegada : " << vg->devuelveVuelo(vuelo).getAereoLlegada() << endl;
-				cout << char(186);
-				cout << "  Hora salida         : " << vg->devuelveVuelo(vuelo).getHoraSalida()<<":00" << endl;
-				cout << char(186);
-				cout << "  Hora llegada        : " << vg->devuelveVuelo(vuelo).getHoraLlegada()<<":00" << endl;
-				cout << char(186);
-				cout << "  Piloto              : " << vg->devuelveVuelo(vuelo).getPiloto() << endl;
-				cout << char(186);
-				for (int i = 0; i < 60; i++) { cout << "-"; }
-				cout << char(186) << endl;
-				cout << char(186);
-				col(11);
-				cout << "\t\t            Avion:\t\t             ";
-				col(15);
-				cout << char(186) << endl;
-				cout << char(186);
-				for (int i = 0; i < 60; i++) { cout << " "; }
-				cout << char(186) << endl;
-				cout << char(186);
-				cout << "  Identificacion      : " << vg->devuelveVuelo(vuelo).devuelveAvion().getId() << endl;
-				cout << char(186);
-				cout << "  A"<<char(164)<<"o                 : " << vg->devuelveVuelo(vuelo).devuelveAvion().getAnnio() << endl;
-				cout << char(186);
-				cout << "  Marca               : "<< vg->devuelveVuelo(vuelo).devuelveAvion().getMarca() << endl;
-				cout << char(186);
-				cout << "  Modelo              : " << vg->devuelveVuelo(vuelo).devuelveAvion().getModelo() << endl;
-				cout << char(186);
-				for (int i = 0; i < 60; i++) { cout << "-"; }
-				cout << char(186) << endl;
-				cout << char(186);
-				col(11);
-				cout << "\t\t            Precio:\t\t             ";
-				col(15);
-				cout << char(186) << endl;
-				cout << char(186);
-				for (int i = 0; i < 60; i++) { cout << " "; }
-				cout << char(186) << endl;
-				cout << char(186);
-				cout << "  Precio del tiquete  :    $" << precio << endl;
-				col(15);
-				cout << char(200);
-				for (int i = 0; i < 60; i++) { cout << char(205); }
-				cout << char(188) << endl;
-				//laterales derecha
-				gotoxy(61, 2) ; cout << char(186);
-				gotoxy(61, 4) ; cout << char(186);
-				gotoxy(61, 5) ; cout << char(186);
-				gotoxy(61, 6) ; cout << char(186);
-				gotoxy(61, 7) ; cout << char(186);
-				gotoxy(61, 8) ; cout << char(186);
-				gotoxy(61, 11); cout << char(186);
-				gotoxy(61, 12); cout << char(186);
-				gotoxy(61, 13); cout << char(186);
-				gotoxy(61, 14); cout << char(186);
-				gotoxy(61, 15); cout << char(186);
-				gotoxy(61, 16); cout << char(186);
-				gotoxy(61, 17); cout << char(186);
-				gotoxy(61, 18); cout << char(186);
-				gotoxy(61, 21); cout << char(186);
-				gotoxy(61, 22); cout << char(186);
-				gotoxy(61, 23); cout << char(186);
-				gotoxy(61, 24); cout << char(186);
-				gotoxy(61, 25); cout << char(186);
-				gotoxy(61, 28); cout << char(186);
-				gotoxy(61, 29); cout << char(186);
-				
-				//---------!IMPRIME EL TIQUETE--------
-				gotoxy(61, 32);
-				cout << endl;
-				vg->devuelveVuelo(vuelo).devuelveAvion().imprimeAsientos();
-				cout << endl << endl;
+							vg->devuelveVuelo(vuelo).devuelveAvion().imprimeAsientos();
+							char fila;
+							int columna;
+							cout << "\n\nDigite la fila del asiento (Letra / ";
+							col(14);
+							cout << "A B C D...";
+							col(15);
+							cout << ") ";
+							gotoxy(((vg->devuelveVuelo(vuelo).devuelveAvion().getColumnas()) * 3) + 3, (vg->devuelveVuelo(vuelo).devuelveAvion().getFilas() + 6));
+							col(224);
+							cout << char(186);
+							col(15);
+							gotoxy(47, (vg->devuelveVuelo(vuelo).devuelveAvion().getFilas() + 8));
+							bool cicloSelecFila = true;
+							while (cicloSelecFila == true) {
+								cout << "> ";
+								if (!(cin >> fila)) {
+									col(12);
+									cerr << "Digite una letra!\n";
+									col(15);
+									cin.clear();
+									cin.ignore(1024, '\n');
+								}
+								else {
+									if (vg->revisaValor(fila, tamAvion) == 1) {
+										cicloSelecFila = false;
+									}
+									else {
+										col(12);
+										cerr << "Digite una letra de la fila!\n";
+										col(15);
+										cin.clear();
+										cin.ignore(1024, '\n');
+									}
+								}
+							}
+							cout << "\n\nDigite la columna del asiento(Numero /";
+							col(11);
+							cout << " 1 2 3 4...";
+							col(15);
+							cout << ") ";
+							gotoxy(((vg->devuelveVuelo(vuelo).devuelveAvion().getColumnas()) * 3) + 3, (vg->devuelveVuelo(vuelo).devuelveAvion().getFilas() + 6));
+							col(15);
+							cout << " ";
+							gotoxy(((vg->devuelveVuelo(vuelo).devuelveAvion().getColumnas()) * 3) + 3, 2);
+							col(176);
+							cout << "<";
+							col(15);
+							gotoxy(51, (vg->devuelveVuelo(vuelo).devuelveAvion().getFilas() + 11));
+							bool cicloSelecNum = true;
+							while (cicloSelecNum == true) {
+								cout << "> ";
+								if (!(cin >> columna)) {
+									col(12);
+									cerr << "Digite una numero!\n";
+									col(15);
+									cin.clear();
+									cin.ignore(1024, '\n');
+								}
+								else {
+									if (columna > 0 && columna <= colum) {
+										cicloSelecNum = false;
+									}
+									else {
+										col(12);
+										cerr << "Digite una numero de las columnas!\n";
+										col(15);
+										cin.clear();
+										cin.ignore(1024, '\n');
+									}
+								}
+							}
+							gotoxy(((vg->devuelveVuelo(vuelo).devuelveAvion().getColumnas()) * 3) + 3, 2);
+							col(15);
+							cout << " ";
+							stringstream f1;
+							f1 << fila;
+							string f2 = f1.str();
+							f2 = toupper(f2[0]);
+							stringstream s1;
+							s1 << f2 << columna;
+							string as = s1.str();
+							Persona *persona = new Persona(nombre, id, as);
+							gotoxy(0, (vg->devuelveVuelo(vuelo).devuelveAvion().getFilas() + 12));
+							if (vg->devuelveVuelo(vuelo).devuelveAvion().verifica(fila, columna) == true) {
+								vg->devuelveVuelo(vuelo).devuelveAvion().insertarPersona(persona, fila, columna);
+								cout << "\n\n\tAsiento: ";
+								col(14);
+								cout << f2.c_str();
+								col(11);
+								cout << columna << endl;
+								col(15);
+								Sleep(2000);
+								//---------IMPRIME EL TIQUETE--------
+								system("cls");
+								cout << endl;
+								cout << char(201);
+								for (int i = 0; i < 60; i++) { cout << char(205); }
+								cout << char(187) << endl;
+								cout << char(186);
+								col(11);
+								cout << "\t\t\t   Tiquete:\t\t\t     ";
+								col(15);
+								cout << char(186) << endl;
+								cout << char(186);
+								for (int i = 0; i < 60; i++) { cout << "-"; }
+								cout << char(186) << endl;
+								cout << char(186);
+								col(11);
+								cout << "\t\t     Datos de la persona:\t\t     ";
+								col(15);
+								cout << char(186) << endl;
+								cout << char(186);
+								for (int i = 0; i < 60; i++) { cout << " "; }
+								cout << char(186) << endl;
+								cout << char(186);
+								cout << "  Nombre         : " << persona->getName() << endl;
+								cout << char(186);
+								cout << "  Identificacion : " << persona->getId() << endl;
+								cout << char(186);
+								cout << "  Asiento        : " << persona->getAsiento() << endl;
+								cout << char(186);
+								for (int i = 0; i < 60; i++) { cout << "-"; }
+								cout << char(186) << endl;
+								cout << char(186);
+								col(11);
+								cout << "\t\t            Vuelo:\t\t             ";
+								col(15);
+								cout << char(186) << endl;
+								cout << char(186);
+								for (int i = 0; i < 60; i++) { cout << " "; }
+								cout << char(186) << endl;
+								cout << char(186);
+								cout << "  Vuelo               : " << vg->devuelveVuelo(vuelo).getNomRuta() << endl;
+								cout << char(186);
+								cout << "  Fecha               : " << vg->devuelveVuelo(vuelo).getFecha() << endl;
+								cout << char(186);
+								cout << "  Aereopuerto salida  : " << vg->devuelveVuelo(vuelo).getAereoSalida() << endl;
+								cout << char(186);
+								cout << "  Aereopuerto llegada : " << vg->devuelveVuelo(vuelo).getAereoLlegada() << endl;
+								cout << char(186);
+								cout << "  Hora salida         : " << vg->devuelveVuelo(vuelo).getHoraSalida() << ":00" << endl;
+								cout << char(186);
+								cout << "  Hora llegada        : " << vg->devuelveVuelo(vuelo).getHoraLlegada() << ":00" << endl;
+								cout << char(186);
+								cout << "  Piloto              : " << vg->devuelveVuelo(vuelo).getPiloto() << endl;
+								cout << char(186);
+								for (int i = 0; i < 60; i++) { cout << "-"; }
+								cout << char(186) << endl;
+								cout << char(186);
+								col(11);
+								cout << "\t\t            Avion:\t\t             ";
+								col(15);
+								cout << char(186) << endl;
+								cout << char(186);
+								for (int i = 0; i < 60; i++) { cout << " "; }
+								cout << char(186) << endl;
+								cout << char(186);
+								cout << "  Identificacion      : " << vg->devuelveVuelo(vuelo).devuelveAvion().getId() << endl;
+								cout << char(186);
+								cout << "  A" << char(164) << "o                 : " << vg->devuelveVuelo(vuelo).devuelveAvion().getAnnio() << endl;
+								cout << char(186);
+								cout << "  Marca               : " << vg->devuelveVuelo(vuelo).devuelveAvion().getMarca() << endl;
+								cout << char(186);
+								cout << "  Modelo              : " << vg->devuelveVuelo(vuelo).devuelveAvion().getModelo() << endl;
+								cout << char(186);
+								for (int i = 0; i < 60; i++) { cout << "-"; }
+								cout << char(186) << endl;
+								cout << char(186);
+								col(11);
+								cout << "\t\t            Precio:\t\t             ";
+								col(15);
+								cout << char(186) << endl;
+								cout << char(186);
+								for (int i = 0; i < 60; i++) { cout << " "; }
+								cout << char(186) << endl;
+								cout << char(186);
+								cout << "  Precio del tiquete  :    $" << precio << endl;
+								col(15);
+								cout << char(200);
+								for (int i = 0; i < 60; i++) { cout << char(205); }
+								cout << char(188) << endl;
+								//laterales derecha
+								gotoxy(61, 2); cout << char(186);
+								gotoxy(61, 4); cout << char(186);
+								gotoxy(61, 5); cout << char(186);
+								gotoxy(61, 6); cout << char(186);
+								gotoxy(61, 7); cout << char(186);
+								gotoxy(61, 8); cout << char(186);
+								gotoxy(61, 11); cout << char(186);
+								gotoxy(61, 12); cout << char(186);
+								gotoxy(61, 13); cout << char(186);
+								gotoxy(61, 14); cout << char(186);
+								gotoxy(61, 15); cout << char(186);
+								gotoxy(61, 16); cout << char(186);
+								gotoxy(61, 17); cout << char(186);
+								gotoxy(61, 18); cout << char(186);
+								gotoxy(61, 21); cout << char(186);
+								gotoxy(61, 22); cout << char(186);
+								gotoxy(61, 23); cout << char(186);
+								gotoxy(61, 24); cout << char(186);
+								gotoxy(61, 25); cout << char(186);
+								gotoxy(61, 28); cout << char(186);
+								gotoxy(61, 29); cout << char(186);
 
-				gotoxy(65, 2); 
-				cin.ignore();
-				cin.get();
+								//---------!IMPRIME EL TIQUETE--------
+								gotoxy(61, 32);
+								cout << endl;
+								vg->devuelveVuelo(vuelo).devuelveAvion().imprimeAsientos();
+								cout << endl << endl;
+
+								gotoxy(65, 2);
+								cin.ignore();
+								cin.get();
+								verifica = false;
+							}
+							else {
+								col(12);
+								cout << "El campo esta lleno, seleccione otro asiento!";
+								Sleep(1000);
+								col(15);
+								verifica = true;
+							}
+
+						}
+						espacio = false;
+					}
+					else {
+						col(12);
+						cout << "No hay asientos disponibles en el vuelo seleccionado!\n";
+						cout << "Digite otro vuelo!\n";
+						col(15);
+						system("PAUSE");
+					}
+				}
 			}
 			else {
 				col(12);
@@ -828,7 +858,38 @@ void Control::opciones() {
 				system("PAUSE");
 			}
 		}
-		else if (opc == 0) {
+		else if (opc == 5) {
+			/*
+				NO REVISAR!!
+				SOLO PARA VERIFICAR EL METODO DE LOS AVIONES
+			*/
+			system("cls");
+			Persona *p = new Persona("Aqui ","hay","una persona");
+			char c;
+			for (int i = 0; i < 4; i++) {
+				for (int j = 0; j <= 25; j++) {
+					if (i == 0) {
+						c = 'A';
+					}
+					if (i == 1) {
+						c = 'B';
+					}
+					if (i == 2) {
+						c = 'C';
+					}
+					if (i==3) {
+						c = 'D';
+					}
+					vg->devuelveVuelo(2).devuelveAvion().insertarPersona(p, c, j);
+					vg->devuelveVuelo(2).devuelveAvion().imprimeAsientos();
+					system("cls");
+				}
+			}
+			vg->devuelveVuelo(2).devuelveAvion().imprimeAsientos();
+			cout << endl;
+			system("PAUSE");
+		}
+		else {
 			delete flotaGe;
 			delete rutaGes;
 			delete vg;

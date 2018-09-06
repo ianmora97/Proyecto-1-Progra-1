@@ -9,6 +9,7 @@ class Interfaz{
 public:
 	Interfaz();
 	void col(int);
+	void gotoxy(int x, int y);
 	int menu();
 	void imprime();
 	int validar();
