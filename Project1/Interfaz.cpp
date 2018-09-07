@@ -112,7 +112,7 @@ int Interfaz::validar() {
 			cin.clear();
 			cin.ignore(1024, '\n');
 		}
-		else if ( opc <0 || opc >5) { //PONER HASTA 5 PARA HACER METODO DE REVISAR
+		else if ( opc <0 || opc >4) { //PONER HASTA 5 PARA HACER METODO DE REVISAR
 			col(15);
 			gotoxy(44, 20); cout << "                           " << char(186) << "            ";//limpia el buffer
 			col(12);
