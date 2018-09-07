@@ -11,6 +11,18 @@ Avion::Avion(int i, int a, string mo, string ma,int t,int f,int c) : id(i), anni
 		}
 	}
 }
+Avion::Avion(const Avion *a) : id(a->id), annio(a->annio), modelo(a->modelo), marca(a->marca), cantidad(a->cantidad), filas(a->filas), columnas(a->columnas), cantPasajeros(a->cantPasajeros) {
+	persona = new Persona**[filas];
+	for (int i = 0; i < filas; i++) {
+		persona[i] = new Persona*[columnas];
+	}
+	for (int i = 0; i < a->filas; i++) {
+		for (int j = 0; j < a->columnas; j++) {
+			persona[i][j] = NULL;
+		}
+	}
+
+}
 void Avion::col(int c){	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), c);}
 void Avion::setAnnio(int a){ annio=a; }
 void Avion::setId(int i) { id = i; }

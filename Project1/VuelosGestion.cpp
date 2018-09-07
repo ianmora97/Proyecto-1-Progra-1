@@ -30,7 +30,7 @@ void VuelosGestion::visualizar() {
 	cout << "Cual vuelo desea visualizar?\n";
 	for (int i = 0; i < cant;i++) {
 		col(10);
-		cout << "\t[" << i + 1 << "] - ";
+		cout << "\t[" << i + 1 << "]  ";
 		col(15);
 	}
 	cout << endl;
@@ -209,15 +209,25 @@ void VuelosGestion::modificar(){
 				cout << "\t\t(Hora de Salida)\n\n";
 				col(15);
 				cout << "La hora de salida del Vuelo es: " << vuelo[opcVuelo]->getHoraSalida() << endl;
-				for (int i = 1; i <= 24; i++) {
-					if (i == 13) {
-						cout << endl;
+				cout << "\tAM\t\t\t\tPM\n";
+				for (int i = 0; i < 12; i++) {
+					for (int j = 0; j < 2; j++) {
+						if (j == 1) {
+							col(14);
+							cout << "\t" << i + 13;
+							col(15);
+							cout << ":" << "00\t\t\t";
+						}
+						else {
+							col(14);
+							cout << "\t" << i + 1;
+							col(15);
+							cout << ":" << "00\t\t\t";
+						}
 					}
-					col(14);
-					cout << i;
-					col(15);
-					cout << ":" << "00 ";
+					cout << endl;
 				}
+				cout << endl;
 				cout << "\nDigite la nueva hora de salida: >";
 				while (ciclo_validaciones) {
 					cout << ">";
@@ -384,54 +394,113 @@ void VuelosGestion::eliminar(){
 }
 void VuelosGestion::imprimeMenu(){
 	system("cls");
+	col(15);
+	cout << endl << endl << endl;
+	cout << "\t\t\t\t" << char(201);
+	for (int i = 0; i < 30; i++) { cout << char(205); } //imprime una linea de =
+	cout << char(187);
+	cout << "\n\t\t\t\t" << char(186);
 	col(11);
-	cout << "\t\tMenu";
-	col(10);
-	cout << "\t\t\t\t\t[Gestion de Vuelos]\n";
+	cout << "     Gestion de Vuelos        ";
 	col(15);
-	for (int i = 0; i < 40; i++) { cout << "-"; }
-	cout << "\n\n";
-	col(10);
-	cout << "\t[1]";
+	cout << char(186) << endl;
 	col(15);
-	cout << " Insertar\n";
+	cout << "\t\t\t\t" << char(200);
+	for (int i = 0; i < 30; i++) { cout << char(205); }
+	cout << char(188) << endl;
+
+	cout << "\t\t\t" << char(201);
+	for (int i = 0; i < 46; i++) { cout << char(205); } //imprime una linea de =
+	cout << char(187);
+	cout << endl;
+	cout << "\t\t\t";
+	cout << char(186) << endl;
+
+	cout << "\t\t\t";
+	cout << char(186);
 	col(10);
-	cout << "\t[2]";
+	cout << "  [1]";
 	col(15);
-	cout << " Visualizar\n";
+	cout << "   Ingresar        \n";
+	cout << "\t\t\t";
+	cout << char(186) << endl;
+	cout << "\t\t\t";
+	cout << char(186);
 	col(10);
-	cout << "\t[3]";
+	cout << "  [2]";
 	col(15);
-	cout << " Modificar\n";
+	cout << "   Visualizar      \n";
+	cout << "\t\t\t";
+	cout << char(186) << endl;
+	cout << "\t\t\t";
+	cout << char(186);
 	col(10);
-	cout << "\t[4]";
+	cout << "  [3]";
 	col(15);
-	cout << " Eliminar\n";
+	cout << "   Modificar       \n";
+	cout << "\t\t\t";
+	cout << char(186) << endl;
+	cout << "\t\t\t";
+	cout << char(186);
 	col(10);
-	cout << "\t[0]";
+	cout << "  [4]";
 	col(15);
-	cout << " Volver al menu principal\n\n";
+	cout << "   Eliminar        \n";
+	cout << "\t\t\t";
+	cout << char(186) << endl;
+	cout << "\t\t\t";
+	cout << char(186);
+	col(10);
+	cout << "  [0]";
+	col(15);
+	cout << "   Menu Principal    \n";
+	cout << "\t\t\t";
+	cout << char(186);
+
+	cout << "\n\t\t\t" << char(204);
+	for (int i = 0; i < 46; i++) { cout << char(205); } //imprime una linea de =
+	cout << char(185) << endl;
+	cout << "\t\t\t" << char(186) << endl;
+	cout << "\t\t\t" << char(186) << endl;
+	cout << "\t\t\t" << char(186);
+	cout << "\n\t\t\t" << char(200);
+	for (int i = 0; i < 46; i++) { cout << char(205); } //imprime una linea de =
+	cout << char(188) << endl;
+	for (int i = 0; i < 11; i++) {
+		gotoxy(71, 7 + i); cout << char(186);
+	}
+	gotoxy(71, 19); cout << char(186);
+	gotoxy(71, 20); cout << char(186);
+	gotoxy(71, 21); cout << char(186);
 }
 void VuelosGestion::interfaz(){
 	bool c = true;
 	while (c) {
-		cout << "\t> ";
+		gotoxy(35, 20); cout << "Opcion > ";
 		col(10);
-		if (!(cin >> opc)) {
-			col(12);
-			cerr << "Error!\nDigite un NUMERO del menu!\n";
+		if (!(cin >> opc)) { //revisa si falla
 			col(15);
+			gotoxy(44, 20); cout << "                           " << char(186) << "            "; //limpia el buffer
+			col(12);
+			gotoxy(55, 20); cout << "Error!";
+			col(15);
+			Sleep(700);
+			gotoxy(44, 20); cout << "                           "; //limpia el error
 			cin.clear();
 			cin.ignore(1024, '\n');
 		}
-		else {
-			if (opc >= 0 && opc <= 4) {
-				c = false;
-			}
-			else {
-				c = true;
-			}
+		else if (opc < 0 || opc >4) { 
+			col(15);
+			gotoxy(44, 20); cout << "                           " << char(186) << "            ";//limpia el buffer
+			col(12);
+			gotoxy(55, 20); cout << "Error!";
+			col(15);
+			Sleep(700);
+			gotoxy(44, 20); cout << "                           "; //limpia el error
+			cin.clear();
+			cin.ignore(1024, '\n');
 		}
+		else { c = false; }
 		col(15);
 	}
 }

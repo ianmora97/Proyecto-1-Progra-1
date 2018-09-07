@@ -8,6 +8,7 @@ private:
 	int cant, tam, opci;
 public:
 	RutasGestion();
+	void gotoxy(int x, int y);
 	void col(int);
 	int getCant();
 	void ingresarRuta(Rutas*);

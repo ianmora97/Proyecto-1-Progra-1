@@ -13,6 +13,7 @@ private:
 public:
 	Avion();
 	Avion(int,int,string,string,int,int,int);
+	Avion(const Avion *a);
 	void col(int);
 	void setAnnio(int);
 	void setId(int);

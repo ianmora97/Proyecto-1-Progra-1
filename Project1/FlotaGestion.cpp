@@ -22,18 +22,21 @@ void FlotaGestion::revisarAdmin() {
 		cout << "\t\t\t" << char(201);
 		for (int i = 0; i < 30; i++) { cout << char(205); } //imprime una linea de =
 		cout << char(187)<<endl;
-		cout << "\t\t\t" << char(186) << "Usuario: Administrador        " << char(186) << endl;
-		cout << "\t\t\t" << char(186) << "Clave  :                      " << char(186) << endl;
+		cout << "\t\t\t" << char(186) << "  Usuario: Administrador      " << char(186) << endl;
+		cout << "\t\t\t" << char(186) << "  Clave  :                    " << char(186) << endl;
 		cout << "\t\t\t" << char(200);
 		for (int i = 0; i < 30; i++) { cout << char(205); }
 		cout << char(188) << endl;
-		col(17);
-		gotoxy(34,5);
-		cin>>pass;
+		col(76);
+		gotoxy(36,5);
+		cin.ignore();
+		getline(cin,pass);
 		col(15);
+		
+		
 		if (pass != clave) {
 			col(12);
-			cerr << "\n\n\t\t\t  Clave Incorrecta!";
+			cerr << "\n\n\t\t\t    Clave Incorrecta!";
 			col(15);
 			cin.clear();
 			cin.ignore(1024, '\n');
@@ -43,7 +46,7 @@ void FlotaGestion::revisarAdmin() {
 		}
 		else {
 			col(10);
-			cout << "\n\n\t\t\t  Clave Correcta!";
+			cout << "\n\n\t\t\t    Clave Correcta!";
 			col(15);
 			Sleep(1000);
 			system("cls");
@@ -104,13 +107,17 @@ void FlotaGestion::eliminar() {
 	cout << "\t\t(Eliminar Aviones)\n\n";
 	col(15);
 	if (cant != 0) { //si hay aviones 
-		cout << "Cual avion desea eliminar?\n";
+		cout << "\tCual avion desea eliminar?\n";
 		for (int i = 0; i < cant; i++) { 
 			col(10);
-			cout << "[" << i + 1 << "]";
+			cout << "\t[" << i + 1 << "]";
 			col(15);
 			cout << plane[i]->getMarca() << " " << plane[i]->getModelo() << endl;
 		}
+		col(10);
+		cout << "\t[0]";
+		col(15);
+		cout << " Cancelar\n";
 		int eliAv;
 		bool cic = true;
 		//Verificacion
@@ -125,7 +132,7 @@ void FlotaGestion::eliminar() {
 				cic = true;
 			}
 			else {
-				if (eliAv > 0 && eliAv <= cant ) {
+				if (eliAv >= 0 && eliAv <= cant ) {
 					cic = false;
 				}
 				else {
@@ -138,19 +145,21 @@ void FlotaGestion::eliminar() {
 				}
 			}
 		}
-		int opcA = eliAv - 1;
-		if (opcA == (cant-1)) {
-			cant--;
-			col(10);
-			cout << "Se ha eliminado un avion Correctamente!\n";
-			col(15);
-		}
-		else {
-			plane[opcA] = plane[cant - 1];
-			cant--;
-			col(10);
-			cout << "Se ha eliminado un avion Correctamente!\n";
-			col(15);
+		if (eliAv != 0) {
+			int opcA = eliAv - 1;
+			if (opcA == (cant - 1)) {
+				cant--;
+				col(10);
+				cout << "Se ha eliminado un avion Correctamente!\n";
+				col(15);
+			}
+			else {
+				plane[opcA] = plane[cant - 1];
+				cant--;
+				col(10);
+				cout << "Se ha eliminado un avion Correctamente!\n";
+				col(15);
+			}
 		}
 	}
 	else {
@@ -162,55 +171,115 @@ void FlotaGestion::eliminar() {
 void FlotaGestion::menu() {
 	bool c = true;
 	while (c) {
-		cout << "\t> ";
+		gotoxy(35, 20); cout << "Opcion > ";
 		col(10);
-		if (!(cin >> opc)) {
-			col(12);
-			cerr << "Error!\nDigite un NUMERO del menu!\n";
+		if (!(cin >> opc)) { //revisa si falla
 			col(15);
+			gotoxy(44, 20); cout << "                           " << char(186) << "            "; //limpia el buffer
+			col(12);
+			gotoxy(55, 20); cout << "Error!";
+			col(15);
+			Sleep(700);
+			gotoxy(44, 20); cout << "                           "; //limpia el error
 			cin.clear();
 			cin.ignore(1024, '\n');
 		}
-		else {
-			if (opc >= 0 && opc <= 4) {
-				c = false;
-			}
-			else {
-				c = true;
-			}
+		else if (opc < 0 || opc >4) { 
+			col(15);
+			gotoxy(44, 20); cout << "                           " << char(186) << "            ";//limpia el buffer
+			col(12);
+			gotoxy(55, 20); cout << "Error!";
+			col(15);
+			Sleep(700);
+			gotoxy(44, 20); cout << "                           "; //limpia el error
+			cin.clear();
+			cin.ignore(1024, '\n');
 		}
+		else { c = false; }
 		col(15);
 	}
 }
 void FlotaGestion::imprimeMenu() {
 	system("cls");
+	col(15);
+	cout << endl << endl << endl;
+	cout << "\t\t\t\t" << char(201);
+	for (int i = 0; i < 30; i++) { cout << char(205); } //imprime una linea de =
+	cout << char(187);
+	cout << "\n\t\t\t\t" << char(186);
 	col(11);
-	cout << "\t\tMenu";
-	col(10);
-	cout << "\t\t\t\t\t[Gestion de Flota]\n";
+	cout << "     Gestion de Flotas        ";
 	col(15);
-	for (int i = 0; i < 40; i++) { cout << "-"; }
-	cout << "\n\n";
-	col(10);
-	cout << "\t[1]";
+	cout << char(186) << endl;
 	col(15);
-	cout << " Insertar\n";
+	cout << "\t\t\t\t" << char(200);
+	for (int i = 0; i < 30; i++) { cout << char(205); }
+	cout << char(188) << endl;
+
+	cout << "\t\t\t" << char(201);
+	for (int i = 0; i < 46; i++) { cout << char(205); } //imprime una linea de =
+	cout << char(187);
+	cout << endl;
+	cout << "\t\t\t";
+	cout << char(186) << endl;
+
+	cout << "\t\t\t";
+	cout << char(186);
 	col(10);
-	cout << "\t[2]";
+	cout << "  [1]";
 	col(15);
-	cout << " Visualizar\n";
+	cout << "   Ingresar        \n";
+	cout << "\t\t\t";
+	cout << char(186) << endl;
+	cout << "\t\t\t";
+	cout << char(186);
 	col(10);
-	cout << "\t[3]";
+	cout << "  [2]";
 	col(15);
-	cout << " Modificar\n";
+	cout << "   Visualizar      \n";
+	cout << "\t\t\t";
+	cout << char(186) << endl;
+	cout << "\t\t\t";
+	cout << char(186);
 	col(10);
-	cout << "\t[4]";
+	cout << "  [3]";
 	col(15);
-	cout << " Eliminar\n";
+	cout << "   Modificar       \n";
+	cout << "\t\t\t";
+	cout << char(186) << endl;
+	cout << "\t\t\t";
+	cout << char(186);
 	col(10);
-	cout << "\t[0]";
+	cout << "  [4]";
 	col(15);
-	cout << " Volver al menu principal\n\n";
+	cout << "   Eliminar        \n";
+	cout << "\t\t\t";
+	cout << char(186) << endl;
+	cout << "\t\t\t";
+	cout << char(186);
+	col(10);
+	cout << "  [0]";
+	col(15);
+	cout << "   Menu Principal    \n";
+	cout << "\t\t\t";
+	cout << char(186);
+
+	cout << "\n\t\t\t" << char(204);
+	for (int i = 0; i < 46; i++) { cout << char(205); } //imprime una linea de =
+	cout << char(185) << endl;
+	cout << "\t\t\t" << char(186) << endl;
+	cout << "\t\t\t" << char(186) << endl;
+	cout << "\t\t\t" << char(186);
+	cout << "\n\t\t\t" << char(200);
+	for (int i = 0; i < 46; i++) { cout << char(205); } //imprime una linea de =
+	cout << char(188) << endl;
+	for (int i = 0; i < 11; i++) {
+		gotoxy(71, 7 + i); cout << char(186);
+	}
+	gotoxy(71, 19); cout << char(186);
+	gotoxy(71, 20); cout << char(186);
+	gotoxy(71, 21); cout << char(186);
+
 }
 void FlotaGestion::modificar() {
 	system("cls");
@@ -225,6 +294,10 @@ void FlotaGestion::modificar() {
 			col(15);
 			cout << plane[i]->getMarca() << " " << plane[i]->getModelo() << endl;
 		}
+		col(10);
+		cout << "\t[0]";
+		col(15);
+		cout << " Cancelar\n";
 		int opcAvion;
 		bool opcAvionCiclo = true;
 		while (opcAvionCiclo) { //valida que haya ingresado bien los datos y que este en el rango de numeros
@@ -238,7 +311,7 @@ void FlotaGestion::modificar() {
 				cin.ignore(1024, '\n');
 			}
 			else {
-				if (opcAvion > 0 && opcAvion <= (cant)) {
+				if (opcAvion >= 0 && opcAvion <= (cant)) {
 					opcAvionCiclo = false;
 				}
 				else {
@@ -253,107 +326,118 @@ void FlotaGestion::modificar() {
 			col(15);
 		}
 		int opcA = opcAvion - 1;
-		cout << "Que desea modificar?\n";
-		col(10);
-		cout << "\t[1]";
-		col(15);
-		cout<< " A" << char(164) << "o\n";
-		col(10);
-		cout << "\t[2]";
-		col(15);
-		cout<< " Modelo\n";
-		col(10);
-		cout << "\t[3]";
-		col(15);
-		cout<< " Marca\n";
-		int opc;
-		bool c = true;
-		while (c) {
-			cout << "\t> ";
+		if (opcAvion != 0) {
+			cout << "Que desea modificar?\n";
 			col(10);
-			if (!(cin >> opc)) {
-				col(12);
-				cerr << "Error! Digite numero!\n";
-				col(15);
-				cin.clear();
-				cin.ignore(1024, '\n');
-			}
-			else {
-				if (opc >= 0 && opc <= 3) {
-					c = false;
+			cout << "\t[1]";
+			col(15);
+			cout << " A" << char(164) << "o\n";
+			col(10);
+			cout << "\t[2]";
+			col(15);
+			cout << " Modelo\n";
+			col(10);
+			cout << "\t[3]";
+			col(15);
+			cout << " Marca\n";
+			col(10);
+			cout << "\t[0]";
+			col(15);
+			cout << " Cancelar\n";
+			int opc;
+			bool c = true;
+			while (c) {
+				cout << "\t> ";
+				col(10);
+				if (!(cin >> opc)) {
+					col(12);
+					cerr << "Error! Digite numero!\n";
+					col(15);
+					cin.clear();
+					cin.ignore(1024, '\n');
 				}
 				else {
-					col(12);
-					cerr << "Error! Digite numero de la lista!\n";
+					if (opc >= 0 && opc <= 3) {
+						c = false;
+					}
+					else {
+						col(12);
+						cerr << "Error! Digite numero de la lista!\n";
+						col(15);
+						cin.clear();
+						cin.ignore(1024, '\n');
+						c = true;
+					}
+				}
+				col(15);
+			}
+			if (opc != 0) {
+				int an = 0;
+				string mode = " ";
+				string mar = " ";
+				bool ciAn = true;
+				switch (opc) {
+				case 1:
+					col(10);
+					cout << "\t\t(A" << char(164) << "o)\n\n";
 					col(15);
-					cin.clear();
-					cin.ignore(1024, '\n');
-					c = true;
+					cout << "El a" << char(164) << "o del avion " << plane[opcA]->getMarca() << " " << plane[opcA]->getModelo() << " es: " << plane[opcA]->getAnnio() << endl;
+					cout << "Digite un nuevo a" << char(164) << "o\n ";
+					while (ciAn) {
+						cout << ">";
+						if (!(cin >> an)) {
+							col(12);
+							cerr << "Error! Digite un numero!\n";
+							col(15);
+							cin.clear();
+							cin.ignore(1024, '\n');
+							ciAn = true;
+						}
+						else { ciAn = false; }
+					}
+					plane[opcA]->setAnnio(an);
+					col(10);
+					cout << "Cambio relizado correctamente!\n";
+					col(15);
+					break;
+				case 2:
+					col(10);
+					cout << "\t\t(Modelo)\n\n";
+					col(15);
+					cout << "El modelo del avion " << plane[opcA]->getMarca() << " " << plane[opcA]->getModelo() << " es: " << plane[opcA]->getModelo() << endl;
+					cout << "Digite un nuevo modelo\n> ";
+					cin.ignore();
+					getline(cin, mode);
+					plane[opcA]->setModelo(mode);
+					col(10);
+					cout << "Cambio relizado correctamente!\n";
+					col(15);
+					break;
+				case 3:
+					col(10);
+					cout << "\t\t(Marca)\n\n";
+					col(15);
+					cout << "La marca del avion " << plane[opcA]->getMarca() << " " << plane[opcA]->getModelo() << " es: " << plane[opcA]->getMarca() << endl;
+					cout << "Digite la nueva marca\n>";
+					cin.ignore();
+					getline(cin, mar);
+					plane[opcA]->setMarca(mar);
+					col(10);
+					cout << "Cambio relizado correctamente!\n";
+					col(15);
+					break;
+				case 0:
+					break;
+				default:
+					col(10);
+					cout << "Ha digitado mal un numero!\nComience de nuevo!\n";
+					col(15);
+					break;
 				}
 			}
-			col(15);
+			else{}
 		}
-		int an = 0;
-		string mode = " ";
-		string mar = " ";
-		bool ciAn = true;
-		system("cls");
-		switch (opc) {
-		case 1:
-			col(10);
-			cout << "\t\t(A" << char(164) << "o)\n\n";
-			col(15);
-			cout << "El a"<<char(164)<<"o del avion "<<plane[opcA]->getMarca()<<" "<<plane[opcA]->getModelo()<<" es: " << plane[opcA]->getAnnio() << endl;
-			cout << "Digite un nuevo a" << char(164) << "o\n ";
-			while (ciAn) {
-				cout << ">";
-				if (!(cin >> an)) {
-					col(12);
-					cerr << "Error! Digite un numero!\n";
-					col(15);
-					cin.clear();
-					cin.ignore(1024, '\n');
-					ciAn = true;
-				}
-				else { ciAn = false; }
-			}
-			plane[opcA]->setAnnio(an);
-			col(10);
-			cout << "Cambio relizado correctamente!\n";
-			col(15);
-			break;
-		case 2:
-			col(10);
-			cout << "\t\t(Modelo)\n\n";
-			col(15);
-			cout << "El modelo del avion " << plane[opcA]->getMarca() << " " << plane[opcA]->getModelo() << " es: " << plane[opcA]->getModelo() << endl;
-			cout << "Digite un nuevo modelo\n> ";
-			cin.ignore();
-			getline(cin,mode);
-			plane[opcA]->setModelo(mode);
-			col(10);
-			cout << "Cambio relizado correctamente!\n";
-			col(15);
-			break;
-		case 3:
-			col(10);
-			cout << "\t\t(Marca)\n\n";
-			col(15);
-			cout << "La marca del avion " << plane[opcA]->getMarca() << " " << plane[opcA]->getModelo() << " es: " << plane[opcA]->getMarca() << endl;
-			cout << "Digite la nueva marca\n>";
-			cin.ignore();
-			getline(cin,mar);
-			plane[opcA]->setMarca(mar);
-			col(10);
-			cout << "Cambio relizado correctamente!\n";
-			col(15);
-			break;
-		default:
-			col(10);
-			cout << "Ha digitado mal un numero!\nComience de nuevo!\n";
-			col(15);
-			break;
-		}
+		else {}
 	}
 	else {
 		col(12);

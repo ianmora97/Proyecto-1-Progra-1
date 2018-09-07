@@ -3,6 +3,7 @@
 #include "Avion.h"
 #include <conio.h>
 #include <stdio.h>
+#include <cctype>
 using namespace std;
 const string clave = "admin";
 class FlotaGestion {

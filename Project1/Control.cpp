@@ -380,8 +380,6 @@ void Control::opciones() {
 						flotaGe->toString();
 						cout << "\nSeleccione un Avion";
 						int opcAvion; //el numero del avion
-
-						Avion *avion = new Avion;
 						while (cicloSelecAvion) {
 							cout << "> ";
 							if (!(cin >> opcAvion)) {
@@ -404,29 +402,38 @@ void Control::opciones() {
 								}
 							}
 						}
-						*avion = flotaGe->devuelve(opcAvion-1); //hace una copia del avion
-						avion->eliminarPersonas();
-						vuelo->insertaAvion(*avion);
-
+						Avion *av;
+						av = new Avion(flotaGe->devuelve(opcAvion-1)); //hace una copia del avion
+						vuelo->insertaAvion(av);
 						fecha = vuelo->muestraFecha();
 						cout << endl;
-						cout << "Seleccione la hora de salida (Solo la hora en ";
+						cout << "\tSeleccione la hora de salida (Solo la hora en ";
 						col(14);
 						cout << " AMARILLO";
 						col(15);
-						cout<<") " << endl;
-						for (int i = 1; i <= 24; i++) {
-							if (i == 13) {
-								cout << endl;
+						cout<<")\n" << endl;
+						cout << "\tAM\t\t\t\tPM\n";
+						for (int i = 0; i < 12; i++) {
+							for (int j = 0; j < 2; j++) {
+								if (j==1) {
+									col(14);
+									cout << "\t" << i + 13;
+									col(15);
+									cout << ":" << "00\t\t\t";
+								}
+								else {
+									col(14);
+									cout << "\t" << i + 1;
+									col(15);
+									cout << ":" << "00\t\t\t";
+								}
 							}
-							col(14);
-							cout << i;
-							col(15);
-							cout << ":" << "00 ";
+							cout << endl;
 						}
 						cout << endl;
 						while (cicloSelecHora) {
-							cout << "> ";
+							cout << "\t> ";
+							col(14);
 							if (!(cin >> horaSalida)) {
 								col(12);
 								cerr << "Digite un numero!\n";
@@ -446,11 +453,13 @@ void Control::opciones() {
 									cin.ignore(1024, '\n');
 								}
 							}
+							col(15);
 						}
 						suma = horaSalida + (rutaGes->devuele(numRuta).getDuracion()); //pide por la duracion del avion y la suma a la hora de salida para la hora de llegada
 						if (suma > 24) { horaLlegada = suma - 24; } //verificacion de la hora de llegada si se pasa de 24
 						else { horaLlegada = suma; }
 						system("cls");
+						cout << "\nNombre de la ruta: " << nomRuta << endl;
 						cout << "\nDigite el aereopuerto de salida > ";
 						cin.ignore();
 						getline(cin, aereoSalida);
