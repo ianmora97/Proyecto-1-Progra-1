@@ -1,6 +1,5 @@
 #include "Vuelos.h"
 Vuelos::Vuelos() {
-	numAvionAsignado = 0;
 	nomRuta = "";
 	fecha = "";
 	horaSalida = 0;
@@ -583,7 +582,6 @@ int Vuelos::getHoraLlegada() { return horaLlegada; }
 string Vuelos::getAereoSalida() { return aereoSalida; }
 string Vuelos::getAereoLlegada() { return aereoLlegada; }
 string Vuelos::getPiloto() { return piloto; }
-int Vuelos::getNumAvion() { return numAvionAsignado; }
 void Vuelos::setNomRuta(string n) { nomRuta = n; }
 void Vuelos::setFecha(string f) { fecha = f; }
 void Vuelos::setHoraSalida(int hs) { horaSalida = hs; }
@@ -591,7 +589,6 @@ void Vuelos::setHoraLlegada(int hl) { horaLlegada = hl; }
 void Vuelos::setAereoSalida(string as) { aereoSalida = as; }
 void Vuelos::setAereoLlegada(string al) { aereoLlegada = al; }
 void Vuelos::setPiloto(string p) { piloto = p; }
-void Vuelos::setNumAvion(int n) { numAvionAsignado = n; }
 string Vuelos::toString() {
 	stringstream p;
 	p << "Nombre de la ruta: ";

@@ -10,7 +10,6 @@ using namespace std;
 class Vuelos {
 private:
 	Avion avion;
-	int numAvionAsignado;
 	string nomRuta;
 	string fecha;
 	int horaSalida;
@@ -30,7 +29,6 @@ public:
 	string getAereoSalida();
 	string getAereoLlegada();
 	string getPiloto();
-	int getNumAvion();
 	void setNomRuta(string);
 	void setFecha(string);
 	void setHoraSalida(int);
@@ -38,7 +36,6 @@ public:
 	void setAereoSalida(string);
 	void setAereoLlegada(string);
 	void setPiloto(string);
-	void setNumAvion(int);
 	void insertaAvion(Avion);
 	Avion devuelveAvion();
 	string toString();

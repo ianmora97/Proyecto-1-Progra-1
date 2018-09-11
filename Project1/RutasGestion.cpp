@@ -249,7 +249,7 @@ void RutasGestion::eliminar() {
 		}
 		if (opc1 != 0) {
 			int opcR = opc1 - 1;
-			if (opcR == cant - 1) {
+			if (opcR == (cant - 1)) {
 				cant--;
 			}
 			else {

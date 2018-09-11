@@ -324,11 +324,10 @@ void Control::opciones() {
 			}
 			system("cls");
 			col(15);
-			bool cicloOpcion = true;
+			bool cicloOpcion = true; //ciclo del menu
 			while (cicloOpcion == true) {
 				system("cls");
 				vg->imprimeMenu();
-				int opcRuta;
 				vg->interfaz();
 				if (vg->getOpc() == 1) {
 					system("cls");
@@ -336,6 +335,7 @@ void Control::opciones() {
 					cout << "\t\t(Ingresar Vuelos)\n\n";
 					col(15);
 					if (rutaGes->getCant() != 0 && flotaGe->getCant() != 0) {
+						int opcRuta;
 						string nomRuta="";
 						string fecha="";
 						int horaSalida=0;
@@ -359,7 +359,7 @@ void Control::opciones() {
 								cin.ignore(1024, '\n');
 							}
 							else {
-								if (opcRuta >= 0 && opcRuta <= rutaGes->getCant()) {
+								if (opcRuta > 0 && opcRuta <= rutaGes->getCant()) {
 									cicloSelecRuta = false;
 								}
 								else {
@@ -496,9 +496,16 @@ void Control::opciones() {
 	
 					}
 					else {
-						col(12);
-						cerr << "No hay rutas ingresadas!\nIngrese una ruta primero en [Modulo Gestion de Ruta]\n";
-						col(15);
+						if (rutaGes->getCant() == 0) {
+							col(12);
+							cerr << "No hay rutas ingresadas!\nIngrese una ruta primero en [Modulo Gestion de Ruta]\n";
+							col(15);
+						}
+						else if (flotaGe->getCant() == 0) {
+							col(12);
+							cerr << "No hay aviones registrados!\nRegistre un avion primero en [Modulo Gestion de Flota]\n";
+							col(15);
+						}
 					}
 					system("PAUSE");
 					cicloOpcion = true;
@@ -605,6 +612,7 @@ void Control::opciones() {
 						int tamAvion = vg->devuelveVuelo(vuelo).devuelveAvion().getCantPasajeros(); //tamaño del avion seleccionado
 						int colum = vg->devuelveVuelo(vuelo).devuelveAvion().getColumnas(); //tamaño de las columnas del avion seleccionado;		
 						system("cls");
+						//variables locales para el nombre y el id del usuario
 						string nombre;
 						string id;
 						col(10);
@@ -618,7 +626,7 @@ void Control::opciones() {
 						getline(cin, nombre);
 						cout << "\tDigite su identificacion >";
 						getline(cin, id);
-						bool verifica = true;
+						bool verifica = true; //ciclo para la verificacion del asiento, si tiene campo
 						while (verifica == true) {
 							system("cls");
 							col(10);
@@ -897,7 +905,7 @@ void Control::opciones() {
 			vg->devuelveVuelo(2).devuelveAvion().imprimeAsientos();
 			cout << endl;
 			system("PAUSE");
-		}
+		} //para revisar metodos nada mas (NO REVISAR)
 		else {
 			delete flotaGe;
 			delete rutaGes;

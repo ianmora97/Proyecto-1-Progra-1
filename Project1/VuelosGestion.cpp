@@ -508,10 +508,6 @@ int VuelosGestion::getOpc(){
 	return opc;
 }
 int VuelosGestion::getCant(){return cant;}
-void VuelosGestion::flotaVisualizar(){
-	FlotaGestion *f=new FlotaGestion;
-	f->visualizarAviones();
-}
 Vuelos VuelosGestion::devuelveVuelo(int i) {return *vuelo[i];}
 void VuelosGestion::toString() {
 	for (int i = 0; i < cant; i++) {

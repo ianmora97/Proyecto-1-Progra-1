@@ -24,7 +24,6 @@ public:
 	void interfaz();
 	int getOpc();
 	int getCant();
-	void flotaVisualizar();
 	Vuelos devuelveVuelo(int);
 	void toString();
 	int revisaValor(char l, int t);
