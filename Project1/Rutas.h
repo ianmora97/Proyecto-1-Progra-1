@@ -13,7 +13,9 @@ private:
 	int duracion;
 	int cantEscalas;
 public:
+	Rutas();
 	Rutas(string,string,int,int);
+	Rutas(const Rutas *r);
 	void col(int);
 	void setOrigen(string);
 	void setDestino(string);

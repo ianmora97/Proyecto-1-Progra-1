@@ -53,22 +53,133 @@ void FlotaGestion::revisarAdmin() {
 			ciclo = false;
 		}
 	}
+	col(13);
+	cout << "\n\n\n\t\t\t";
+	cout << "Bienvenido a la Gestion de Flota!\n";
+	for (int i = 0; i < 2; i++) {
+		Sleep(500);
+	}
+	system("cls");
 }
 void FlotaGestion::col(int c) { SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), c); }
-int FlotaGestion::getOpc(){return opc;}
 int FlotaGestion::getCant() {return cant;}
-void FlotaGestion::ingresarAvion(Avion *a) {
-	if (cant < tam) {
+void FlotaGestion::ingresar(Avion *a) {
+	if (cant<tam) {
 		plane[cant] = a;
 		cant++;
 	}
 	else {
 		col(12);
-		cerr << "\nNo hay espacio para mas aviones!\n";
+		cout << "No hay campo para ingresar un avion!\n";
 		col(15);
 	}
 }
-void FlotaGestion::visualizarAviones() {
+void FlotaGestion::ingresar() {
+	if (cant < tam) {
+		int id;
+		int annio;
+		string modelo, marca;
+		char tamanoAvion;
+		system("cls");
+		col(10);
+		cout << "\t\t(Ingresar Avion)\n\n";
+		col(15);
+		bool tamA = true;
+		cout << "Cual sera el tama" << char(164) << "io del avion?:\n";
+		col(10);
+		cout << "[ P ]";
+		col(15);
+		cout << " Peque" << char(164);
+		cout << "o (100 campos) - ";
+		col(10);
+		cout << "[ G ]";
+		col(15);
+		cout << " Grande (180 campos)";
+		int fil, colu, t;
+		while (tamA == true) {
+			cout << "\n> ";
+			if (!(cin >> tamanoAvion)) {
+				col(12);
+				cerr << "Digite una letra!\n";
+				col(15);
+				cin.clear();
+				cin.ignore(1024, '\n');
+				tamA = true;
+			}
+			else {
+				if ((tamanoAvion == 'p') || (tamanoAvion == 'g' || tamanoAvion == 'P' || tamanoAvion == 'G')) {
+					if (tamanoAvion == 'P' || tamanoAvion == 'p') {
+						t = 100;
+						fil = 4;
+						colu = 25;
+					}
+					else if (tamanoAvion == 'g' || tamanoAvion == 'G') {
+						t = 180;
+						fil = 6;
+						colu = 30;
+					}
+					tamA = false;
+				}
+				else {
+					col(12);
+					cerr << "Digite \"P\" o \"G\" \n";
+					col(15);
+					cin.clear();
+					cin.ignore(1024, '\n');
+					tamA = true;
+				}
+			}
+		}
+		cout << "Digite Id del avion (NUMERO) ";
+		bool cicloId = true;
+		while (cicloId == true) {
+			cout << "> ";
+			if (!(cin >> id)) {
+				col(12);
+				cerr << "Digite un numero!\n";
+				col(15);
+				cin.clear();
+				cin.ignore(1024, '\n');
+			}
+			else {
+				cicloId = false;
+			}
+		}
+		cout << " \nDigite el a" << char(164) << "o del avion ";
+		bool cicloAn = true;
+		while (cicloAn == true) {
+			cout << "> ";
+			if (!(cin >> annio)) {
+				col(12);
+				cerr << "Digite un numero!\n";
+				col(15);
+				cin.clear();
+				cin.ignore(1024, '\n');
+			}
+			else {
+				cicloAn = false;
+			}
+		}
+		cout << "\nDigite el Modelo del avion > ";
+		cin.ignore();
+		getline(cin, modelo);
+		cout << "\nDigite la Marca del avion > ";
+		getline(cin, marca);
+		plane[cant] = new Avion(id, annio, modelo, marca, t, fil, colu);
+		cant++;
+		col(10);
+		cout << "Avion ingresado Correctamente!\n";
+		col(15);
+		system("PAUSE");
+	}
+	else {
+		col(12);
+		cerr << "\nNo hay espacio para mas aviones!\n";
+		col(15);
+		system("PAUSE");
+	}
+}
+void FlotaGestion::visualizar() {
 	system("cls");
 	col(10);
 	cout << "\t\t(Visualizar Aviones)\n\n";
@@ -161,45 +272,16 @@ void FlotaGestion::eliminar() {
 				col(15);
 			}
 		}
+		system("PAUSE");
 	}
 	else {
 		col(12);
 		cout << "No hay aviones para eliminar!\n";
 		col(15);
+		system("PAUSE");
 	}
 }
-void FlotaGestion::menu() {
-	bool c = true;
-	while (c) {
-		gotoxy(35, 20); cout << "Opcion > ";
-		col(10);
-		if (!(cin >> opc)) { //revisa si falla
-			col(15);
-			gotoxy(44, 20); cout << "                           " << char(186) << "            "; //limpia el buffer
-			col(12);
-			gotoxy(55, 20); cout << "Error!";
-			col(15);
-			Sleep(700);
-			gotoxy(44, 20); cout << "                           "; //limpia el error
-			cin.clear();
-			cin.ignore(1024, '\n');
-		}
-		else if (opc < 0 || opc >4) { 
-			col(15);
-			gotoxy(44, 20); cout << "                           " << char(186) << "            ";//limpia el buffer
-			col(12);
-			gotoxy(55, 20); cout << "Error!";
-			col(15);
-			Sleep(700);
-			gotoxy(44, 20); cout << "                           "; //limpia el error
-			cin.clear();
-			cin.ignore(1024, '\n');
-		}
-		else { c = false; }
-		col(15);
-	}
-}
-void FlotaGestion::imprimeMenu() {
+int FlotaGestion::menu() {
 	system("cls");
 	col(15);
 	cout << endl << endl << endl;
@@ -279,7 +361,37 @@ void FlotaGestion::imprimeMenu() {
 	gotoxy(71, 19); cout << char(186);
 	gotoxy(71, 20); cout << char(186);
 	gotoxy(71, 21); cout << char(186);
-
+	int opc;
+	bool c = true;
+	while (c) {
+		gotoxy(35, 20); cout << "Opcion > ";
+		col(10);
+		if (!(cin >> opc)) { //revisa si falla
+			col(15);
+			gotoxy(44, 20); cout << "                           " << char(186) << "            "; //limpia el buffer
+			col(12);
+			gotoxy(55, 20); cout << "Error!";
+			col(15);
+			Sleep(700);
+			gotoxy(44, 20); cout << "                           "; //limpia el error
+			cin.clear();
+			cin.ignore(1024, '\n');
+		}
+		else if (opc < 0 || opc >4) { 
+			col(15);
+			gotoxy(44, 20); cout << "                           " << char(186) << "            ";//limpia el buffer
+			col(12);
+			gotoxy(55, 20); cout << "Error!";
+			col(15);
+			Sleep(700);
+			gotoxy(44, 20); cout << "                           "; //limpia el error
+			cin.clear();
+			cin.ignore(1024, '\n');
+		}
+		else { c = false; }
+		col(15);
+	}
+	return opc;
 }
 void FlotaGestion::modificar() {
 	system("cls");
@@ -444,6 +556,7 @@ void FlotaGestion::modificar() {
 		cout << "No hay aviones para modificar!\n";
 		col(15);
 	}
+	system("PAUSE");
 }
 Avion FlotaGestion::devuelve(int i) {return *plane[i];}
 FlotaGestion::~FlotaGestion() { 

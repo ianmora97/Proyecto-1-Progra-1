@@ -5,6 +5,9 @@
 #include <sstream>
 #include <Windows.h>
 #include <stdlib.h>
+#include <conio.h>
+#include <stdio.h>
+#include <cctype>
 using namespace std;
 
 class Persona{

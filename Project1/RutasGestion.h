@@ -5,19 +5,18 @@ using namespace std;
 class RutasGestion{
 private:
 	Rutas **ruta;
-	int cant, tam, opci;
+	int cant, tam;
 public:
 	RutasGestion();
 	void gotoxy(int x, int y);
 	void col(int);
 	int getCant();
-	void ingresarRuta(Rutas*);
+	void ingresar(Rutas*);
+	void ingresar();
 	void visualizar();
 	void modificar();
 	void eliminar();
-	void imprimirMenu();
-	int opc();
-	void interfaz();
+	int menu();
 	void mostrarRutas();
 	Rutas devuele(int);
 	~RutasGestion();

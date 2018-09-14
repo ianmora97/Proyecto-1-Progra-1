@@ -17,17 +17,100 @@ void RutasGestion::col(int c) { SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_
 int RutasGestion::getCant(){
 	return cant;
 }
-void RutasGestion::ingresarRuta(Rutas *r) {
+void RutasGestion::ingresar(Rutas *r) {
 	if (cant<tam) {
 		ruta[cant] = r;
 		cant++;
 	}
 	else {
 		col(12);
-		cout << "\nNo hay campo para ingresar rutas!";
+		cout << "\nNo hay campo para ingresar rutas!\n";
+	}
+}
+void RutasGestion::ingresar() {
+	if (cant < tam) {
+		string origen;
+		string destino;
+		int duracion;
+		int escalas;
+		bool d1 = true;
+		bool d2 = true;		
+		system("cls");
+		col(10);
+		cout << "\t\t(Ingresar Rutas)\n\n";
+		col(15);
+		cout << "Ingrese el origen (";
+		col(10);
+		cout << "Despegue";
+		col(15);
+		cout << ") > ";
+		cin.ignore();
+		col(10);
+		getline(cin, origen);
+		col(15);
+		cout << "\nIngrese el destino (";
+		col(10);
+		cout << "Aterrizaje";
+		col(15);
+		cout << ") > ";
+		col(10);
+		getline(cin, destino);
+		col(15);
+		cout << "\nIngrese la duracion del vuelo (";
+		col(14);
+		cout << "Cantidad de Horas";
+		col(15);
+		cout << ")";
+		d1 = true;
+		while (d1) {
+			cout << " > ";
+			col(14);
+			if (!(cin >> duracion)) {
+				col(12);
+				cerr << "Error! Digite un numero!\n";
+				col(15);
+				cin.clear();
+				cin.ignore(1024, '\n');
+			}
+			else {
+				d1 = false;
+			}
+			col(15);
+		}
+		cout << "\nIngrese la cantidad de escalas";
+		d2 = true;
+		while (d2) {
+			cout << " > ";
+			col(11);
+			if (!(cin >> escalas)) {
+				col(12);
+				cerr << "Error! Digite un numero!\n";
+				col(15);
+				cin.clear();
+				cin.ignore(1024, '\n');
+			}
+			else {
+				d2 = false;
+			}
+			col(15);
+		}
+		ruta[cant] = new Rutas(origen, destino, duracion, escalas);
+		cant++;
+		col(10);
+		cout << "\nSe ha ingresado una ruta correctamente!\n";
+		col(15);
+		system("PAUSE");
+	}
+	else {
+		col(12);
+		cout << "\nNo hay campo para ingresar rutas!\n";
 	}
 }
 void RutasGestion::visualizar() {
+	system("cls");
+	col(10);
+	cout << "\t\t(Visualizar Rutas)\n\n";
+	col(15);
 	cout << "La empresa tiene: "<<cant<<" rutas!\n\n";
 	for (int i = 0; i < 30; i++) { cout << "-"; }
 	cout << endl;
@@ -37,8 +120,13 @@ void RutasGestion::visualizar() {
 		col(15);
 		cout<<ruta[i]->toString()<<endl;
 	}
+	system("PAUSE");
 }
 void RutasGestion::modificar(){
+	system("cls");
+	col(10);
+	cout << "\t\t(Modificar Rutas)\n\n";
+	col(15);
 	if (cant != 0) {
 		cout << "\tDigite la ruta que quiera modificar:\n";
 		for (int i = 0; i < cant; i++) {
@@ -209,8 +297,13 @@ void RutasGestion::modificar(){
 		cout << "No hay rutas que modificar!\n";
 		col(15);
 	}
+	system("PAUSE");
 }
 void RutasGestion::eliminar() {
+	system("cls");
+	col(10);
+	cout << "\t\t(Eliminar Rutas)\n\n";
+	col(15);
 	if (cant != 0) {
 		cout << "Cual ruta desea eliminar?\n";
 		for (int i = 0; i < cant; i++) {
@@ -266,9 +359,9 @@ void RutasGestion::eliminar() {
 		cout << "No hay rutas para eliminar!\n";
 		col(15);
 	}
-	
+	system("PAUSE");
 }
-void RutasGestion::imprimirMenu(){
+int RutasGestion::menu(){
 	system("cls");
 	col(15);
 	cout << endl << endl << endl;
@@ -348,8 +441,7 @@ void RutasGestion::imprimirMenu(){
 	gotoxy(71, 19); cout << char(186);
 	gotoxy(71, 20); cout << char(186);
 	gotoxy(71, 21); cout << char(186);
-}
-void RutasGestion::interfaz(){
+	int opci;
 	bool c = true;
 	while (c) {
 		gotoxy(35, 20); cout << "Opcion > ";
@@ -379,8 +471,8 @@ void RutasGestion::interfaz(){
 		else { c = false; }
 		col(15);
 	}
+	return opci;
 }
-int RutasGestion::opc() {return opci;}
 void RutasGestion::mostrarRutas() {
 	for (int i = 0; i < cant; i++) {
 		col(11);

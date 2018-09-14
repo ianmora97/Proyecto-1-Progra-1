@@ -1,5 +1,7 @@
 #include "Rutas.h"
 Rutas::Rutas(string o, string d, int du, int e) : origen(o), destino(d), duracion(du), cantEscalas(e) {}
+Rutas::Rutas(const Rutas *r) : origen(r->origen), destino(r->destino), duracion(r->duracion), cantEscalas(r->cantEscalas) {}
+Rutas::Rutas(){}
 void Rutas::col(int c){ SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), c); }
 void Rutas::setOrigen(string o) { origen = o; }
 void Rutas::setDestino(string d) { destino = d; }

@@ -1,15 +1,12 @@
 #ifndef VUELOS_H
 #define VUELOS_H
-#include <iostream>
-#include <string>
-#include <sstream>
-#include <ctype.h>
-#include <Windows.h>
 #include "FlotaGestion.h"
+#include "RutasGestion.h"
 using namespace std;
 class Vuelos {
 private:
 	Avion avion;
+	Rutas ruta;
 	string nomRuta;
 	string fecha;
 	int horaSalida;
@@ -19,7 +16,7 @@ private:
 	string piloto;
 public:
 	Vuelos();
-	Vuelos(string,string,int,int,string,string,string,Avion);
+	Vuelos(string,string,int,int,string,string,string,Avion,Rutas);
 	void col(int);
 	string muestraFecha();
 	string getNomRuta();

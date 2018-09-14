@@ -1,6 +1,6 @@
 #include "VuelosGestion.h"
 VuelosGestion::VuelosGestion() {
-	vuelo = new  Vuelos*[100]; //Declara hasta 100 vuelos (no especifica cuantos vuelos se pueden hacer)
+	vuelo = new  Vuelos*[100]; //Declara hasta 100 vuelos (el proyecto no especifica cuantos vuelos se pueden hacer)
 	cant = 0;
 	tam = 100;
 }
@@ -13,7 +13,7 @@ void VuelosGestion::gotoxy(int x, int y) {
 	dwPos.Y = y;
 	SetConsoleCursorPosition(hcon, dwPos);
 }
-void VuelosGestion::insertarVuelo(Vuelos *v) {
+void VuelosGestion::insertar(Vuelos *v) {
 	if (cant < tam) {
 		vuelo[cant] = v;
 		cant++;
@@ -24,7 +24,118 @@ void VuelosGestion::insertarVuelo(Vuelos *v) {
 		col(15);
 	}
 }
+void VuelosGestion::insertar(Avion *av, Rutas *ruta,int canR, int canF, string nomRut,int dur){
+	system("cls");
+	col(10);
+	cout << "\t\t(Ingresar Vuelos)\n\n";
+	col(15);
+	if (cant < tam) {
+		if (canR != 0 && canF != 0) {
+			string nomRuta = nomRut, fecha = "";
+			int horaSalida = 0,horaLlegada = 0, suma = 0;
+			string aereoSalida = "", aereoLlegada = "", piloto = "";
+			bool cicloSelecHora = true;
+			fecha = vuelo[0]->muestraFecha();
+			cout << endl;
+			cout << "\tSeleccione la hora de salida (Solo la hora en ";
+			col(14);
+			cout << " AMARILLO";
+			col(15);
+			cout << ")\n" << endl;
+			cout << "\tAM\t\t\t\tPM\n";
+			for (int i = 0; i < 12; i++) {
+				for (int j = 0; j < 2; j++) {
+					if (j == 1) {
+						col(14);
+						cout << "\t" << i + 13;
+						col(15);
+						cout << ":" << "00\t\t\t";
+					}
+					else {
+						col(14);
+						cout << "\t" << i + 1;
+						col(15);
+						cout << ":" << "00\t\t\t";
+					}
+				}
+				cout << endl;
+			}
+			cout << endl;
+			while (cicloSelecHora) {
+				cout << "\t> ";
+				col(14);
+				if (!(cin >> horaSalida)) {
+					col(12);
+					cerr << "Digite un numero!\n";
+					col(15);
+					cin.clear();
+					cin.ignore(1024, '\n');
+				}
+				else {
+					if (horaSalida >= 1 && horaSalida <= 24) {
+						cicloSelecHora = false;
+					}
+					else {
+						col(12);
+						cerr << "Digite un numero de la lista!\n";
+						col(15);
+						cin.clear();
+						cin.ignore(1024, '\n');
+					}
+				}
+				col(15);
+			}
+			suma = horaSalida + (dur); //pide por la duracion del avion y la suma a la hora de salida para la hora de llegada
+			if (suma > 24) { horaLlegada = suma - 24; } //verificacion de la hora de llegada si se pasa de 24
+			else { horaLlegada = suma; }
+			system("cls");
+			cout << "\nNombre de la ruta: " << nomRuta << endl;
+			cout << "\nDigite el aereopuerto de salida > ";
+			cin.ignore();
+			getline(cin, aereoSalida);
+			cout << "\nDigite el aereopuerto de llegada > ";
+			getline(cin, aereoLlegada);
+			cout << "\nDigite el nombre del piloto > ";
+			getline(cin, piloto);
+			system("cls");
+			vuelo[cant] = new Vuelos(nomRuta,fecha,horaSalida,horaLlegada,aereoSalida,aereoLlegada,piloto,av,ruta);
+			cant++;
+
+			col(10);
+			cout << "Un vuelo ha sido creado!\n";
+			col(15);
+			col(11);
+			cout << " Avion:\n";
+			col(15);
+			cout << devuelveVuelo(cant-1).devuelveAvion().toString() << endl;
+			col(11);
+			cout << " Vuelo:\n";
+			col(15);
+			cout << devuelveVuelo(cant-1).toString() << endl;
+		}
+		else if (canR == 0) {
+			col(12);
+			cerr << "No hay rutas ingresadas!\nIngrese una ruta primero en [Modulo Gestion de Ruta]\n";
+			col(15);
+		}
+		else if (canF == 0) {
+			col(12);
+			cerr << "No hay aviones registrados!\nRegistre un avion primero en [Modulo Gestion de Flota]\n";
+			col(15);
+		}
+	}
+	else {
+		col(12);
+		cout << "No hay campo para insertar vuelos!\n";
+		col(15);
+	}
+	system("PAUSE");
+}
 void VuelosGestion::visualizar() {
+	system("cls");
+	col(10);
+	cout << "\t\t(Visualizar Vuelos)\n\n";
+	col(15);
 	cout << "La empresa tiene: " << cant;
 	cant > 1 ? cout << " vuelos "<<endl : cout << " vuelo " << endl;
 	cout << "Cual vuelo desea visualizar?\n";
@@ -76,6 +187,7 @@ void VuelosGestion::visualizar() {
 	col(15);
 	cout << vuelo[opcV-1]->devuelveAvion().toStringPasajeros();
 	cout << endl;
+	system("PAUSE");
 }
 void VuelosGestion::modificar(){
 	system("cls");
@@ -325,6 +437,7 @@ void VuelosGestion::modificar(){
 		cout << "No hay vuelos para modificar!\n";
 		col(15);
 	}
+	system("PAUSE");
 }
 void VuelosGestion::eliminar(){
 	system("cls");
@@ -391,8 +504,10 @@ void VuelosGestion::eliminar(){
 		cout << "No hay vuelos para eliminar!\n";
 		col(15);
 	}
+	system("PAUSE");
 }
-void VuelosGestion::imprimeMenu(){
+int VuelosGestion::menu(){
+	int opc;
 	system("cls");
 	col(15);
 	cout << endl << endl << endl;
@@ -472,8 +587,6 @@ void VuelosGestion::imprimeMenu(){
 	gotoxy(71, 19); cout << char(186);
 	gotoxy(71, 20); cout << char(186);
 	gotoxy(71, 21); cout << char(186);
-}
-void VuelosGestion::interfaz(){
 	bool c = true;
 	while (c) {
 		gotoxy(35, 20); cout << "Opcion > ";
@@ -489,7 +602,7 @@ void VuelosGestion::interfaz(){
 			cin.clear();
 			cin.ignore(1024, '\n');
 		}
-		else if (opc < 0 || opc >4) { 
+		else if (opc < 0 || opc >4) {
 			col(15);
 			gotoxy(44, 20); cout << "                           " << char(186) << "            ";//limpia el buffer
 			col(12);
@@ -503,8 +616,6 @@ void VuelosGestion::interfaz(){
 		else { c = false; }
 		col(15);
 	}
-}
-int VuelosGestion::getOpc(){
 	return opc;
 }
 int VuelosGestion::getCant(){return cant;}
