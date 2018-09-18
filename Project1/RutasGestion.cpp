@@ -4,6 +4,9 @@ RutasGestion::RutasGestion() {
 	ruta = new Rutas*[100]; //se pueden hacer hasta 100 rutas, (el proyecto no especifica cuantas rutas se puedan hacer)
 	cant = 0;
 	tam = 100;
+	for (int i = 0; i < tam; i++) {
+		ruta[i] = NULL;
+	}
 }
 void RutasGestion::gotoxy(int x, int y) {
 	HANDLE hcon;
@@ -341,14 +344,16 @@ void RutasGestion::eliminar() {
 			}
 		}
 		if (opc1 != 0) {
-			int opcR = opc1 - 1;
-			if (opcR == (cant - 1)) {
-				cant--;
+			int opcA = opc1 - 1;
+			for (int i = 0; i < tam; i++) {
+				if (i == opcA) {
+					while (i < tam) {
+						ruta[i] = ruta[i + 1];
+						i++;
+					}
+				}
 			}
-			else {
-				ruta[opcR] = ruta[cant - 1];
-				cant--;
-			}
+			cant--;
 			col(10);
 			cout << "\nSe ha eliminado la ruta correctamente!\n";
 			col(15);
@@ -476,8 +481,9 @@ int RutasGestion::menu(){
 void RutasGestion::mostrarRutas() {
 	for (int i = 0; i < cant; i++) {
 		col(11);
-		cout << "Ruta: " << i + 1 << endl;
+		cout << "Ruta: " << i + 1 << endl << endl;
 		col(15);
+		cout << endl;
 		cout << ruta[i]->toString() << endl;
 	}
 }

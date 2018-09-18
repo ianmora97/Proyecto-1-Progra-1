@@ -24,7 +24,9 @@ void VuelosGestion::insertar(Vuelos *v) {
 		col(15);
 	}
 }
-void VuelosGestion::insertar(Avion *av, Rutas *ruta,int canR, int canF, string nomRut,int dur){
+void VuelosGestion::insertar(Avion av, Rutas *ruta,int canR, int canF, string nomRut,int dur){
+	Vuelos vu;
+	Avion ac1 = new Avion(av);
 	system("cls");
 	col(10);
 	cout << "\t\t(Ingresar Vuelos)\n\n";
@@ -35,7 +37,34 @@ void VuelosGestion::insertar(Avion *av, Rutas *ruta,int canR, int canF, string n
 			int horaSalida = 0,horaLlegada = 0, suma = 0;
 			string aereoSalida = "", aereoLlegada = "", piloto = "";
 			bool cicloSelecHora = true;
-			fecha = vuelo[0]->muestraFecha();
+			bool cicloSelecFecha = true;
+			while (cicloSelecFecha == true) {
+				int res;
+				fecha = vu.muestraFecha();
+				for (int i = 0; i < cant; i++) {
+					if (vuelo[i]->getFecha() == fecha) {
+						if (vuelo[i]->devuelveAvion().getId() == av.getId() && vuelo[i]->devuelveAvion().getMarca() == av.getMarca()) {
+							res = 1;
+						}
+						else {
+							res = 0;
+						}
+					}
+					else {
+						res = 0;
+					}
+				}
+				if (res == 1) {
+					col(12);
+					cout << "\nEl avion no esta disponible para esta fecha: " << fecha << endl;
+					col(15);
+					cicloSelecFecha = true;
+					system("PAUSE");
+				}
+				else {
+					cicloSelecFecha = false;
+				}
+			}
 			cout << endl;
 			cout << "\tSeleccione la hora de salida (Solo la hora en ";
 			col(14);
@@ -143,6 +172,7 @@ void VuelosGestion::visualizar() {
 		col(10);
 		cout << "\t[" << i + 1 << "]  ";
 		col(15);
+		cout << vuelo[i]->getNomRuta() << endl;
 	}
 	cout << endl;
 	int opcV;
@@ -178,10 +208,14 @@ void VuelosGestion::visualizar() {
 	col(15);
 	cout << vuelo[opcV-1]->toString() << endl;
 	col(11);
-	cout << " - Avion: "<<endl;
+	cout << " - Ruta: " << endl << endl;
 	col(15);
-	cout <<vuelo[opcV-1]->devuelveAvion().toString()<<endl;
-	vuelo[opcV-1]->devuelveAvion().imprimeAsientos();
+	cout << vuelo[opcV - 1]->devuelveRuta().toString() << endl;
+	col(11);
+	cout << " - Avion: " << endl << endl;
+	col(15);
+	cout << vuelo[opcV - 1]->devuelveAvion().toString() << endl;
+	vuelo[opcV - 1]->devuelveAvion().imprimeAsientos();
 	col(11);
 	cout << "\n - Tiquetes"<<endl<<endl;
 	col(15);
@@ -484,19 +518,18 @@ void VuelosGestion::eliminar(){
 		}
 		if (opcEligeVuelo != 0) {
 			int eligeVuelo = opcEligeVuelo - 1;
-			if (eligeVuelo == cant - 1) {
-				cant--;
-				col(10);
-				cout << "Se ha eliminado un vuelo Correctamente!\n";
-				col(15);
+			for (int i = 0; i < tam; i++) {
+				if (i == eligeVuelo) {
+					while (i < tam) {
+						vuelo[i] = vuelo[i + 1];
+						i++;
+					}
+				}
 			}
-			else {
-				vuelo[eligeVuelo] = vuelo[cant - 1];
-				cant--;
-				col(10);
-				cout << "Se ha eliminado un vuelo Correctamente!\n";
-				col(15);
-			}
+			cant--;
+			col(10);
+			cout << "Se ha eliminado un avion Correctamente!\n";
+			col(15);
 		}
 	}
 	else {
@@ -627,9 +660,7 @@ void VuelosGestion::toString() {
 		cout << "Vuelo: " << i + 1 << endl << endl;
 		col(15);
 		cout << vuelo[i]->toString() << endl;
-		cout << "Avion asignado: " << endl<<endl;
-		cout << vuelo[i]->devuelveAvion().toString() << endl;
-		vuelo[i]->devuelveAvion().imprimeAsientos();
+		
 		cout << endl;
 	}
 }

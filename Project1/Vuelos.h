@@ -35,6 +35,7 @@ public:
 	void setPiloto(string);
 	void insertaAvion(Avion);
 	Avion devuelveAvion();
+	Rutas devuelveRuta();
 	string toString();
 	~Vuelos();
 };

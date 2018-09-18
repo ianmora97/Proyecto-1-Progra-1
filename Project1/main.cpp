@@ -1,22 +1,12 @@
-/*
-
-Universidad Nacional de Costa Rica
-
+/*Universidad Nacional de Costa Rica
 PROGRAMACION I
 PRIMER PROYECTO DE PROGRAMACION
-
-ESTUDIANTES:
-		IAN MORA RODRIGUEZ
-		GIANCARLO ALVARADO SANCHEZ
-PROFESORA:
-		MARJORIE CHAVARRIA NERIO
-
-AGOSTO - SEPTIEMBRE 2018
-
-*/
+ESTUDIANTE: IAN MORA RODRIGUEZ
+AGOSTO - SEPTIEMBRE 2018*/
 
 #include "Control.h"
 int main() {
+	SetConsoleTitleA("Co Airlines - Compra de Tiquetes");
 	Control *control = new Control;
 	control->opciones();
 	return 0;

@@ -53,12 +53,6 @@ void FlotaGestion::revisarAdmin() {
 			ciclo = false;
 		}
 	}
-	col(13);
-	cout << "\n\n\n\t\t\t";
-	cout << "Bienvenido a la Gestion de Flota!\n";
-	for (int i = 0; i < 2; i++) {
-		Sleep(500);
-	}
 	system("cls");
 }
 void FlotaGestion::col(int c) { SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), c); }
@@ -85,19 +79,20 @@ void FlotaGestion::ingresar() {
 		cout << "\t\t(Ingresar Avion)\n\n";
 		col(15);
 		bool tamA = true;
-		cout << "Cual sera el tama" << char(164) << "io del avion?:\n";
+		cout << "Cual sera el tama" << char(164) << "o del avion?\n\n";
 		col(10);
-		cout << "[ P ]";
+		cout << "[ P ] ->";
 		col(15);
 		cout << " Peque" << char(164);
-		cout << "o (100 campos) - ";
+		cout << "o (100 campos)\n";
 		col(10);
-		cout << "[ G ]";
+		cout << "[ G ] ->";
 		col(15);
-		cout << " Grande (180 campos)";
+		cout << " Grande  (180 campos)";
 		int fil, colu, t;
 		while (tamA == true) {
-			cout << "\n> ";
+			cout << "\n\n\t\t\t     > ";
+			col(10);
 			if (!(cin >> tamanoAvion)) {
 				col(12);
 				cerr << "Digite una letra!\n";
@@ -129,11 +124,13 @@ void FlotaGestion::ingresar() {
 					tamA = true;
 				}
 			}
+			col(15);
 		}
-		cout << "Digite Id del avion (NUMERO) ";
+		cout << "\nDigite Id del avion (NUMERO) ";
 		bool cicloId = true;
 		while (cicloId == true) {
 			cout << "> ";
+			col(10);
 			if (!(cin >> id)) {
 				col(12);
 				cerr << "Digite un numero!\n";
@@ -144,11 +141,13 @@ void FlotaGestion::ingresar() {
 			else {
 				cicloId = false;
 			}
+			col(15);
 		}
 		cout << " \nDigite el a" << char(164) << "o del avion ";
 		bool cicloAn = true;
 		while (cicloAn == true) {
-			cout << "> ";
+			cout << "     > ";
+			col(10);
 			if (!(cin >> annio)) {
 				col(12);
 				cerr << "Digite un numero!\n";
@@ -159,14 +158,17 @@ void FlotaGestion::ingresar() {
 			else {
 				cicloAn = false;
 			}
+			col(15);
 		}
-		cout << "\nDigite el Modelo del avion > ";
+		cout << "\nDigite el Modelo del avion   > ";
 		cin.ignore();
-		getline(cin, modelo);
-		cout << "\nDigite la Marca del avion > ";
-		getline(cin, marca);
+		col(10); getline(cin, modelo); col(15);
+		cout << "\nDigite la Marca del avion    > ";
+		col(10); getline(cin, marca); col(15);
 		plane[cant] = new Avion(id, annio, modelo, marca, t, fil, colu);
 		cant++;
+		cout << endl;
+		plane[cant - 1]->imprimeAsientos();
 		col(10);
 		cout << "Avion ingresado Correctamente!\n";
 		col(15);
@@ -191,25 +193,32 @@ void FlotaGestion::visualizar() {
 	cout << "La empresa tiene: " << cant;
 	cant > 1 ? cout << " aviones " << endl : cout << " avion " << endl;
 
-	for (int i = 0; i < cant; i++) {
-		cout << "-------------------------" << endl;
-		col(11);
-		cout << "Avion: " << i+1 << endl << endl;
-		col(15);
-		cout<<plane[i]->toString()<<endl;
-	}
+	toString();
 	cout << endl;
 	system("PAUSE");
 }
 void FlotaGestion::toString() {
-	cout << "----------------------\n";
 	for (int i = 0; i < cant; i++) {
-
+			cout << "--------------------------------------------\n";
 			col(11);
 			cout << "Avion: " << i + 1 << endl << endl;
 			col(15);
 			cout << plane[i]->toString() << endl;
 		
+	}
+}
+void FlotaGestion::toString2() {
+	cout << "------------------------------------------------------------------------------------------------------\n";
+	cout << "Avion     Identificacion   A"<<char(164)<<"o    Modelo   Marca    Capacidad  A.Ocupados  A.Disponibles  Cant.Filas Cant.Columnas"<<endl<<endl;
+	for (int i = 0; i < cant; i++) {
+		col(11);
+		gotoxy(0, 10 + i); i > 9 ? cout << "Avion " << i + 1 << " " : cout << "Avion " << i + 1 << "  ";
+		col(15);
+		//cout << plane[i]->toString2() << endl;
+		gotoxy(10, 10 + i); cout << plane[i]->getId();
+		gotoxy(27, 10 + i); cout << plane[i]->getAnnio();
+		gotoxy(34, 10 + i); cout << plane[i]->getModelo();
+		gotoxy(43, 10 + i); cout << plane[i]->getMarca();
 	}
 }
 void FlotaGestion::eliminar() {
@@ -258,19 +267,18 @@ void FlotaGestion::eliminar() {
 		}
 		if (eliAv != 0) {
 			int opcA = eliAv - 1;
-			if (opcA == (cant - 1)) {
-				cant--;
-				col(10);
-				cout << "Se ha eliminado un avion Correctamente!\n";
-				col(15);
+			for (int i = 0; i < tam; i++) {
+				if (i == opcA) {
+					while (i<tam) {
+						plane[i] = plane[i + 1];
+						i++;
+					}
+				}
 			}
-			else {
-				plane[opcA] = plane[cant - 1];
-				cant--;
-				col(10);
-				cout << "Se ha eliminado un avion Correctamente!\n";
-				col(15);
-			}
+			cant--;
+			col(10);
+			cout << "Se ha eliminado un avion Correctamente!\n";
+			col(15);
 		}
 		system("PAUSE");
 	}
@@ -569,3 +577,4 @@ FlotaGestion::~FlotaGestion() {
 	cout << "Se ha destruido los aviones!"<<endl;
 	col(15);
 }
+

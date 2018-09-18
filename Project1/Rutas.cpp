@@ -19,14 +19,10 @@ int Rutas::getDuracion() { return duracion; }
 int Rutas::getCantEscalas() { return cantEscalas; }
 string Rutas::toString() {
 	stringstream p1;
-	p1 << "\nNombre de origen: \n";
-	p1 << origen << "\n";
-	p1 << "Nombre de destino:\n";
-	p1 << destino << "\n";
-	p1 <<"Duracion del viaje:\n"
-		<<duracion<<" horas\n"
-		<<"Cantidad de escalas:\n"
-		<<cantEscalas<<" escalas\n";
+	p1 << "Nombre de origen        : " << origen << "\n";
+	p1 << "Nombre de destino       : " << destino << "\n";
+	p1 << "Duracion del viaje      : " << duracion << " horas\n";
+	p1 << "Cantidad de escalas     : " << cantEscalas << " escalas\n";
 	return p1.str();
 }
 Rutas::~Rutas(){

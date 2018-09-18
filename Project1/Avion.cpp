@@ -48,14 +48,31 @@ string Avion::getMarca() { return marca; }
 string Avion::toString() {
 	int ca = suma();
 	stringstream p;
-	p << "Id: " << id << endl;
-	p << "A" << char(164) << "o: "<<annio<<endl;
-	p << "Modelo: " << modelo << endl;
-	p << "Marca: " << marca << endl;
-	p << "Capacidad de Pasajeros: " << cantPasajeros << endl;
-	p << "Asientos ocupados: " << ca << endl;
-	p << "Asientos disponibles: " << (cantPasajeros - ca) << endl;
-	p << "Cantidad de filas: " << filas << " Columnas: " << columnas << endl;
+	p << "Identificacion          : " << id << endl;
+	p << "A" << char(164) << "o                     : "<<annio<<endl;
+	p << "Modelo                  : " << modelo << endl;
+	p << "Marca                   : " << marca << endl;
+	p << "Capacidad de Pasajeros  : " << cantPasajeros << endl;
+	p << "Asientos ocupados       : " << ca << endl;
+	p << "Asientos disponibles    : " << (cantPasajeros - ca) << endl;
+	p << "Cantidad de filas       : " << filas<<endl; 
+	p << "Cantidad de columnas    : " << columnas << endl;
+	p << "Tipo de Avion           : ";
+	cantPasajeros == 180 ? p << "GRANDE" << endl : p << "PEQUE" << char(164) << "O" << endl;
+	return p.str();
+}
+string Avion::toString2() {
+	int ca = suma();
+	stringstream p;
+	p << id <<"  ";
+	p << annio << "  ";
+	p << modelo << "  ";
+	p << marca << "  ";
+	p << cantPasajeros << "  ";
+	p << ca << "  ";
+	p << (cantPasajeros - ca) << "  ";
+	p << filas << "  ";
+	p << columnas << "  ";
 	return p.str();
 }
 int Avion::suma() { 

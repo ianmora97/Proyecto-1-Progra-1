@@ -30,6 +30,7 @@ public:
 	string getModelo();
 	string getMarca();
 	string toString();
+	string toString2();
 	int letraXNumero(char);
 	int revisaValor(char,int);
 	void imprimeAsientos();

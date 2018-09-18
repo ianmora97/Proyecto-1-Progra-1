@@ -583,23 +583,18 @@ void Vuelos::setAereoLlegada(string al) { aereoLlegada = al; }
 void Vuelos::setPiloto(string p) { piloto = p; }
 string Vuelos::toString() {
 	stringstream p;
-	p << "Nombre de la ruta: ";
-	p << nomRuta << endl;
-	p << "Fecha: ";
-	p << fecha << endl;
-	p << "Hora de Salida: ";
-	p << horaSalida;
-	p <<":00"<<endl;
-	p << "Hora de llegada: ";
-	p << horaLlegada;
-	p << ":00"<<endl;
-	p << "Aereopuerto de Salida: "<<aereoSalida<<endl;
-	p << "Aereopuerto de Llegada: "<<aereoLlegada<<endl;
-	p << "Nombre del Piloto: "<<piloto<<endl;
+	p << "Nombre de la ruta       : " << nomRuta << endl;
+	p << "Fecha                   : " << fecha << endl;
+	p << "Hora de Salida          : " << horaSalida <<":00"<<endl;
+	p << "Hora de llegada         : " << horaLlegada << ":00"<<endl;
+	p << "Aereopuerto de Salida   : "<<aereoSalida<<endl;
+	p << "Aereopuerto de Llegada  : "<<aereoLlegada<<endl;
+	p << "Nombre del Piloto       : "<<piloto<<endl;
 	return p.str();
 }
 void Vuelos::insertaAvion(Avion a) {avion = a;}
 Avion Vuelos::devuelveAvion() { return avion; }
+Rutas Vuelos::devuelveRuta() { return ruta; }
 Vuelos::~Vuelos(){
 	nomRuta = "";
 	fecha = "";

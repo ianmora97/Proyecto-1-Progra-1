@@ -11,7 +11,7 @@ public:
 	void col(int);
 	void gotoxy(int x, int y);
 	void insertar(Vuelos*);
-	void insertar(Avion*,Rutas*,int,int,string,int);
+	void insertar(Avion,Rutas*,int,int,string,int);
 	void visualizar();
 	void modificar();
 	void eliminar();

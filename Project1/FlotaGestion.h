@@ -19,6 +19,7 @@ public:
 	void modificar();
 	void eliminar();
 	void toString();
+	void toString2();
 	int menu();
 	Avion devuelve(int);
 	~FlotaGestion();

@@ -14,31 +14,75 @@ void Control::opciones() {
 	FlotaGestion *flotaGe = new FlotaGestion;
 	RutasGestion *rutaGes = new RutasGestion;
 	VuelosGestion *vg = new VuelosGestion;
+
 	Avion *a1 = new Avion(1, 2005, "747", "Boeing", 180, 6, 30);
 	Avion *a2 = new Avion(2, 2000, "A340", "Airbus", 100, 4, 25);
 	Avion *a3 = new Avion(3, 2015, "182N", "Cessna", 100, 4, 25);
+	Avion *a4 = new Avion(4, 2010, "554", "Boeing", 180, 6, 30);
+	Avion *a5 = new Avion(5, 2002, "YT11", "Airbus", 180, 6, 30);
+	Avion *copy1 = new Avion(a1);
+	Avion *copy2 = new Avion(a2);
+	Avion *copy3 = new Avion(a3);
+	Avion *copy4 = new Avion(a4);
+	Avion *copy5 = new Avion(a5);
+
 	flotaGe->ingresar(a1);
 	flotaGe->ingresar(a2);
 	flotaGe->ingresar(a3);
+	flotaGe->ingresar(a4);
+	flotaGe->ingresar(a5);
+
 	Rutas *r1 = new Rutas("Costa Rica", "Panama", 1, 1);
 	Rutas *r2 = new Rutas("Costa Rica", "España", 17, 1);
 	Rutas *r3 = new Rutas("Costa Rica", "Estados Unidos", 3, 1);
+	Rutas *r4 = new Rutas("Panama", "Costa Rica", 1, 1);
+	Rutas *r5 = new Rutas("España", "Costa Rica", 17, 1);
+	Rutas *r6 = new Rutas("Estados Unidos", "Costa Rica", 3, 1);
+	Rutas *r7 = new Rutas("Costa Rica", "Rusia", 12, 1);
+	Rutas *r8 = new Rutas("Rusia", "Costa Rica", 13, 1);
+	Rutas *r9 = new Rutas("Costa Rica", "Brasil", 10, 1);
+	Rutas *r10 = new Rutas("Brasil", "Costa Rica", 10, 1);
+
 	rutaGes->ingresar(r1);
 	rutaGes->ingresar(r2);
 	rutaGes->ingresar(r3);
-	Vuelos *v1 = new Vuelos("COSTA RICA-PANAMA","14,NOVIEMBRE,2018",5,6,"Juan Santamaria","Albrook","Juan Gonzales", *a1,*r1);
-	Vuelos *v2 = new Vuelos("COSTA RICA-ESPAÑA", "25,DICIEMBRE,2018", 8, 1, "Juan Santamaria", "Madrid", "Luis Garita", *a2,*r2);
-	Vuelos *v3 = new Vuelos("COSTA RICA-ESTADOS UNIDOS", "8,ENERO,2019", 12, 3, "Juan Santamaria", "Orlando, Florida", "Ivannia Flores", *a3,*r3);
+	rutaGes->ingresar(r4);
+	rutaGes->ingresar(r5);
+	rutaGes->ingresar(r6);
+	rutaGes->ingresar(r7);
+	rutaGes->ingresar(r8);
+	rutaGes->ingresar(r9);
+	rutaGes->ingresar(r10);
+
+	Vuelos *v1 = new Vuelos("COSTA RICA-PANAMA", "14,NOVIEMBRE,2018", 5, 6, "Juan Santamaria", "Albrook", "Juan Gonzales", *a1, *r1);
+	Vuelos *v2 = new Vuelos("COSTA RICA-ESPAÑA", "25,DICIEMBRE,2018", 8, 1, "Juan Santamaria", "Madrid", "Luis Garita", *a2, *r2);
+	Vuelos *v3 = new Vuelos("COSTA RICA-ESTADOS UNIDOS", "8,ENERO,2019", 12, 3, "Juan Santamaria", "Orlando, Florida", "Ivannia Flores", *a3, *r3);
+	Vuelos *v4 = new Vuelos("PANAMA-COSTA RICA", "18,NOVIEMBRE,2018", 5, 6, "Albrook", "Juan Santamaria", "Juan Gonzales", *copy1, *r4);
+	Vuelos *v5 = new Vuelos("ESPAÑA-COSTA RICA", "2,ENERO,2019", 8, 1, "Madrid", "Juan Santamaria", "Luis Garita", *copy2, *r5);
+	Vuelos *v6 = new Vuelos("ESTADOS UNIDOS-COSTA RICA", "13,ENERO,2019", 12, 3, "Orlando, Florida", "Juan Santamaria", "Ivannia Flores", *copy3, *r6);
+	Vuelos *v7 = new Vuelos("COSTA RICA-RUSIA", "25,ENERO,2019", 15, 2, "Juan Santamaria", "Moscow", "Gerardo Sancho", *a4, *r7);
+	Vuelos *v8 = new Vuelos("RUSIA-COSTA RICA", "1,FEBRERO,2019", 15, 2, "Moscow", "Juan Santamaria", "Gerardo Sancho", *copy4, *r8);
+	Vuelos *v9 = new Vuelos("COSTA RICA-BRASIL", "5,FEBRERO,2019", 12, 22, "Juan Santamaria", "Sao Paolo", "Luis Alvarez", *a5, *r9);
+	Vuelos *v10 = new Vuelos("BRASIL-COSTA RICA", "10,FEBRERO,2019", 12, 22, "Sao Paolo", "Juan Santamaria", "Luis Alvarez", *copy5, *r10);
 	vg->insertar(v1);
 	vg->insertar(v2);
 	vg->insertar(v3);
+	vg->insertar(v4);
+	vg->insertar(v5);
+	vg->insertar(v6);
+	vg->insertar(v7);
+	vg->insertar(v8);
+	vg->insertar(v9);
+	vg->insertar(v10);
 	//ciclos
 	bool cicloPrincipal=true;
 	//----!ciclos
 	srand(time(NULL));
 
+
 	bienvenido();
 	while (cicloPrincipal) {
+
 		i->imprime();
 		int opc = i->menu();
 		if (opc == 1) { // Gestion de Flotas
@@ -47,47 +91,21 @@ void Control::opciones() {
 			while (cicloOpcion1) {
 				system("cls");
 				switch (flotaGe->menu()){
-				case 0:
-					system("cls");
-					col(13);
-					cout << "\n\n\n\t\t\t";
-					cout << "Saliendo de [Gestion de Flota]\n";
-					cout << "\n\t\t";
-					for (int i = 0; i < 60; i++) {col(255);cout << " ";Sleep(15);}
-					system("cls");
-					col(15);
-					cicloOpcion1 = false;
-					break;
+				case 0: system("cls"); cicloOpcion1 = false; break;
 				case 1: flotaGe->ingresar(); break;
 				case 2: flotaGe->visualizar(); break;
 				case 3: flotaGe->modificar(); break;
 				case 4: flotaGe->eliminar(); break;
 				default: break;}
-				
 			}
 
 		}
 		else if (opc == 2) {
 			system("cls");
-			col(13);
-			cout << "\n\n\n\t\t\t";
-			cout << "Bienvenido a la gestion de Rutas!\n";
-			for (int i = 0; i < 2; i++) {Sleep(500);}
-			system("cls");
-			col(15);
 			bool cicloOpcion = true;
 			while (cicloOpcion) {
 				switch (rutaGes->menu()){
-				case 0:
-					system("cls");
-					col(13);
-					cout << "\n\n\n\t\t\t";
-					cout << "Saliendo de [Gestion de Rutas]\n";
-					cout << "\n\t\t";
-					for (int i = 0; i < 60; i++) {col(255);	cout << " ";Sleep(15);}
-					col(15);
-					cicloOpcion = false;
-					break;
+				case 0: system("cls"); cicloOpcion = false; break;
 				case 1: rutaGes->ingresar(); break;
 				case 2: rutaGes->visualizar(); break;
 				case 3: rutaGes->modificar(); break;
@@ -98,12 +116,6 @@ void Control::opciones() {
 		}
 		else if (opc == 3) {
 			system("cls");
-			col(13);
-			cout << "\n\n\n\t\t\t";
-			cout << "Bienvenido a la gestion de Vuelos!\n";
-			for (int i = 0; i < 2; i++) { Sleep(500);}
-			system("cls");
-			col(15);
 			bool cicloOpcion = true; //ciclo del menu
 			while (cicloOpcion == true) {
 				system("cls");
@@ -117,16 +129,7 @@ void Control::opciones() {
 				int opcAvion;
 				int opcAvionm;
 				switch (vg->menu()){
-				case 0:
-					system("cls");
-					col(13);
-					cout << "\n\n\n\t\t\t";
-					cout << "Saliendo de la gestion de Vuelos!\n";
-					cout << "\n\t\t";
-					for (int i = 0; i < 60; i++) {col(255);cout << " ";Sleep(15);}
-					col(15);
-					cicloOpcion = false;
-					break;
+				case 0: system("cls");  cicloOpcion = false; break;
 				case 1:
 					system("cls");
 					cout << "Las rutas disponibles son:\n";
@@ -195,44 +198,63 @@ void Control::opciones() {
 		}
 		else if (opc == 4) {
 			system("cls");
-			col(13);
-			cout << "\n\n\n\t\t\t";
-			cout << "Bienvenido a la Compra de tiquetes!\n";
-			for (int i = 0; i < 2; i++) {Sleep(500);}
 			if (vg->getCant() != 0) { //si no hay vuelos registrados no puede comprar asientos
 				bool espacio = true;
 				while (espacio == true) {
-					system("cls");
-					col(10);
-					cout << "\t\t(Compra de Tiquetes)\n\n";
-					col(15);
-					vg->toString();
-					cout << "Seleccione el vuelo deseado";
-					int opcVvuelo;
-					bool cicloSelecVuelo = true;
-					while (cicloSelecVuelo == true) {
-						cout << "> ";
-						if (!(cin >> opcVvuelo)) {
-							col(12);
-							cerr << "Digite un numero!\n";
-							col(15);
-							cin.clear();
-							cin.ignore(1024, '\n');
+					cin.ignore();
+					int vuelo;
+					bool rutanom = true;
+					while (rutanom == true) {
+						system("cls");
+						col(10);
+						cout << "\t\t(Compra de Tiquetes)\n\n";
+						col(15);
+						cout << "Digite el nombre de origen > ";
+						string nombreOrigen;
+						string colecNombreOrigen;
+						col(13); getline(cin, nombreOrigen); col(15);
+						cout << "\nDigite el nombre de destino > ";
+						string nombreDestino;
+						string colecNombreDestino;
+						col(13); getline(cin, nombreDestino); col(15);
+						for (int i = 0; nombreDestino[i]; i++) {
+							nombreDestino = toupper(nombreDestino[i]);
 						}
-						else {
-							if (opcVvuelo > 0 && opcVvuelo <= vg->getCant()) {
-								cicloSelecVuelo = false;
+						for (int i = 0; nombreOrigen[i]; i++) {
+							nombreOrigen = toupper(nombreOrigen[i]);
+						}
+						for (int i = 0; i < vg->getCant(); i++) {
+							colecNombreDestino = vg->devuelveVuelo(i).devuelveRuta().getDestino();
+							colecNombreOrigen = vg->devuelveVuelo(i).devuelveRuta().getOrigen();
+							for (int j = 0; colecNombreDestino[j]; j++) {
+								colecNombreDestino = toupper(colecNombreDestino[j]);
+							}
+							for (int j = 0; colecNombreOrigen[j]; j++) {
+								colecNombreOrigen = toupper(colecNombreOrigen[j]);
+							}
+							if (colecNombreDestino == nombreDestino && colecNombreOrigen == nombreOrigen) {
+								cout << "\nRuta " << i + 1 << endl << endl;
+								cout << vg->devuelveVuelo(i).devuelveRuta().toString() << endl;
+								vuelo = i;
+								break;
 							}
 							else {
-								col(12);
-								cerr << "Digite un numero de la lista!\n";
-								col(15);
-								cin.clear();
-								cin.ignore(1024, '\n');
+								vuelo = -1;
 							}
 						}
+						if (vuelo == -1) {
+							rutanom = true;
+							col(12);
+							cout << "\nLa ruta no se encuentra en el sistema\n";
+							col(15);
+							system("PAUSE");
+						}
+						else {
+							rutanom = false;
+						}
 					}
-					int vuelo = opcVvuelo - 1;
+					col(15);
+					system("PAUSE");
 					if (vg->devuelveVuelo(vuelo).devuelveAvion().getCan() < vg->devuelveVuelo(vuelo).devuelveAvion().getCantPasajeros()) {
 						int precio = rand() % (800 + 150);//metodo para un precio random
 						int tamAvion = vg->devuelveVuelo(vuelo).devuelveAvion().getCantPasajeros(); //tamaño del avion seleccionado
@@ -243,13 +265,12 @@ void Control::opciones() {
 						col(10);
 						cout << "\t[Digitar los datos de la persona]\n";
 						col(11);
-						cout << "\n\tAsiento" << endl;
+						cout << "\n" << endl;
 						cout << "\t--------------------------\n";
 						col(15);
-						cout << "\tDigite su nombre > ";
-						cin.ignore();
+						cout << "\tDigite su nombre         > ";
 						getline(cin, nombre);
-						cout << "\tDigite su identificacion >";
+						cout << "\tDigite su identificacion > ";
 						getline(cin, id);
 						bool verifica = true; //ciclo para la verificacion del asiento, si tiene campo
 						while (verifica == true) {
