@@ -10,6 +10,7 @@ private:
 	string modelo,marca;
 	int cantPasajeros;
 	int filas, columnas;
+	string tam;
 public:
 	Avion();
 	Avion(int,int,string,string,int,int,int);

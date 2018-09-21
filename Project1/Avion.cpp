@@ -10,6 +10,7 @@ Avion::Avion(int i, int a, string mo, string ma,int t,int f,int c) : id(i), anni
 			persona[i][j] = NULL;
 		}
 	}
+	cantPasajeros == 180 ? tam = "GRANDE" : tam = "PEQUENIO";
 }
 Avion::Avion(const Avion *a) : id(a->id), annio(a->annio), modelo(a->modelo), marca(a->marca), cantidad(a->cantidad), filas(a->filas), columnas(a->columnas), cantPasajeros(a->cantPasajeros) {
 	persona = new Persona**[filas];
@@ -21,7 +22,7 @@ Avion::Avion(const Avion *a) : id(a->id), annio(a->annio), modelo(a->modelo), ma
 			persona[i][j] = NULL;
 		}
 	}
-
+	a->cantPasajeros == 180 ? tam = "GRANDE" : tam = "PEQUENIO";
 }
 void Avion::col(int c){	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), c);}
 void Avion::setAnnio(int a){ annio=a; }
@@ -57,8 +58,7 @@ string Avion::toString() {
 	p << "Asientos disponibles    : " << (cantPasajeros - ca) << endl;
 	p << "Cantidad de filas       : " << filas<<endl; 
 	p << "Cantidad de columnas    : " << columnas << endl;
-	p << "Tipo de Avion           : ";
-	cantPasajeros == 180 ? p << "GRANDE" << endl : p << "PEQUE" << char(164) << "O" << endl;
+	p << "Tipo de Avion           : " << tam << endl;
 	return p.str();
 }
 string Avion::toString2() {

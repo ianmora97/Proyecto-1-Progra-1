@@ -42,6 +42,12 @@
     <ClInclude Include="VuelosGestion.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CompraTiquete.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tiquete.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Persona.cpp">
@@ -72,6 +78,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="VuelosGestion.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CompraTiquete.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tiquete.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

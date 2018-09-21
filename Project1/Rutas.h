@@ -12,6 +12,7 @@ private:
 	string destino;
 	int duracion;
 	int cantEscalas;
+	float precio;
 public:
 	Rutas();
 	Rutas(string,string,int,int);
@@ -26,6 +27,7 @@ public:
 	string getDestino();
 	int getDuracion();
 	int getCantEscalas();
+	int getPrecio();
 	string toString();
 	~Rutas();
 };

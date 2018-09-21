@@ -1,6 +1,7 @@
 #include "Vuelos.h"
 Vuelos::Vuelos() : nomRuta(""), fecha(""), horaSalida(0), horaLlegada(0), aereoSalida(""), aereoLlegada(""), piloto("") {}
 Vuelos::Vuelos(string n, string f , int s, int l, string as, string al, string p, Avion av, Rutas ru) : nomRuta(n), fecha(f), horaSalida(s), horaLlegada(l), aereoSalida(as), aereoLlegada(al), piloto(p), avion(av), ruta(ru) {}
+Vuelos::Vuelos(const Vuelos *v) : nomRuta(v->nomRuta), fecha(v->fecha), horaSalida(v->horaSalida), horaLlegada(v->horaLlegada), aereoSalida(v->aereoSalida), aereoLlegada(v->aereoLlegada), piloto(v->piloto), avion(v->avion), ruta(v->ruta) {}
 void Vuelos::col(int c) { SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), c); }
 string Vuelos::muestraFecha(){
 	int mes;

@@ -17,6 +17,7 @@ private:
 public:
 	Vuelos();
 	Vuelos(string,string,int,int,string,string,string,Avion,Rutas);
+	Vuelos(const Vuelos * v);
 	void col(int);
 	string muestraFecha();
 	string getNomRuta();

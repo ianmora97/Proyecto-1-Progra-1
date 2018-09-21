@@ -111,17 +111,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Avion.h" />
+    <ClInclude Include="CompraTiquete.h" />
     <ClInclude Include="Control.h" />
     <ClInclude Include="FlotaGestion.h" />
     <ClInclude Include="Interfaz.h" />
     <ClInclude Include="Persona.h" />
     <ClInclude Include="Rutas.h" />
     <ClInclude Include="RutasGestion.h" />
+    <ClInclude Include="Tiquete.h" />
     <ClInclude Include="Vuelos.h" />
     <ClInclude Include="VuelosGestion.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Avion.cpp" />
+    <ClCompile Include="CompraTiquete.cpp" />
     <ClCompile Include="Control.cpp" />
     <ClCompile Include="FlotaGestion.cpp" />
     <ClCompile Include="Interfaz.cpp" />
@@ -129,6 +132,7 @@
     <ClCompile Include="Persona.cpp" />
     <ClCompile Include="Rutas.cpp" />
     <ClCompile Include="RutasGestion.cpp" />
+    <ClCompile Include="Tiquete.cpp" />
     <ClCompile Include="Vuelos.cpp" />
     <ClCompile Include="VuelosGestion.cpp" />
   </ItemGroup>

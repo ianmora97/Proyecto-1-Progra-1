@@ -1,6 +1,6 @@
 #include "Rutas.h"
-Rutas::Rutas(string o, string d, int du, int e) : origen(o), destino(d), duracion(du), cantEscalas(e) {}
-Rutas::Rutas(const Rutas *r) : origen(r->origen), destino(r->destino), duracion(r->duracion), cantEscalas(r->cantEscalas) {}
+Rutas::Rutas(string o, string d, int du, int e) : origen(o), destino(d), duracion(du), cantEscalas(e) { srand(time(NULL)); precio = (rand() % 800) + 150; }
+Rutas::Rutas(const Rutas *r) : origen(r->origen), destino(r->destino), duracion(r->duracion), cantEscalas(r->cantEscalas) { srand(time(NULL)); precio = (rand() % 800) + 150; }
 Rutas::Rutas(){}
 void Rutas::col(int c){ SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), c); }
 void Rutas::setOrigen(string o) { origen = o; }
@@ -17,6 +17,7 @@ string Rutas::getOrigen() { return origen; }
 string Rutas::getDestino() { return destino; }
 int Rutas::getDuracion() { return duracion; }
 int Rutas::getCantEscalas() { return cantEscalas; }
+int Rutas::getPrecio() { return precio; }
 string Rutas::toString() {
 	stringstream p1;
 	p1 << "Nombre de origen        : " << origen << "\n";
